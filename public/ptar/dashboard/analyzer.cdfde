@@ -1,0 +1,829 @@
+{
+ "components": {
+  "rows": []
+ },
+ "datasources": {
+  "rows": [
+   {
+    "id": "LOADJOB_CPKENDPOINTS",
+    "name": "LOADJOB Endpoints",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "Group",
+      "type": "Label",
+      "value": "LOADJOB Endpoints"
+     }
+    ],
+    "type": "Label",
+    "typeDesc": "<i>Group</i>"
+   },
+   {
+    "id": "59fd7083-2a24-491d-2e07-da1b08bb3651",
+    "meta": "CPK",
+    "meta_endpoint": "jobLoadProject",
+    "meta_pluginId": "loadJob",
+    "parent": "LOADJOB_CPKENDPOINTS",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "loadProjectDS"
+     },
+     {
+      "name": "stepName",
+      "type": "String",
+      "value": "OUTPUT"
+     },
+     {
+      "name": "kettleOutput",
+      "type": "kettleOutputCustom",
+      "value": "Inferred"
+     }
+    ],
+    "type": "ComponentsloadJob_jobLoadProject_CPKENDPOINT",
+    "typeDesc": "jobLoadProject Endpoint"
+   },
+   {
+    "id": "a3968ea6-2768-f9e4-b7ad-25e19b8512b0",
+    "meta": "CPK",
+    "meta_endpoint": "trLoadMasters",
+    "meta_pluginId": "loadJob",
+    "parent": "LOADJOB_CPKENDPOINTS",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "loadMasterDS"
+     },
+     {
+      "name": "stepName",
+      "type": "String",
+      "value": "OUTPUT"
+     },
+     {
+      "name": "kettleOutput",
+      "type": "kettleOutputCustom",
+      "value": "Inferred"
+     }
+    ],
+    "type": "ComponentsloadJob_trLoadMasters_CPKENDPOINT",
+    "typeDesc": "trLoadMasters Endpoint"
+   },
+   {
+    "id": "2b9e2993-fcd2-74f7-de63-b98b7502b367",
+    "meta": "CPK",
+    "meta_endpoint": "trLoadPrintedMaterial",
+    "meta_pluginId": "loadJob",
+    "parent": "LOADJOB_CPKENDPOINTS",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "loadMaterialDS"
+     },
+     {
+      "name": "stepName",
+      "type": "String",
+      "value": "OUTPUT"
+     },
+     {
+      "name": "kettleOutput",
+      "type": "kettleOutputCustom",
+      "value": "Inferred"
+     }
+    ],
+    "type": "ComponentsloadJob_trLoadPrintedMaterial_CPKENDPOINT",
+    "typeDesc": "trLoadPrintedMaterial Endpoint"
+   },
+   {
+    "id": "3d306b62-cd51-a011-2562-1e3b80f80332",
+    "meta": "CPK",
+    "meta_endpoint": "trLoan",
+    "meta_pluginId": "loadJob",
+    "parent": "LOADJOB_CPKENDPOINTS",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "loadLoanDS"
+     },
+     {
+      "name": "stepName",
+      "type": "String",
+      "value": "OUTPUT"
+     },
+     {
+      "name": "kettleOutput",
+      "type": "kettleOutputCustom",
+      "value": "Inferred"
+     }
+    ],
+    "type": "ComponentsloadJob_trLoan_CPKENDPOINT",
+    "typeDesc": "trLoan Endpoint"
+   },
+   {
+    "id": "4ab17468-c4a1-e7c9-01e9-9ee605c82cc3",
+    "meta": "CPK",
+    "meta_endpoint": "trVisitor",
+    "meta_pluginId": "loadJob",
+    "parent": "LOADJOB_CPKENDPOINTS",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "loadVisitorDS"
+     },
+     {
+      "name": "stepName",
+      "type": "String",
+      "value": "OUTPUT"
+     },
+     {
+      "name": "kettleOutput",
+      "type": "kettleOutputCustom",
+      "value": "Inferred"
+     }
+    ],
+    "type": "ComponentsloadJob_trVisitor_CPKENDPOINT",
+    "typeDesc": "trVisitor Endpoint"
+   }
+  ]
+ },
+ "filename": "/public/ptar/dashboard/analyzer.cdfde",
+ "layout": {
+  "rows": [
+   {
+    "id": "29b78d32-0560-5bd4-7074-3fa612cda52a",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutRow",
+    "typeDesc": "Row"
+   },
+   {
+    "id": "8efc6b83-d10f-361c-e795-a039353120dd",
+    "parent": "29b78d32-0560-5bd4-7074-3fa612cda52a",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "bootstrapExtraSmall",
+      "type": "String",
+      "value": "12"
+     },
+     {
+      "name": "bootstrapSmall",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapMedium",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapLarge",
+      "type": "String",
+      "value": "12"
+     },
+     {
+      "name": "bootstrapCssClass",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutBootstrapColumn",
+    "typeDesc": "Column"
+   },
+   {
+    "id": "e7c43fe7-4894-8e87-a108-22a2665ec1ea",
+    "parent": "8efc6b83-d10f-361c-e795-a039353120dd",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "html",
+      "type": "Html",
+      "value": "<div class=\"panel panel-default\">\n    <div class=\"panel-heading\">\n        <span class=\"topPanelSubtitle\">Load Project Data</span>\n    </div> \n     <div class=\"panel-body\">\n            <div id=\"htmlBtnLoadProject\">\n            \n            </div>\n    </div>\n        \n     \n</div> "
+     },
+     {
+      "name": "fontSize",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "color",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutHtml",
+    "typeDesc": "Html"
+   },
+   {
+    "id": "6b685d3f-4a35-1f6e-fdcc-8c4c2254f996",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutRow",
+    "typeDesc": "Row"
+   },
+   {
+    "id": "eff4a96b-7f82-8dfa-69ae-095346b5ce23",
+    "parent": "6b685d3f-4a35-1f6e-fdcc-8c4c2254f996",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "bootstrapExtraSmall",
+      "type": "String",
+      "value": "12"
+     },
+     {
+      "name": "bootstrapSmall",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapMedium",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapLarge",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapCssClass",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutBootstrapColumn",
+    "typeDesc": "Column"
+   },
+   {
+    "id": "14e8a23f-426f-51be-a737-8312d220734f",
+    "parent": "eff4a96b-7f82-8dfa-69ae-095346b5ce23",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "html",
+      "type": "Html",
+      "value": "<div class=\"panel panel-default\">\n    <div class=\"panel-heading\">\n        <span class=\"topPanelSubtitle\">Load Project Data</span>\n    </div> \n     <div class=\"panel-body\">\n            <div id=\"htmlBtnLoadMaster\">\n            \n            </div>\n    </div>\n        \n     \n</div> "
+     },
+     {
+      "name": "fontSize",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "color",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutHtml",
+    "typeDesc": "Html"
+   },
+   {
+    "id": "629c22a5-2c24-da79-9997-9a53f50eb6cb",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutRow",
+    "typeDesc": "Row"
+   },
+   {
+    "id": "4a2ded1c-8d40-7396-b956-36a708bb9c92",
+    "parent": "629c22a5-2c24-da79-9997-9a53f50eb6cb",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "bootstrapExtraSmall",
+      "type": "String",
+      "value": "12"
+     },
+     {
+      "name": "bootstrapSmall",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapMedium",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapLarge",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapCssClass",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutBootstrapColumn",
+    "typeDesc": "Column"
+   },
+   {
+    "id": "39e64528-e6d6-c2b7-3bd3-c7ef3ef661dd",
+    "parent": "4a2ded1c-8d40-7396-b956-36a708bb9c92",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "html",
+      "type": "Html",
+      "value": "<div class=\"panel panel-default\">\n    <div class=\"panel-heading\">\n        <span class=\"topPanelSubtitle\">Load Project Data</span>\n    </div> \n     <div class=\"panel-body\">\n            <div id=\"htmlbtnLoadMaterial\">\n            \n            </div>\n    </div>\n        \n     \n</div> "
+     },
+     {
+      "name": "fontSize",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "color",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutHtml",
+    "typeDesc": "Html"
+   },
+   {
+    "id": "e8637b8d-1723-5373-8ae0-5b4c256ff752",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutRow",
+    "typeDesc": "Row"
+   },
+   {
+    "id": "72cea83b-c06c-ac33-843e-1c7bad332eda",
+    "parent": "e8637b8d-1723-5373-8ae0-5b4c256ff752",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "bootstrapExtraSmall",
+      "type": "String",
+      "value": "12"
+     },
+     {
+      "name": "bootstrapSmall",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapMedium",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapLarge",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapCssClass",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutBootstrapColumn",
+    "typeDesc": "Column"
+   },
+   {
+    "id": "23fcfb64-ccbe-d77f-907b-255cf26f480d",
+    "parent": "72cea83b-c06c-ac33-843e-1c7bad332eda",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "html",
+      "type": "Html",
+      "value": "<div class=\"panel panel-default\">\n    <div class=\"panel-heading\">\n        <span class=\"topPanelSubtitle\">Load Project Data</span>\n    </div> \n     <div class=\"panel-body\">\n            <div id=\"htmlBtnLoadLoan\">\n            \n            </div>\n    </div>\n        \n     \n</div> "
+     },
+     {
+      "name": "fontSize",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "color",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutHtml",
+    "typeDesc": "Html"
+   },
+   {
+    "id": "d690310f-0a02-3101-2f31-47e1d5bc32ef",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutRow",
+    "typeDesc": "Row"
+   },
+   {
+    "id": "8bcbbe5e-048d-7801-3afd-2be8365a2aa8",
+    "parent": "d690310f-0a02-3101-2f31-47e1d5bc32ef",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "bootstrapExtraSmall",
+      "type": "String",
+      "value": "12"
+     },
+     {
+      "name": "bootstrapSmall",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapMedium",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapLarge",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapCssClass",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutBootstrapColumn",
+    "typeDesc": "Column"
+   },
+   {
+    "id": "f8c4460a-87ef-e60d-3140-bb4bc11d76bf",
+    "parent": "8bcbbe5e-048d-7801-3afd-2be8365a2aa8",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "html",
+      "type": "Html",
+      "value": "<div class=\"panel panel-default\">\n    <div class=\"panel-heading\">\n        <span class=\"topPanelSubtitle\">Load Visitor Data</span>\n    </div> \n     <div class=\"panel-body\">\n            <div id=\"htmlBtnVisitor\">\n            \n            </div>\n    </div>\n        \n     \n</div> "
+     },
+     {
+      "name": "fontSize",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "color",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutHtml",
+    "typeDesc": "Html"
+   }
+  ],
+  "title": "CDF - Sample structure"
+ }
+}

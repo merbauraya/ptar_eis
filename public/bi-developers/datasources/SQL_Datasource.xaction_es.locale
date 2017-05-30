@@ -1,0 +1,4 @@
+#Locale = es
+#Wed May 31 05:29:43 MYT 2017
+file.title=Consulta SQL de los Jefes de los Departamentos 
+file.description=Essta regla usa una consulta SQL de base de datos para determinar el jefe para cada regi\u00F3n.<p>Vea el Quick Start Guide para saber como personalizar estos datos.

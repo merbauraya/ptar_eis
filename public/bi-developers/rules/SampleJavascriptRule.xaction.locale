@@ -1,0 +1,5 @@
+#Locale = default
+#Wed May 31 05:29:42 MYT 2017
+file.title=Javascript Rule returns Central
+title=SampleJavascriptRule
+file.description=This example uses javascript to execute a business rule

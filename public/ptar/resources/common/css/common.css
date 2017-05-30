@@ -1,0 +1,168 @@
+.img-icon
+{
+	height:80px;
+	width:80px;
+}
+.img-ptarlogo
+{
+	background : rgba(0, 0, 0, 0) url("../img/ptar_logo.png") no-repeat scroll left center / cover  content-box;
+	
+	min-height:83px;
+}
+
+
+
+.img-book
+{
+	 
+	 background : rgba(0, 0, 0, 0) url("../img/book-small.gif") no-repeat scroll left center / cover  content-box;
+}
+.img-bahan
+{
+	 
+	 background : rgba(0, 0, 0, 0) url("../img/bahan.png") no-repeat scroll left center / cover  content-box;
+}
+
+.img-loan
+{
+	 
+	 background : rgba(0, 0, 0, 0) url("../img/loan.png") no-repeat scroll left center / cover  content-box;
+}
+.img-ir
+{
+	 
+	 background : rgba(0, 0, 0, 0) url("../img/ir.png") no-repeat scroll left center / cover  content-box;
+}
+.img-blended
+{
+	background : rgba(0, 0, 0, 0) url("../img/blended.png") no-repeat scroll left center / cover  content-box;
+}
+
+.img-visitor 
+{
+	background : rgba(0, 0, 0, 0) url("../img/visitor.png") no-repeat scroll left center / cover  content-box;
+}
+.img-staf 
+{
+	background : rgba(0, 0, 0, 0) url("../img/perjawatan.png") no-repeat scroll left center / cover  content-box;
+}
+
+.img-infra 
+{
+	background : rgba(0, 0, 0, 0) url("../img/infra.png") no-repeat scroll left center / cover  content-box;
+}
+.img-project 
+{
+	background : rgba(0, 0, 0, 0) url("../img/project.png") no-repeat scroll left center / cover  content-box;
+}
+.img-member
+{
+	background : rgba(0, 0, 0, 0) url("../img/members.png") no-repeat scroll left center / cover  content-box;
+}
+td.details-control {
+	background: url('../img/details_open.png') no-repeat center center;
+	cursor: pointer;
+}
+tr.shown td.details-control {
+	background: url('../img/details_close.png') no-repeat center center;
+	background-color: #e0e0e0;
+}
+.childTable td:last-child {
+    border-right: medium none;
+}
+.dataTable th {
+    text-align: left !important; 
+}
+.dataTable.childTable tr:last-child td {
+    border-bottom: medium none;
+}
+table.dataTable
+{
+	font-family: Arial, Helvetica, sans-serif;
+    color: #666;
+    /*font-size: 12px; */
+	border-collapse: initial;	
+}
+
+
+.dataTables_empty .badge {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+table.dataTable tbody td:first-child
+{
+	border-left: 1px solid #e0e0e0;
+}
+ table.dataTable th {
+	padding: 21px 25px 22px 25px;
+	border-top: 1px solid #fafafa;
+	border-bottom: 1px solid #e0e0e0;
+            
+	background: #e0e0e0;
+	background: -webkit-gradient(linear, left top, left bottom, from(#e0e0e0), to(#e0e0e0));
+	background: -moz-linear-gradient(top,  #e0e0e0,  #e0e0e0);
+        }
+table.dataTable.childTable th {
+	padding: 21px 25px 22px 25px;
+	border-top: 1px solid #fafafa;
+	border-bottom: 1px solid #e0e0e0;
+            
+	background: #ededed;
+	background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#ebebeb));
+	background: -moz-linear-gradient(top,  #ededed,  #ebebeb);
+}
+        
+table.dataTable tr td {
+    border-bottom: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    border-top: 1px solid #ffffff;
+    padding: 18px;
+}	
+table.dataTable td.details-control
+{
+	border-right:none;
+}
+td.expandCol {
+    background-color: #e0e0e0;
+    border-right: 1px solid #fff !important;
+    width: 20px;
+}
+td.childTbCont
+{
+	padding: 0px !important;
+}
+th.details-control, th.details-control[style]
+{
+	width:25px !important;
+}
+td.details-control
+{
+	background-color: #e0e0e0; 
+}
+.panel-heading table td
+{
+padding: 5px;
+}
+div#htmlStatus .dropdown-menu a[href$="1"] {
+    background: #b90504 none repeat scroll 0 0;
+}
+div#htmlStatus .dropdown-menu a[href$="2"] {
+    background: #ffc300 none repeat scroll 0 0;
+}
+
+div#htmlStatus .dropdown-menu a[href$="3"] {
+    background: #387a36 none repeat scroll 0 0;
+}
+#tableStatus td:not(:first-child)
+{
+	border: 3px solid #f5f5f5;
+	
+}
+#tableStatus td.status
+{
+	background: rgba(0, 0, 0, 0) url("../img/check.svg") no-repeat scroll center center;
+}
+#tableStatus td.disabled
+{
+	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+}

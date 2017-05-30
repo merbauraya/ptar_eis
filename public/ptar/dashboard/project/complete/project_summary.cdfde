@@ -1,0 +1,599 @@
+{
+ "components": {
+  "rows": [
+   {
+    "id": "OTHERCOMPONENTS",
+    "name": "Others",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "Group",
+      "type": "Label",
+      "value": "Others"
+     }
+    ],
+    "type": "Label",
+    "typeDesc": "<i>Group</i>"
+   },
+   {
+    "id": "f7ea713d-6001-5cc7-1c54-80d5bbba122b",
+    "parent": "OTHERCOMPONENTS",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "tableProject"
+     },
+     {
+      "name": "expandContainerObject",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "listeners",
+      "type": "Listeners",
+      "value": "[]"
+     },
+     {
+      "name": "oLanguage",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "language",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "colFormats",
+      "type": "ColFormatsArray",
+      "value": "[]"
+     },
+     {
+      "name": "colHeaders",
+      "type": "ColHeadersArray",
+      "value": "[\" \",\"Projek\",\"Mula\",\"Tamat\",\"Status\",\"Completion Percentage\",\"Siap\",\"Sumber\",\"Jenis Sumber\"]"
+     },
+     {
+      "name": "colSortable",
+      "type": "ColSortableArray",
+      "value": "[]"
+     },
+     {
+      "name": "colTypes",
+      "type": "colTypesCustom",
+      "value": "[\"formattedText\",\"formattedText\",\"string\",\"string\",\"formattedText\",\"hidden\",\"string\",\"string\"]"
+     },
+     {
+      "name": "colWidths",
+      "type": "ColWidthsArray",
+      "value": "[]"
+     },
+     {
+      "name": "expandParameters",
+      "type": "ValuesArray",
+      "value": "[]"
+     },
+     {
+      "name": "parameters",
+      "type": "ValuesArray",
+      "value": "[]"
+     },
+     {
+      "name": "displayLength",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "expandOnClick",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "filter",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "info",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "lengthChange",
+      "type": "Boolean",
+      "value": "true"
+     },
+     {
+      "name": "paginate",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "sort",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "colSearchable",
+      "type": "Array",
+      "value": "[]"
+     },
+     {
+      "name": "drawCallback",
+      "type": "JavaScript",
+      "value": "function ()\n{\n     $('#' + this.htmlObject + ' .column0').addClass('details-control');\n} "
+     },
+     {
+      "name": "dataSource",
+      "type": "Datasource",
+      "value": "dataProject"
+     },
+     {
+      "name": "sDom",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "sortBy",
+      "type": "SortByArray",
+      "value": "[]"
+     },
+     {
+      "name": "priority",
+      "type": "Integer",
+      "value": 5
+     },
+     {
+      "name": "refreshPeriod",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "paginationType",
+      "type": "PaginationType",
+      "value": "simple_numbers"
+     },
+     {
+      "name": "tableStyle",
+      "type": "TableStyle",
+      "value": "pTable"
+     },
+     {
+      "name": "htmlObject",
+      "type": "HtmlObject",
+      "value": "htmlProject"
+     },
+     {
+      "name": "executeAtStart",
+      "type": "Boolean",
+      "value": "true"
+     },
+     {
+      "name": "paginateServerside",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "preExecution",
+      "type": "JavaScript",
+      "value": "function()\n{\n  \n    this.setAddInOptions(\"colType\",\"formattedText\",function(cell){\n        \n        var strategyId = cell.value;\n        \n       \n        \n       \n        \n        if(cell.colIdx === 0) //project Id \n         {\n           return {  \n               textFormat: function(v, st) \n                { \n                    \n                    return \"<span id='\"+v + \"'></span>\"\n                } \n            };\n         }\n        \n        if (cell.colIdx == 1) //project name\n        {\n            var data = cell.rawData.resultset;\n            var projectId = data[cell.rowIdx][0];\n            var projectStrategyURL = \"/pentaho/api/repos/%3Apublic%3Aptar%3Adashboard%3Aproject%3Aproject_detail.wcdf/generatedContent\";\n            var href = projectStrategyURL + \"?projectId=\"+ projectId; \n            return {  \n               textFormat: function(v, st) \n                { \n                    return '<a href=\"'+ href + '\">' + cell.value + '</a>';\n                } \n            };\n            \n            \n        }\n        if (cell.colIdx == 4)\n        {\n            var data = cell.rawData.resultset;\n            var completionPercentage = data[cell.rowIdx][5];\n            \n            \n           return {  \n               textFormat: function(v, st) \n                { \n                    if (isNaN(cell.value) || cell.value === null)\n                    {\n                        return \"\";\n                    }else\n                    {\n                       // return '<span class=\"badge\">'+ cell.value + '%</span>';\n                        return buildProgressBar(cell.value,completionPercentage);\n                    }\n                } \n            };\n        }\n    \n    \n       \n       \n      });\n      \n   \n   \n      \n      \n} "
+     },
+     {
+      "name": "postExecution",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "postFetch",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "preChange",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "postChange",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "extraOptions",
+      "type": "OptionArray",
+      "value": "[]"
+     },
+     {
+      "name": "tooltip",
+      "type": "Html",
+      "value": ""
+     },
+     {
+      "name": "clickAction",
+      "type": "JavaScript",
+      "value": ""
+     }
+    ],
+    "type": "ComponentsTable",
+    "typeDesc": "table Component"
+   }
+  ]
+ },
+ "datasources": {
+  "rows": [
+   {
+    "id": "SQL",
+    "name": "SQL Queries",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "Group",
+      "type": "Label",
+      "value": "SQL Queries"
+     }
+    ],
+    "type": "Label",
+    "typeDesc": "<i>Group</i>"
+   },
+   {
+    "id": "26d542c0-dc66-3895-aaa8-ae2ab8311af8",
+    "meta": "CDA",
+    "meta_conntype": "sql.jndi",
+    "meta_datype": "sql",
+    "parent": "SQL",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "dataProject"
+     },
+     {
+      "name": "access",
+      "type": "Access",
+      "value": "public"
+     },
+     {
+      "name": "jndi",
+      "type": "Jndi",
+      "value": "PTAR"
+     },
+     {
+      "name": "query",
+      "type": "SqlQuery",
+      "value": "SELECT \n    A.project_id,\n    A.project_name AS Projek,\n    CONCAT(A.start_month_name, ' ', A.start_year) AS Mula,\n    CONCAT(A.end_month_name, ' ', A.end_year) AS Tamat,\n    A.project_status,\n    completion_percentage,\n    IF(ISNULL(A.actual_completion_date),\n        '',\n        DATE_FORMAT(A.actual_completion_date, '%d %b %Y')) AS Siap,\n    IFNULL(B.resource_name, '') AS Sumber,\n    IFNULL(C.resource_type_name, '') AS 'Jenis Sumber'\nFROM\n    ptar_eis.mst_project A\n        LEFT JOIN\n    mst_project_resource B ON A.resource_id = B.resource_id\n        LEFT JOIN\n    mst_project_resource_type C ON A.resource_type_id = C.resource_type_id\nORDER BY start_month , start_year\n"
+     },
+     {
+      "name": "parameters",
+      "type": "CdaParameters",
+      "value": "[]"
+     },
+     {
+      "name": "cdacalculatedcolumns",
+      "type": "CdaCalculatedColumnsArray",
+      "value": "[]"
+     },
+     {
+      "name": "cdacolumns",
+      "type": "CdaColumnsArray",
+      "value": "[]"
+     },
+     {
+      "name": "output",
+      "type": "IndexArray",
+      "value": "[]"
+     },
+     {
+      "name": "outputMode",
+      "type": "OutputMode",
+      "value": "include"
+     },
+     {
+      "name": "cacheKeys",
+      "type": "CacheKeysValues",
+      "value": "[]"
+     },
+     {
+      "name": "cacheDuration",
+      "type": "Integer",
+      "value": 3600
+     },
+     {
+      "name": "cache",
+      "type": "Boolean",
+      "value": "true"
+     }
+    ],
+    "type": "Componentssql_sqlJndi",
+    "typeDesc": "sql over sqlJndi"
+   }
+  ]
+ },
+ "filename": "/public/ptar/dashboard/project/complete/project_summary.cdfde",
+ "layout": {
+  "rows": [
+   {
+    "id": "bb4a24bd-d053-fa2e-2d14-2f67ef1272c6",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "resourceCode",
+      "type": "Resource",
+      "value": "function buildProgressBar(status,percentage)\n{\n    \n    var statusDefault = 0;\n    var statusRed = 1;\n    var statusYellow = 2;\n    var statusGreen = 3;\n    \n    var badgeColor;\n    \n    switch (status)\n    {\n        \n        case statusDefault:\n            badgeColor = \"blue\";\n            break;\n        case statusRed:\n            badgeColor = \"red\";\n            break;\n        case statusYellow:\n            badgeColor = \"yellow\";\n            break;\n        case statusGreen:\n             badgeColor = \"green\";\n            break;\n    }\n    \n    if (isNaN(percentage) || isNaN(status) || percentage === null || status === null)\n    {\n        return \"\";   \n    }else\n    {\n        return \"<span class='badge \"+ badgeColor + \"'>\"+ percentage + \"%</span>\";\n    } \n    \n   \n} "
+     },
+     {
+      "name": "resourceType",
+      "type": "Label",
+      "value": "Javascript"
+     }
+    ],
+    "type": "LayoutResourceCode",
+    "typeDesc": "Resource"
+   },
+   {
+    "id": "b4a39d88-17b8-e6d0-dcb4-d26e5bfc1c27",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "resourceCode",
+      "type": "Resource",
+      "value": "\n\n$(document).on(\"click\",\"#tableStrategy tr td.details-control.activity\", function(e){\n    e.preventDefault();\n    e.stopImmediatePropagation();    \n\n    var tr = $(this).closest('tr');\n    var strategyId =$(this).attr('strategyId');\n    var rowindex = $(this).closest('tr').index();\n    \n    if (tr.hasClass(\"shown\"))\n    {\n       tr.removeClass(\"shown\");\n       var next = tr.next();\n       next.remove();\n   }else\n   {\n       tr.addClass(\"shown\");\n        //$('#htmlStrategyTable > tbody > tr').eq(rowindex+1).before(detailRow);\n        \n        toggleActivity(strategyId,tr);\n        //tr.after(detailRow);\n   }\n   \n    \n    \n});\n\n\n$(document).on(\"click\",\"#htmlProjectTable tr td.details-control\", function(e){\n    \n    e.stopPropagation();\n\n\n   var tr = $(this).closest('tr');\n   \n   var project = $(this).closest('tr').find(\"td:first\").html();\n   var projectId =$(project).attr('id');\n  // console.log(\"strategy=\"+strategyId);\n   \n   var rowindex = $(this).closest('tr').index();\n   //console.log(\"idx=\"+rowindex);\n   \n   \n    \n  \n   \n   if (tr.hasClass(\"shown\"))\n   {\n       tr.removeClass(\"shown\");\n       var next = tr.next();\n       next.remove();\n   }else\n   {\n       tr.addClass(\"shown\");\n        //$('#htmlStrategyTable > tbody > tr').eq(rowindex+1).before(detailRow);\n        \n        toggleStrategy(projectId,tr);\n        //tr.after(detailRow);\n   }\n   \n   \n   \n  \n   \n   //toggleActivity(rowIndex,strategyId);\n  \n  \n \n});\n\n\nfunction toggleActivity(strategyId,tr)\n{\n    var qd={path:'/public/ptar/dashboard/project/project_detail.cda', dataAccessId:\"dataAktivity\"};\n    var params = {strategyIdParam: strategyId};\n    var queryObj = Query(qd);\n    var result;\n    var rowData = \"\";\n    queryObj.fetchData(params, function(data){\n    \n        //console.log(data);\n        var result = data.resultset;\n        //console.log(result);\n        var rowHeader;\n        var tbHeader = [];\n        \n        \n       \n        if (result.length <=0)\n        {\n            rowHeader =  '<tr><td colspan=\"8\" class=\"dataTables_empty\">'\n        }\n        else\n        {\n            rowHeader =  '<tr><td colspan=\"8\">';\n        }\n        tbHeader.push (\n            \"<table class='dataTable childTable' style='padding-left:20px;width:100%;'>\",\n            \"<thead>\",\n            \"<tr>\",\n            \"<th>Aktivity</th>\",\n            \"<th>Mula</th>\",\n            \"<th>Akhir</th>\",\n            \"<th>Status</th>\",\n            \"<th>Siap</th>\",\n            \"<th>Sumber</th>\",\n            \"<th>Jenis Sumber</th>\",\n            \"</thead>\",\n            \"</tr><tbody>\"\n        );\n        \n        var tb = '<tr><td colspan=\"8\"><table style=\"padding-left:80px;\">';\n        \n        var row = [];\n        for (i = 0; i < result.length; i++)\n        {\n            var status = result[i][5];\n            var percentage = result[i][6];\n            \n            var statusProgress = buildProgressBar(status,percentage)\n            \n            row.push(\n                \"<tr>\",\n                \"<td>\" + result[i][2] + \"</td>\",\n                \"<td>\" + result[i][3] +\"</td>\",\n                \"<td>\" + result[i][4] +\"</td>\",\n                \"<td>\" + statusProgress +\"</td>\",\n                \"<td>\" + result[i][7] +\"</td>\",\n                \"<td>\" + result[i][8] +\"</td>\",\n                \"<td>\" + result[i][9] +\"</td>\",\n                \"</tr>\"\n                \n                );\n        }\n        \n        row.push(\"</tbody></table>\");\n        if (result.length > 0)\n        {\n            rowData = rowHeader+ tbHeader.join(\"\")+ row.join(\"</td>\");\n        }else\n        {\n            \n            rowData =  rowHeader +'<span class=\"badge\">Tiada Aktiviti</span></td></tr>';\n        }\n        tr.after(rowData);\n        \n        return tr;\n        \n    \n    \n    });\n    \n    return tr;\n   \n\n} \n\nfunction toggleStrategy(projectId,tr)\n{\n    var qd={path:'/public/ptar/dashboard/project/project_detail.cda', dataAccessId:\"dataStrategy\"};\n    var params = {projectIdParam: projectId};\n    var queryObj = Query(qd);\n    var result;\n    var rowData = \"\";\n    queryObj.fetchData(params, function(data){\n    \n        //console.log(data);\n        var result = data.resultset;\n        //console.log(result);\n        var rowHeader;\n        var tbHeader = [];\n        \n        \n       \n        if (result.length <=0)\n        {\n            rowHeader =  '<tr><td colspan=\"8\" class=\"dataTables_empty\">'\n        }\n        else\n        {\n            rowHeader =  '<tr><td colspan=\"8\">';\n        }\n        tbHeader.push (\n            \"<table id='tableStrategy' class='dataTable childTable' style='padding-left:20px;width:100%;'>\",\n            \"<thead>\",\n            \"<tr>\",\n            \"<th class='details-control' style='width:16px;'></th>\",\n            \"<th>Strategi</th>\",\n            \"<th>Mula</th>\",\n            \"<th>Akhir</th>\",\n            \"<th>Status</th>\",\n            \"<th>Siap</th>\",\n            \"<th>Sumber</th>\",\n            \"<th>Jenis Sumber</th>\",\n            \"</thead>\",\n            \"</tr><tbody>\"\n        );\n        \n  \n        var row = [];\n        for (i = 0; i < result.length; i++)\n        {\n            var status = result[i][6];\n            var percentage = result[i][5];\n            \n            var statusProgress = buildProgressBar(status,percentage)\n            \n            row.push(\n                \"<tr>\",\n                \"<td strategyId='\" +result[i][1] + \"' class='details-control activity'></td>\",\n                \"<td>\" + result[i][2] + \"</td>\",\n                \"<td>\" + result[i][3] +\"</td>\",\n                \"<td>\" + result[i][4] +\"</td>\",\n                \"<td>\" + statusProgress +\"</td>\",\n                \"<td>\" + result[i][7] +\"</td>\",\n                \"<td>\" + result[i][8] +\"</td>\",\n                \"<td>\" + result[i][9] +\"</td>\",\n                \"</tr>\"\n                \n                );\n        }\n        \n        row.push(\"</tbody></table>\");\n        if (result.length > 0)\n        {\n            rowData = rowHeader+ tbHeader.join(\"\")+ row.join(\"</td>\");\n        }else\n        {\n            \n            rowData =  rowHeader +'<span class=\"badge\">Tiada Strategi</span></td></tr>';\n        }\n        tr.after(rowData);\n        \n        return tr;\n        \n    \n    \n    });\n    \n    return tr;\n   \n \n} "
+     },
+     {
+      "name": "resourceType",
+      "type": "Label",
+      "value": "Javascript"
+     }
+    ],
+    "type": "LayoutResourceCode",
+    "typeDesc": "Resource"
+   },
+   {
+    "id": "89583e2a-af07-81b7-ff97-fd5a9efda6c9",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "hx"
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutRow",
+    "typeDesc": "Row"
+   },
+   {
+    "id": "ec89e78e-39ad-b60a-75c5-9388ef3f0a12",
+    "parent": "89583e2a-af07-81b7-ff97-fd5a9efda6c9",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "htmlTable"
+     },
+     {
+      "name": "bootstrapExtraSmall",
+      "type": "String",
+      "value": "12"
+     },
+     {
+      "name": "bootstrapSmall",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapMedium",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapLarge",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapCssClass",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutBootstrapColumn",
+    "typeDesc": "Column"
+   },
+   {
+    "id": "e158a804-c7b6-5409-33fd-fbd435ce0efe",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "rowx"
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutRow",
+    "typeDesc": "Row"
+   },
+   {
+    "id": "92b33813-e421-f604-e3ad-02ce898702c7",
+    "parent": "e158a804-c7b6-5409-33fd-fbd435ce0efe",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "bootstrapExtraSmall",
+      "type": "String",
+      "value": "12"
+     },
+     {
+      "name": "bootstrapSmall",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapMedium",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapLarge",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapCssClass",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutBootstrapColumn",
+    "typeDesc": "Column"
+   },
+   {
+    "id": "3535f969-e15d-0af3-5b9c-cb42fb9063c6",
+    "parent": "92b33813-e421-f604-e3ad-02ce898702c7",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "html",
+      "type": "Html",
+      "value": "<div class=\"panel panel-default\">\n    <div class=\"panel-heading\">\n        <span class=\"topPanelSubtitle\">Projeck </span>\n        \n    </div>\n    <div class=\"panel-body \">\n        <div id=\"htmlProject\"></div>\n    </div>\n</div> \n\n "
+     },
+     {
+      "name": "fontSize",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "color",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutHtml",
+    "typeDesc": "Html"
+   }
+  ],
+  "title": "CDF - Sample structure"
+ }
+}

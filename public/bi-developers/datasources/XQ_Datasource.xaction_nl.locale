@@ -1,0 +1,4 @@
+#Locale = nl
+#Wed May 31 05:29:43 MYT 2017
+file.title=XQuery Query van een XML Databron.
+file.description=Deze regel gebruikt een XML query om een lijst van boeken te verkrijgen.<p>De databron is een XML Document.

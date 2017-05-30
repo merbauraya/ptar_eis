@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><CDADescriptor>
+  <DataSources>
+    <Connection id="dataProject" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+  </DataSources>
+  <DataAccess access="public" connection="dataProject" id="dataProject" type="sql">
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT 
+    A.project_id,
+    A.project_name AS Projek,
+    CONCAT(A.start_month_name, ' ', A.start_year) AS Mula,
+    CONCAT(A.end_month_name, ' ', A.end_year) AS Tamat,
+    A.project_status,
+    completion_percentage,
+    IF(ISNULL(A.actual_completion_date),
+        '',
+        DATE_FORMAT(A.actual_completion_date, '%d %b %Y')) AS Siap,
+    IFNULL(B.resource_name, '') AS Sumber,
+    IFNULL(C.resource_type_name, '') AS 'Jenis Sumber'
+FROM
+    ptar_eis.mst_project A
+        LEFT JOIN
+    mst_project_resource B ON A.resource_id = B.resource_id
+        LEFT JOIN
+    mst_project_resource_type C ON A.resource_type_id = C.resource_type_id
+ORDER BY start_month , start_year]]></Query>
+  </DataAccess>
+</CDADescriptor>

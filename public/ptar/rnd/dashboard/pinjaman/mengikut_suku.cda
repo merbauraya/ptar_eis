@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?><CDADescriptor>
+  <DataSources>
+    <Connection id="dataLatestPeriod" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataCategoryList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataYearList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataQuarterList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataQuarterSum" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataBottom10Library" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataTop10Library" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataQuarterState" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+  </DataSources>
+  <DataAccess access="public" connection="dataLatestPeriod" id="dataLatestPeriod" type="sql">
+    <Name>dataLatestPeriod</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    time_id, month_name, qtr_name, year_id, month_id
+FROM
+    dim_time
+WHERE
+    time_id = GETLATESTPERIOD('pinjaman', ${yearParam})]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataCategoryList" id="dataCategoryList" type="sql">
+    <Name>dataCategoryList</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT '[All Kategoris]', 'Semua Kategori' 
+UNION SELECT 
+    CONCAT(CONCAT('[Kategori].[', category_name),
+            ']'),
+    category_name
+FROM
+    mst_member_category]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataYearList" id="dataYearList" type="sql">
+    <Name>dataYearList</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT DISTINCT
+    year_id
+FROM
+    dim_time
+ORDER BY 1 DESC]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataQuarterList" id="dataQuarterList" type="sql">
+    <Name>dataQuarterList</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="2016" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT distinct
+    qtr_name
+FROM
+    dim_time
+
+order by qtr_name
+
+/*
+    
+
+*/]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataQuarterSum" id="dataQuarterSum" type="mdx">
+    <Name>dataQuarterSum</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+      <Parameter default="quarterParam" name="quarterParam" type="String"/>
+      <Parameter default="categoryParam" name="categoryParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+
+SET [~ROWS] AS
+  descendants([Time].[${yearParam}].[${quarterParam}],[Time].[Month])
+    
+SELECT
+NON EMPTY {[Measures].[Jumlah]} ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Pinjaman Bahan]
+WHERE {[Kategori].${categoryParam}}]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataBottom10Library" id="dataBottom10Library" type="mdx">
+    <Name>dataBottom10Library</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+      <Parameter default="quarterParam" name="quarterParam" type="String"/>
+      <Parameter default="categoryParam" name="categoryParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+SET [~COLUMNS] AS
+   {[Measures].[Jumlah]}
+SET [~ROWS] AS
+   BOTTOMCOUNT(FILTER([Lokasi].[Perpustakaan].Members, NOT ISEMPTY([Measures].[Jumlah])) , 10 , [Measures].[Jumlah])
+ 
+SELECT
+NON EMPTY [~COLUMNS] ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Pinjaman Bahan]
+WHERE crossjoin( {[Kategori].${categoryParam}} ,  {[Time].[${yearParam}].[${quarterParam}]})]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataTop10Library" id="dataTop10Library" type="mdx">
+    <Name>dataTop10Library</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+      <Parameter default="quarterParam" name="quarterParam" type="String"/>
+      <Parameter default="categoryParam" name="categoryParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+SET [~COLUMNS] AS
+   {[Measures].[Jumlah]}
+SET [~ROWS] AS
+   topcount ({[Lokasi].[Perpustakaan].Members} ,10, [Measures].[Jumlah])
+SELECT
+NON EMPTY [~COLUMNS] ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Pinjaman Bahan]
+WHERE crossjoin( {[Kategori].${categoryParam}} ,  {[Time].[${yearParam}].[${quarterParam}]})]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataQuarterState" id="dataQuarterState" type="mdx">
+    <Name>dataQuarterState</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+      <Parameter default="quarterParam" name="quarterParam" type="String"/>
+      <Parameter default="categoryParam" name="categoryParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+SET [~COLUMNS] AS
+   {[Measures].[Jumlah]}
+SET [~ROWS] AS
+   ORDER ({[Lokasi].[Negeri].Members} , [Measures].[Jumlah],BDESC)
+SELECT
+ [~COLUMNS] ON COLUMNS,
+ [~ROWS] ON ROWS
+FROM [Pinjaman Bahan]
+WHERE crossjoin( {[Kategori].${categoryParam}} ,  {[Time].[${yearParam}].[${quarterParam}]})]]></Query>
+  </DataAccess>
+</CDADescriptor>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?><CDADescriptor>
+  <DataSources>
+    <Connection id="dataByState" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataByCategory" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataBottom10" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataTop10" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataMonth" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataYearList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataSelectedPeriod" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+  </DataSources>
+  <DataAccess access="public" connection="dataByState" id="dataByState" type="mdx">
+    <Name>dataByState</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+      <Parameter default="periodParam" name="periodParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+SET [~FILTER] AS
+    {${periodParam}}
+SET [~ROWS] AS
+   
+ORDER(
+    {[Lokasi].[Negeri].Members},[Measures].[Judul],BDESC
+    
+    )    
+    
+SELECT
+NON EMPTY {[Measures].[Judul], [Measures].[Naskah]} ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Bahan Bukan Bercetak]
+WHERE [~FILTER]]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataByCategory" id="dataByCategory" type="mdx">
+    <Name>dataByCategory</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+      <Parameter default="periodParam" name="periodParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+SET [~FILTER] AS
+    {${periodParam}}
+SET [~ROWS] AS
+   
+ORDER(
+    {[Kategori].[Kategori].Members},[Measures].[Judul],BDESC
+    
+    )    
+    
+SELECT
+NON EMPTY {[Measures].[Judul], [Measures].[Naskah]} ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Bahan Bukan Bercetak]
+WHERE [~FILTER]]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataBottom10" id="dataBottom10" type="mdx">
+    <Name>dataBottom10</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="periodParam" name="periodParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[select {[Measures].[Judul]} ON COLUMNS,
+  
+  
+   BOTTOMCOUNT(FILTER([Lokasi].[Perpustakaan].Members, NOT ISEMPTY([Measures].[Judul])) , 10 , [Measures].[Judul]) ON ROWS 
+  
+  
+FROM [Bahan Bukan Bercetak]
+WHERE  {${periodParam}}]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataTop10" id="dataTop10" type="mdx">
+    <Name>dataTop10</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="periodParam" name="periodParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[select {[Measures].[Judul]} ON COLUMNS,
+  {TopCount([Lokasi].[Perpustakaan].Members, 10, [Measures].[Judul])} ON ROWS
+FROM [Bahan Bukan Bercetak]
+WHERE  {${periodParam}}]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataMonth" id="dataMonth" type="sql">
+    <Name>dataMonth</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    month_name
+FROM
+    ptar_eis.dim_time
+WHERE
+    year_id = ${yearParam}]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataYearList" id="dataYearList" type="sql">
+    <Name>dataYearList</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT DISTINCT
+    year_id
+FROM
+    dim_time
+ORDER BY 1 DESC]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataSelectedPeriod" id="dataSelectedPeriod" type="sql">
+    <Name>dataSelectedPeriod</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+      <Parameter default="monthParam" name="monthParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    B.time_id, B.month_name, B.qtr_name, B.year_id,B.month_id
+FROM
+    dim_time B
+WHERE
+    B.year_id = ${yearParam}
+    AND B.month_name = ${monthParam}]]></Query>
+  </DataAccess>
+</CDADescriptor>

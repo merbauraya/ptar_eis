@@ -1,0 +1,694 @@
+<?xml version="1.0" encoding="UTF-8"?><CDADescriptor>
+  <DataSources>
+    <Connection id="dataKpiRange" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataImportantRecordChart" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataSyllabusChart" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataPDDTChart" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataStaffTrainingChart" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataCustSatisfactionChart" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataArchiveAdditionYearlyChart" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataItemSelangorChart" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataExpensesChart" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataIrCountChart" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataLoanYearlyChart" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataPTJCountYearlyChart" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataYearList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataImportantRecord" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataSyllabus" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataPDDT" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataStaffTraining" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataCustSatisfaction" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataArchiveYearly" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataItemSelangor" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataExpenses" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataIrCount" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataPTJCountYearly" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataVisitorOnlineYearlyChart" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataVisitorPhysicalYearlyChart" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataLoanYearly" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataVisitorOnlineYearly" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataVisitorPhysicalYearly" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dummyData" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+  </DataSources>
+  <DataAccess access="public" connection="dataKpiRange" id="dataKpiRange" type="sql">
+    <Name>dataKpiRange</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT 
+    *
+FROM
+    mst_kpi_range
+ORDER BY 1]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataImportantRecordChart" id="dataImportantRecordChart" type="sql">
+    <Name>dataImportantRecordChart</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title,
+    FLOOR((B.actual / B.target) * 100) AS actualValue,
+    0 AS minVal,
+    100 AS maxVal,
+    NULL
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'IMPORTANT_RECORD'
+        AND B.time_id = ${yearParam}
+        AND B.period_type = 4]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataSyllabusChart" id="dataSyllabusChart" type="sql">
+    <Name>dataSyllabusChart</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title,
+    FLOOR((B.actual / B.target) * 100) AS actualValue,
+    0 AS minVal,
+    100 AS maxVal,
+    NULL
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'SYLLABUS_ITEM'
+        AND B.time_id = ${yearParam}
+        AND B.period_type = 4]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataPDDTChart" id="dataPDDTChart" type="sql">
+    <Name>dataPDDTChart</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title,
+    FLOOR((B.actual / B.target) * 100) AS actualValue,
+    0 AS minVal,
+    100 AS maxVal,
+    NULL
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'PDDT'
+        AND B.time_id = ${yearParam}
+        AND B.period_type = 4]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataStaffTrainingChart" id="dataStaffTrainingChart" type="sql">
+    <Name>dataStaffTrainingChart</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title,
+    FLOOR((B.actual / B.target) * 100) AS actualValue,
+    0 AS minVal,
+    100 AS maxVal,
+    NULL
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'STAFF_TRAINING'
+        AND B.time_id = ${yearParam}
+        AND B.period_type = 4]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataCustSatisfactionChart" id="dataCustSatisfactionChart" type="sql">
+    <Name>dataCustSatisfactionChart</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title,
+    FLOOR((B.actual / B.target) * 100) AS actualValue,
+    0 AS minVal,
+    100 AS maxVal,
+    NULL
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'CUSTOMER_SATISFACTION'
+        AND B.time_id = ${yearParam}
+        AND B.period_type = 4]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataArchiveAdditionYearlyChart" id="dataArchiveAdditionYearlyChart" type="sql">
+    <Name>dataArchiveAdditionYearlyChart</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title,
+    FLOOR((B.actual / B.target) * 100) AS actualValue,
+    0 AS minVal,
+    100 AS maxVal,
+    NULL
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'ARCHIVE_ADDITION_YEARLY'
+        AND B.time_id = ${yearParam}
+        AND B.period_type = 4]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataItemSelangorChart" id="dataItemSelangorChart" type="sql">
+    <Name>dataItemSelangorChart</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title,
+    FLOOR((B.actual / B.target) * 100) AS actualValue,
+    0 AS minVal,
+    100 AS maxVal,
+    NULL
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'ITEM_ADDITION_YEARLY'
+        AND B.time_id = ${yearParam}
+        AND B.period_type = 4]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataExpensesChart" id="dataExpensesChart" type="sql">
+    <Name>dataExpensesChart</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title,
+    FLOOR((B.actual / B.target) * 100) AS actualValue,
+    0 AS minVal,
+    100 AS maxVal,
+    NULL
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'EXPENSES_PERCENTAGE'
+        AND B.time_id = ${yearParam}
+        AND B.period_type = 4]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataIrCountChart" id="dataIrCountChart" type="sql">
+    <Name>dataIrCountChart</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title,
+    FLOOR((B.actual / B.target) * 100) AS actualValue,
+    0 AS minVal,
+    100 AS maxVal,
+    NULL
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'IR_COUNT_YEARLY'
+        AND B.time_id = ${yearParam}
+        AND B.period_type = 4]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataLoanYearlyChart" id="dataLoanYearlyChart" type="sql">
+    <Name>dataLoanYearlyChart</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title,
+    FLOOR((B.actual / B.target) * 100) AS actualValue,
+    0 AS minVal,
+    100 AS maxVal,
+    NULL
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'LOAN'
+        AND B.time_id = ${yearParam}
+        AND B.period_type = 4]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataPTJCountYearlyChart" id="dataPTJCountYearlyChart" type="sql">
+    <Name>dataPTJCountYearlyChart</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title,
+    FLOOR((B.actual / B.target) * 100) AS actualValue,
+    0 AS minVal,
+    100 AS maxVal,
+    NULL
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'PTJ_COUNT_YEARLY'
+        AND B.time_id = ${yearParam}]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataYearList" id="dataYearList" type="sql">
+    <Name>dataYearList</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[select distinct year_id
+from dim_time
+order by 1 desc]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataImportantRecord" id="dataImportantRecord" type="sql">
+    <Name>dataImportantRecord</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title,
+    B.target,
+    B.actual,
+    B.actual - B.target
+   
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'IMPORTANT_RECORD'
+        AND B.time_id = ${yearParam}]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataSyllabus" id="dataSyllabus" type="sql">
+    <Name>dataSyllabus</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title,
+    B.target,
+    B.actual,
+    B.actual - B.target
+   
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'SYLLABUS_ITEM'
+        AND B.time_id = ${yearParam}]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataPDDT" id="dataPDDT" type="sql">
+    <Name>dataPDDT</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title,
+    B.target,
+    B.actual,
+    B.actual - B.target
+   
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'PDDT'
+        AND B.time_id = ${yearParam}]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataStaffTraining" id="dataStaffTraining" type="sql">
+    <Name>dataStaffTraining</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title,
+    B.target,
+    B.actual,
+    B.actual - B.target
+   
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'STAFF_TRAINING'
+        AND B.time_id = ${yearParam}]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataCustSatisfaction" id="dataCustSatisfaction" type="sql">
+    <Name>dataCustSatisfaction</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title,
+    B.target,
+    B.actual,
+    B.actual - B.target
+   
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'CUSTOMER_SATISFACTION'
+        AND B.time_id = ${yearParam}]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataArchiveYearly" id="dataArchiveYearly" type="sql">
+    <Name>dataArchiveYearly</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title,
+    B.target,
+    B.actual,
+    B.actual - B.target
+   
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'ARCHIVE_ADDITION_YEARLY'
+        AND B.time_id = ${yearParam}]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataItemSelangor" id="dataItemSelangor" type="sql">
+    <Name>dataItemSelangor</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title,
+    B.target,
+    B.actual,
+    B.actual - B.target
+   
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'ITEM_ADDITION_YEARLY'
+        AND B.time_id = ${yearParam}]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataExpenses" id="dataExpenses" type="sql">
+    <Name>dataExpenses</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title,
+    B.target,
+    B.actual,
+    B.actual - B.target
+   
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'EXPENSES_PERCENTAGE'
+        AND B.time_id = ${yearParam}]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataIrCount" id="dataIrCount" type="sql">
+    <Name>dataIrCount</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title,
+    B.target,
+    B.actual,
+    B.actual - B.target
+   
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'IR_COUNT_YEARLY'
+        AND B.time_id = ${yearParam}]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataPTJCountYearly" id="dataPTJCountYearly" type="sql">
+    <Name>dataPTJCountYearly</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title,
+    B.target,
+    B.actual,
+    B.actual - B.target
+   
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'PTJ_COUNT_YEARLY'
+        AND B.time_id = ${yearParam}]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataVisitorOnlineYearlyChart" id="dataVisitorOnlineYearlyChart" type="sql">
+    <Name>dataVisitorOnlineYearlyChart</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title,
+    FLOOR((B.actual / B.target) * 100) AS actualValue,
+    0 AS minVal,
+    100 AS maxVal,
+    NULL
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'VISITOR_ONLINE_YEARLY'
+        AND B.time_id = ${yearParam}
+        AND B.period_type = 4]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataVisitorPhysicalYearlyChart" id="dataVisitorPhysicalYearlyChart" type="sql">
+    <Name>dataVisitorPhysicalYearlyChart</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title,
+   FLOOR( (SELECT 
+            SUM(total)
+        FROM
+            ptar_eis.fact_visitor A,
+            mst_visitor_category B
+        WHERE
+            A.visitor_category_id = B.visitor_category_id
+                AND A.period_year = ${yearParam}
+                AND B.visitor_category_name = 'Fizikal') / B.target * 100) AS actualValue,
+    0 AS minVal,
+    100 AS maxVal,
+    NULL
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'VISITOR_PHYSICAL_YEARLY'
+        AND B.time_id = ${yearParam}
+        AND B.period_type = 4]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataLoanYearly" id="dataLoanYearly" type="sql">
+    <Name>dataLoanYearly</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title, B.target, B.actual, B.actual - B.target
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'LOAN'
+        AND B.time_id = ${yearParam}
+        AND B.period_type = 4]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataVisitorOnlineYearly" id="dataVisitorOnlineYearly" type="sql">
+    <Name>dataVisitorOnlineYearly</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title, B.target, B.actual, B.actual - B.target
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'VISITOR_ONLINE_YEARLY'
+        AND B.time_id = ${yearParam}
+        AND B.period_type = 4]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataVisitorPhysicalYearly" id="dataVisitorPhysicalYearly" type="sql">
+    <Name>dataVisitorPhysicalYearly</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.kpi_name AS title,
+    B.target,
+    (SELECT 
+            SUM(total)
+        FROM
+            fact_visitor A,
+            mst_visitor_category B
+        WHERE
+            A.visitor_category_id = B.visitor_category_id
+                AND A.period_year = ${yearParam}
+                AND B.visitor_category_name = 'Fizikal') AS actual,
+    (SELECT 
+            SUM(total)
+        FROM
+            fact_visitor A,
+            mst_visitor_category B
+        WHERE
+            A.visitor_category_id = B.visitor_category_id
+                AND A.period_year =  ${yearParam}
+                AND B.visitor_category_name = 'Fizikal') - B.target AS diff
+FROM
+    mst_kpi A,
+    fact_kpi B
+WHERE
+    A.kpi_id = B.kpi_id
+        AND A.kpi_key = 'VISITOR_PHYSICAL_YEARLY'
+        AND B.time_id = ${yearParam}
+        AND B.period_type = 4]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dummyData" id="dummyData" type="sql">
+    <Name>dummyData</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[select 100,500]]></Query>
+  </DataAccess>
+</CDADescriptor>

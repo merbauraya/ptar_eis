@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?><CDADescriptor>
+  <DataSources>
+    <Connection id="dataSumExpense" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataSumAllocation" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataType" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataYearList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataLatestPeriod" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataTop10LibraryAllocation" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataTop10ExpenseByLibrary" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataSumExpense" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataSumAllocation" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataSumState" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+  </DataSources>
+  <DataAccess access="public" connection="dataSumExpense" id="dataSumExpense" type="sql">
+    <Name>dataSumExpense</Name>
+    <Cache duration="3600" enabled="false"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    C.masterFileName, SUM(A.amount) as Amount
+FROM
+    fact_expense A,
+    dim_time B,
+    masterfile C
+WHERE
+    A.time_id = B.time_id
+        AND B.year_id = ${yearParam}
+        AND A.masterfile_id = C.masterFileId
+        AND expense_type = 'Perbelanjaan'
+GROUP BY expense_type , C.masterFileName
+order by Amount ASC]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataSumAllocation" id="dataSumAllocation" type="sql">
+    <Name>dataSumAllocation</Name>
+    <Cache duration="3600" enabled="false"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    C.masterFileName, SUM(A.amount) as Amount
+FROM
+    fact_expense A,
+    dim_time B,
+    masterfile C
+WHERE
+    A.time_id = B.time_id
+        AND B.year_id = ${yearParam}
+        AND A.masterfile_id = C.masterFileId
+        AND expense_type = 'Peruntukan'
+GROUP BY expense_type , C.masterFileName]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataType" id="dataType" type="sql">
+    <Name>dataType</Name>
+    <Cache duration="3600" enabled="false"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT '[Kategori].[Kategori].Members', 'Semua Kategori' 
+UNION SELECT '[Kategori].[Peruntukan]', 'Peruntukan' 
+UNION SELECT '[Kategori].[Perbelanjaan]', 'Perbelanjaan']]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataYearList" id="dataYearList" type="sql">
+    <Name>dataYearList</Name>
+    <Cache duration="3600" enabled="false"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT DISTINCT
+    year_id
+FROM
+    dim_time
+ORDER BY 1 DESC]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataLatestPeriod" id="dataLatestPeriod" type="sql">
+    <Name>dataLatestPeriod</Name>
+    <Cache duration="3600" enabled="false"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    B.time_id, B.month_name, B.qtr_name, B.year_id,B.month_id
+FROM
+    ptar_eis.data_load_status A,
+    dim_time B
+WHERE
+    A.latest_period = B.time_id
+        AND A.data_name = 'perbelanjaan'
+        AND A.period_year = ${yearParam}]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataTop10LibraryAllocation" id="dataTop10LibraryAllocation" type="mdx">
+    <Name>dataTop10LibraryAllocation</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+SET [~ROWS] AS
+    {TOPCOUNT([Lokasi].[Perpustakaan].Members,10,[Measures].[Jumlah])}
+SELECT
+NON EMPTY {[Measures].[Jumlah]} ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Perbelanjaan]
+WHERE CrossJoin({[Kategori].[Peruntukan]}, {[Time].[${yearParam}]})]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataTop10ExpenseByLibrary" id="dataTop10ExpenseByLibrary" type="mdx">
+    <Name>dataTop10ExpenseByLibrary</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+SET [~ROWS] AS
+    {TOPCOUNT([Lokasi].[Perpustakaan].Members,10,[Measures].[Jumlah])}
+SELECT
+NON EMPTY {[Measures].[Jumlah]} ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Perbelanjaan]
+WHERE CrossJoin({[Kategori].[Perbelanjaan]}, {[Time].[${yearParam}]})]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataSumExpense" id="dataSumExpense" type="mdx">
+    <Name>dataSumExpense</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+      <Parameter default="typeParam" name="typeParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+SET [~ROWS] AS
+Order (
+    {[Sumber].[Sumber].Members},[Measures].[Jumlah],BDESC)
+SELECT
+NON EMPTY {[Measures].[Jumlah]} ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Perbelanjaan]
+WHERE CrossJoin({[Time].[${yearParam}]}, {[Kategori].[Perbelanjaan]})]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataSumAllocation" id="dataSumAllocation" type="mdx">
+    <Name>dataSumAllocation</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+      <Parameter default="typeParam" name="typeParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+SET [~ROWS] AS
+ORDER(
+    {[Sumber].[Sumber].Members},[Measures].[Jumlah],BDESC)
+SELECT
+NON EMPTY {[Measures].[Jumlah]} ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Perbelanjaan]
+WHERE CrossJoin({[Time].[${yearParam}]}, {[Kategori].[Peruntukan]})]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataSumState" id="dataSumState" type="mdx">
+    <Name>dataSumState</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+      <Parameter default="typeParam" name="typeParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+SET [~FILTER] AS
+    {[Time].[${yearParam}]}
+SET [~COLUMNS] AS
+    {${typeParam}}
+SET [~ROWS] AS
+  ORDER(  {[Lokasi].[Negeri].Members},[Measures].[Jumlah],BDESC)
+SELECT
+NON EMPTY CrossJoin([~COLUMNS], {[Measures].[Jumlah]}) ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Perbelanjaan]
+WHERE [~FILTER]]]></Query>
+  </DataAccess>
+</CDADescriptor>

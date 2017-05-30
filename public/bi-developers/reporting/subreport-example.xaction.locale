@@ -1,0 +1,5 @@
+#Locale = default
+#Wed May 31 05:29:43 MYT 2017
+file.title=Subreport
+title=subreport-example
+file.description=This shows an example of a subreport in JFreeReport

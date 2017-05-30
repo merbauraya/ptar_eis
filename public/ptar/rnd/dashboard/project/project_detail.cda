@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><CDADescriptor>
+  <DataSources>
+    <Connection id="dataStrategy" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataProjectList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataAktivity" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+  </DataSources>
+  <DataAccess access="public" connection="dataStrategy" id="dataStrategy" type="sql">
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="projectIdParam" name="projectIdParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.project_id,
+    A.strategy_id,
+    A.strategy_name AS Strategi,
+    CONCAT(A.start_month_name, ' ', A.start_year) AS Mula,
+    CONCAT(A.end_month_name, ' ', A.end_year) AS Akhir,
+    A.completion_percentange,
+    A.strategy_status AS Status,
+    IF(ISNULL(A.actual_completion_date),
+        '',
+        DATE_FORMAT(A.actual_completion_date, '%d %b %Y')) AS Siap,
+    IFNULL(B.resource_name, '') AS Sumber,
+    IFNULL(C.resource_type_name, '') AS 'Jenis Sumber',
+    A.resource_id,
+    A.start_month,
+    A.start_year,
+    A.start_month_name,
+    A.end_month,
+    A.end_year,
+    A.end_month_name
+FROM
+    mst_project_strategy A
+        LEFT JOIN
+    mst_project_resource B ON A.resource_id = B.resource_id
+        LEFT JOIN
+    mst_project_resource_type C ON A.resource_type_id = C.resource_type_id
+WHERE
+    A.project_id = ${projectIdParam}
+ORDER BY start_month , start_year]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataProjectList" id="dataProjectList" type="sql">
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT 
+    project_id, project_name
+FROM
+    mst_project]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataAktivity" id="dataAktivity" type="sql">
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="strategyIdParam" name="strategyIdParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    activity_id,
+    strategy_id,
+    activity_name,
+    CONCAT(A.start_month_name, ' ', A.start_year) AS Mula,
+    CONCAT(A.end_month_name, ' ', A.end_year) AS Akhir,
+    status,
+    completion_percentage,
+    IF(ISNULL(A.actual_completion_date),
+        '',
+        DATE_FORMAT(A.actual_completion_date, '%d %b %Y')) AS Siap,
+    IFNULL(B.resource_name, '') AS Sumber,
+    IFNULL(C.resource_type_name, '') AS 'Jenis Sumber'
+FROM
+    ptar_eis.mst_project_activity A
+        LEFT JOIN
+    mst_project_resource B ON A.resource_id = B.resource_id
+        LEFT JOIN
+    mst_project_resource_type C ON A.resource_type_id = C.resource_type_id
+WHERE
+    strategy_id = ${strategyIdParam}]]></Query>
+  </DataAccess>
+</CDADescriptor>

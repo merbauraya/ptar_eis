@@ -1,0 +1,2440 @@
+{
+ "components": {
+  "rows": [
+   {
+    "id": "OTHERCOMPONENTS",
+    "name": "Others",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "Group",
+      "type": "Label",
+      "value": "Others"
+     }
+    ],
+    "type": "Label",
+    "typeDesc": "<i>Group</i>"
+   },
+   {
+    "id": "d26fdf50-4192-a067-da29-7406a11c0f48",
+    "parent": "OTHERCOMPONENTS",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "tableActivityExport"
+     },
+     {
+      "name": "expandContainerObject",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "listeners",
+      "type": "Listeners",
+      "value": "[]"
+     },
+     {
+      "name": "oLanguage",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "language",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "colFormats",
+      "type": "ColFormatsArray",
+      "value": "[]"
+     },
+     {
+      "name": "colHeaders",
+      "type": "ColHeadersArray",
+      "value": "[]"
+     },
+     {
+      "name": "colSortable",
+      "type": "ColSortableArray",
+      "value": "[\"false\",\"true\"]"
+     },
+     {
+      "name": "colTypes",
+      "type": "colTypesCustom",
+      "value": "[]"
+     },
+     {
+      "name": "colWidths",
+      "type": "ColWidthsArray",
+      "value": "[]"
+     },
+     {
+      "name": "expandParameters",
+      "type": "ValuesArray",
+      "value": "[]"
+     },
+     {
+      "name": "parameters",
+      "type": "ValuesArray",
+      "value": "[]"
+     },
+     {
+      "name": "displayLength",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "expandOnClick",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "filter",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "info",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "lengthChange",
+      "type": "Boolean",
+      "value": "true"
+     },
+     {
+      "name": "paginate",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "sort",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "colSearchable",
+      "type": "Array",
+      "value": "[]"
+     },
+     {
+      "name": "drawCallback",
+      "type": "JavaScript",
+      "value": "function ()\n{\n     $('#' + this.htmlObject + ' .column0').addClass('details-control');\n     \n} "
+     },
+     {
+      "name": "dataSource",
+      "type": "Datasource",
+      "value": "dataActivityAll"
+     },
+     {
+      "name": "sDom",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "sortBy",
+      "type": "SortByArray",
+      "value": "[]"
+     },
+     {
+      "name": "priority",
+      "type": "Integer",
+      "value": 5
+     },
+     {
+      "name": "refreshPeriod",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "paginationType",
+      "type": "PaginationType",
+      "value": "simple_numbers"
+     },
+     {
+      "name": "tableStyle",
+      "type": "TableStyle",
+      "value": "pTable"
+     },
+     {
+      "name": "htmlObject",
+      "type": "HtmlObject",
+      "value": "${h:htmlTableActivity}"
+     },
+     {
+      "name": "executeAtStart",
+      "type": "Boolean",
+      "value": "true"
+     },
+     {
+      "name": "paginateServerside",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "preExecution",
+      "type": "JavaScript",
+      "value": "function()\n{\n  \n    this.setAddInOptions(\"colType\",\"formattedText\",function(cell){\n        \n        var strategyId = cell.value;\n        \n       \n        \n       \n        \n        if(cell.colIdx === 0) //project Id \n         {\n           return {  \n               textFormat: function(v, st) \n                { \n                    \n                    return \"<span id='\"+v + \"'></span>\"\n                } \n            };\n         }\n        \n        if (cell.colIdx == 2) //project name\n        {\n            var data = cell.rawData.resultset;\n            var projectId = data[cell.rowIdx][0];\n            var projectStrategyURL = \"/pentaho/api/repos/%3Apublic%3Aptar%3Adashboard%3Aproject%3Aproject_detail.wcdf/generatedContent\";\n            var href = projectStrategyURL + \"?projectId=\"+ projectId; \n            return {  \n               textFormat: function(v, st) \n                { \n                    //return '<a href=\"'+ href + '\">' + cell.value + '</a>';\n                    return cell.value;\n                } \n            };\n            \n            \n        }\n        if (cell.colIdx == 5)\n        {\n            data = cell.rawData.resultset;\n            var completionPercentage = data[cell.rowIdx][6];\n            \n            /* if project not yet started, dont display progress */\n            if (data === 0)\n            {\n                \n                return '';\n            }\n            \n           return {  \n               textFormat: function(v, st) \n                { \n                    if (isNaN(cell.value) || cell.value === null)\n                    {\n                        return \"\";\n                    }else\n                    {\n                       // return '<span class=\"badge\">'+ cell.value + '%</span>';\n                        return buildProgressBar(cell.value,completionPercentage);\n                    }\n                } \n            };\n        }\n    \n    \n       \n       \n      });\n      \n   \n   \n      \n      \n} "
+     },
+     {
+      "name": "postExecution",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "postFetch",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "preChange",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "postChange",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "extraOptions",
+      "type": "OptionArray",
+      "value": "[]"
+     },
+     {
+      "name": "tooltip",
+      "type": "Html",
+      "value": ""
+     },
+     {
+      "name": "clickAction",
+      "type": "JavaScript",
+      "value": ""
+     }
+    ],
+    "type": "ComponentsTable",
+    "typeDesc": "table Component"
+   },
+   {
+    "id": "a365ba8b-5018-6d0a-3a3b-744764653e66",
+    "parent": "OTHERCOMPONENTS",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "tableStrategyExport"
+     },
+     {
+      "name": "expandContainerObject",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "listeners",
+      "type": "Listeners",
+      "value": "[]"
+     },
+     {
+      "name": "oLanguage",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "language",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "colFormats",
+      "type": "ColFormatsArray",
+      "value": "[]"
+     },
+     {
+      "name": "colHeaders",
+      "type": "ColHeadersArray",
+      "value": "[]"
+     },
+     {
+      "name": "colSortable",
+      "type": "ColSortableArray",
+      "value": "[\"false\",\"true\"]"
+     },
+     {
+      "name": "colTypes",
+      "type": "colTypesCustom",
+      "value": "[]"
+     },
+     {
+      "name": "colWidths",
+      "type": "ColWidthsArray",
+      "value": "[]"
+     },
+     {
+      "name": "expandParameters",
+      "type": "ValuesArray",
+      "value": "[]"
+     },
+     {
+      "name": "parameters",
+      "type": "ValuesArray",
+      "value": "[]"
+     },
+     {
+      "name": "displayLength",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "expandOnClick",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "filter",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "info",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "lengthChange",
+      "type": "Boolean",
+      "value": "true"
+     },
+     {
+      "name": "paginate",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "sort",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "colSearchable",
+      "type": "Array",
+      "value": "[]"
+     },
+     {
+      "name": "drawCallback",
+      "type": "JavaScript",
+      "value": "function ()\n{\n     $('#' + this.htmlObject + ' .column0').addClass('details-control');\n     \n} "
+     },
+     {
+      "name": "dataSource",
+      "type": "Datasource",
+      "value": "dataStrategyAll"
+     },
+     {
+      "name": "sDom",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "sortBy",
+      "type": "SortByArray",
+      "value": "[]"
+     },
+     {
+      "name": "priority",
+      "type": "Integer",
+      "value": 5
+     },
+     {
+      "name": "refreshPeriod",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "paginationType",
+      "type": "PaginationType",
+      "value": "simple_numbers"
+     },
+     {
+      "name": "tableStyle",
+      "type": "TableStyle",
+      "value": "pTable"
+     },
+     {
+      "name": "htmlObject",
+      "type": "HtmlObject",
+      "value": "${h:htmlTableStrategy}"
+     },
+     {
+      "name": "executeAtStart",
+      "type": "Boolean",
+      "value": "true"
+     },
+     {
+      "name": "paginateServerside",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "preExecution",
+      "type": "JavaScript",
+      "value": "function()\n{\n  \n    this.setAddInOptions(\"colType\",\"formattedText\",function(cell){\n        \n        var strategyId = cell.value;\n        \n       \n        \n       \n        \n        if(cell.colIdx === 0) //project Id \n         {\n           return {  \n               textFormat: function(v, st) \n                { \n                    \n                    return \"<span id='\"+v + \"'></span>\"\n                } \n            };\n         }\n        \n        if (cell.colIdx == 2) //project name\n        {\n            var data = cell.rawData.resultset;\n            var projectId = data[cell.rowIdx][0];\n            var projectStrategyURL = \"/pentaho/api/repos/%3Apublic%3Aptar%3Adashboard%3Aproject%3Aproject_detail.wcdf/generatedContent\";\n            var href = projectStrategyURL + \"?projectId=\"+ projectId; \n            return {  \n               textFormat: function(v, st) \n                { \n                    //return '<a href=\"'+ href + '\">' + cell.value + '</a>';\n                    return cell.value;\n                } \n            };\n            \n            \n        }\n        if (cell.colIdx == 5)\n        {\n            data = cell.rawData.resultset;\n            var completionPercentage = data[cell.rowIdx][6];\n            \n            /* if project not yet started, dont display progress */\n            if (data === 0)\n            {\n                \n                return '';\n            }\n            \n           return {  \n               textFormat: function(v, st) \n                { \n                    if (isNaN(cell.value) || cell.value === null)\n                    {\n                        return \"\";\n                    }else\n                    {\n                       // return '<span class=\"badge\">'+ cell.value + '%</span>';\n                        return buildProgressBar(cell.value,completionPercentage);\n                    }\n                } \n            };\n        }\n    \n    \n       \n       \n      });\n      \n   \n   \n      \n      \n} "
+     },
+     {
+      "name": "postExecution",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "postFetch",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "preChange",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "postChange",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "extraOptions",
+      "type": "OptionArray",
+      "value": "[]"
+     },
+     {
+      "name": "tooltip",
+      "type": "Html",
+      "value": ""
+     },
+     {
+      "name": "clickAction",
+      "type": "JavaScript",
+      "value": ""
+     }
+    ],
+    "type": "ComponentsTable",
+    "typeDesc": "table Component"
+   },
+   {
+    "id": "f7ea713d-6001-5cc7-1c54-80d5bbba122b",
+    "parent": "OTHERCOMPONENTS",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "tableProject"
+     },
+     {
+      "name": "expandContainerObject",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "listeners",
+      "type": "Listeners",
+      "value": "['${p:statusParam}','${p:progressStatusParam}']"
+     },
+     {
+      "name": "oLanguage",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "language",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "colFormats",
+      "type": "ColFormatsArray",
+      "value": "[]"
+     },
+     {
+      "name": "colHeaders",
+      "type": "ColHeadersArray",
+      "value": "[\" \",\"Bil\",\"Projek\",\"Mula\",\"Tamat\",\"Status\",\"Completion Percentage\",\"Siap\",\"Pengurus Projek\",\"Bahagian\"]"
+     },
+     {
+      "name": "colSortable",
+      "type": "ColSortableArray",
+      "value": "[\"false\",\"true\"]"
+     },
+     {
+      "name": "colTypes",
+      "type": "colTypesCustom",
+      "value": "[\"formattedText\",\"numeric\",\"formattedText\",\"string\",\"string\",\"formattedText\",\"hidden\",\"string\",\"string\"]"
+     },
+     {
+      "name": "colWidths",
+      "type": "ColWidthsArray",
+      "value": "[]"
+     },
+     {
+      "name": "expandParameters",
+      "type": "ValuesArray",
+      "value": "[]"
+     },
+     {
+      "name": "parameters",
+      "type": "ValuesArray",
+      "value": "[[\"statusParam\",\"statusParam\"],[\"progressStatusParam\",\"progressStatusParam\"]]"
+     },
+     {
+      "name": "displayLength",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "expandOnClick",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "filter",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "info",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "lengthChange",
+      "type": "Boolean",
+      "value": "true"
+     },
+     {
+      "name": "paginate",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "sort",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "colSearchable",
+      "type": "Array",
+      "value": "[]"
+     },
+     {
+      "name": "drawCallback",
+      "type": "JavaScript",
+      "value": "function ()\n{\n     $('#' + this.htmlObject + ' .column0').addClass('details-control');\n     \n} "
+     },
+     {
+      "name": "dataSource",
+      "type": "Datasource",
+      "value": "dataProject"
+     },
+     {
+      "name": "sDom",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "sortBy",
+      "type": "SortByArray",
+      "value": "[]"
+     },
+     {
+      "name": "priority",
+      "type": "Integer",
+      "value": 5
+     },
+     {
+      "name": "refreshPeriod",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "paginationType",
+      "type": "PaginationType",
+      "value": "simple_numbers"
+     },
+     {
+      "name": "tableStyle",
+      "type": "TableStyle",
+      "value": "pTable"
+     },
+     {
+      "name": "htmlObject",
+      "type": "HtmlObject",
+      "value": "htmlProject"
+     },
+     {
+      "name": "executeAtStart",
+      "type": "Boolean",
+      "value": "true"
+     },
+     {
+      "name": "paginateServerside",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "preExecution",
+      "type": "JavaScript",
+      "value": "function()\n{\n  \n    this.setAddInOptions(\"colType\",\"formattedText\",function(cell){\n        \n        var strategyId = cell.value;\n        \n       \n        \n       \n        \n        if(cell.colIdx === 0) //project Id \n         {\n           return {  \n               textFormat: function(v, st) \n                { \n                    \n                    return \"<span id='\"+v + \"'></span>\"\n                } \n            };\n         }\n        \n        if (cell.colIdx == 2) //project name\n        {\n            var data = cell.rawData.resultset;\n            var projectId = data[cell.rowIdx][0];\n            var projectStrategyURL = \"/pentaho/api/repos/%3Apublic%3Aptar%3Adashboard%3Aproject%3Aproject_detail.wcdf/generatedContent\";\n            var href = projectStrategyURL + \"?projectId=\"+ projectId; \n            return {  \n               textFormat: function(v, st) \n                { \n                    //return '<a href=\"'+ href + '\">' + cell.value + '</a>';\n                    return cell.value;\n                } \n            };\n            \n            \n        }\n        if (cell.colIdx == 5)\n        {\n            data = cell.rawData.resultset;\n            var completionPercentage = data[cell.rowIdx][6];\n            \n            /* if project not yet started, dont display progress */\n            if (data === 0)\n            {\n                \n                return '';\n            }\n            \n           return {  \n               textFormat: function(v, st) \n                { \n                    if (isNaN(cell.value) || cell.value === null)\n                    {\n                        return \"\";\n                    }else\n                    {\n                       // return '<span class=\"badge\">'+ cell.value + '%</span>';\n                        return buildProgressBar(cell.value,completionPercentage);\n                    }\n                } \n            };\n        }\n    \n    \n       \n       \n      });\n      \n   \n   \n      \n      \n} "
+     },
+     {
+      "name": "postExecution",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "postFetch",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "preChange",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "postChange",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "extraOptions",
+      "type": "OptionArray",
+      "value": "[]"
+     },
+     {
+      "name": "tooltip",
+      "type": "Html",
+      "value": ""
+     },
+     {
+      "name": "clickAction",
+      "type": "JavaScript",
+      "value": ""
+     }
+    ],
+    "type": "ComponentsTable",
+    "typeDesc": "table Component"
+   },
+   {
+    "id": "4c681e37-adf1-9bf4-15d9-fb27a1e94232",
+    "parent": "OTHERCOMPONENTS",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "btnExportActivity"
+     },
+     {
+      "name": "label",
+      "type": "String",
+      "value": "Export Aktiviti"
+     },
+     {
+      "name": "listeners",
+      "type": "Listeners",
+      "value": "[]"
+     },
+     {
+      "name": "parameters",
+      "type": "ValuesArray",
+      "value": "[]"
+     },
+     {
+      "name": "priority",
+      "type": "Integer",
+      "value": "1"
+     },
+     {
+      "name": "refreshPeriod",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "componentName",
+      "type": "String",
+      "value": "tableActivityExport"
+     },
+     {
+      "name": "outputType",
+      "type": "String",
+      "value": "xls"
+     },
+     {
+      "name": "htmlObject",
+      "type": "HtmlObject",
+      "value": "${h:exportAktivity}"
+     },
+     {
+      "name": "executeAtStart",
+      "type": "Boolean",
+      "value": "true"
+     },
+     {
+      "name": "preExecution",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "postExecution",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "tooltip",
+      "type": "Html",
+      "value": ""
+     }
+    ],
+    "rowName": "Export Button",
+    "type": "ComponentsexportButton",
+    "typeDesc": "Export Button Component"
+   },
+   {
+    "id": "3959779d-d9dc-c2d9-e4db-e6e43af8c8c5",
+    "parent": "OTHERCOMPONENTS",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "btnExportStrategy"
+     },
+     {
+      "name": "label",
+      "type": "String",
+      "value": "Export Strategi"
+     },
+     {
+      "name": "listeners",
+      "type": "Listeners",
+      "value": "['${p:statusParam}','${p:progressStatusParam}']"
+     },
+     {
+      "name": "parameters",
+      "type": "ValuesArray",
+      "value": "[]"
+     },
+     {
+      "name": "priority",
+      "type": "Integer",
+      "value": 5
+     },
+     {
+      "name": "refreshPeriod",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "componentName",
+      "type": "String",
+      "value": "tableStrategyExport"
+     },
+     {
+      "name": "outputType",
+      "type": "String",
+      "value": "xls"
+     },
+     {
+      "name": "htmlObject",
+      "type": "HtmlObject",
+      "value": "${h:exportStrategy}"
+     },
+     {
+      "name": "executeAtStart",
+      "type": "Boolean",
+      "value": "true"
+     },
+     {
+      "name": "preExecution",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "postExecution",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "tooltip",
+      "type": "Html",
+      "value": ""
+     }
+    ],
+    "rowName": "Export Button",
+    "type": "ComponentsexportButton",
+    "typeDesc": "Export Button Component"
+   },
+   {
+    "id": "4da03cdd-22d7-7cdf-fc9a-c67f5ec55d0e",
+    "parent": "OTHERCOMPONENTS",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "btnExportProject"
+     },
+     {
+      "name": "label",
+      "type": "String",
+      "value": "Export Projek"
+     },
+     {
+      "name": "listeners",
+      "type": "Listeners",
+      "value": "['${p:statusParam}','${p:progressStatusParam}']"
+     },
+     {
+      "name": "parameters",
+      "type": "ValuesArray",
+      "value": "[[\"progressStatusParam\",\"progressStatusParam\"],[\"statusParam\",\"statusParam\"]]"
+     },
+     {
+      "name": "priority",
+      "type": "Integer",
+      "value": 5
+     },
+     {
+      "name": "refreshPeriod",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "componentName",
+      "type": "String",
+      "value": "tableProject"
+     },
+     {
+      "name": "outputType",
+      "type": "String",
+      "value": "xls"
+     },
+     {
+      "name": "htmlObject",
+      "type": "HtmlObject",
+      "value": "${h:exportProject}"
+     },
+     {
+      "name": "executeAtStart",
+      "type": "Boolean",
+      "value": "true"
+     },
+     {
+      "name": "preExecution",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "postExecution",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "tooltip",
+      "type": "Html",
+      "value": ""
+     }
+    ],
+    "rowName": "Export Button",
+    "type": "ComponentsexportButton",
+    "typeDesc": "Export Button Component"
+   },
+   {
+    "id": "GENERIC",
+    "name": "Generic",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "Group",
+      "type": "Label",
+      "value": "Generic"
+     }
+    ],
+    "type": "Label",
+    "typeDesc": "<i>Group</i>"
+   },
+   {
+    "id": "bbeb565b-3036-6946-bbb9-593bf6578a35",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "statusParam"
+     },
+     {
+      "name": "javaScript",
+      "type": "JavaScript",
+      "value": "[0,1,2,3] "
+     },
+     {
+      "name": "parameterViewRole",
+      "type": "parameterViewRoleCustom",
+      "value": "unused"
+     },
+     {
+      "name": "bookmarkable",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "public",
+      "type": "Boolean",
+      "value": "false"
+     }
+    ],
+    "type": "ComponentsJavascriptParameter",
+    "typeDesc": "Custom parameter"
+   },
+   {
+    "id": "495aab48-e688-6eb0-a30c-18abb46bced3",
+    "parent": "GENERIC",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "progressStatusParam"
+     },
+     {
+      "name": "javaScript",
+      "type": "JavaScript",
+      "value": "'Semua Status' "
+     },
+     {
+      "name": "parameterViewRole",
+      "type": "parameterViewRoleCustom",
+      "value": "unused"
+     },
+     {
+      "name": "bookmarkable",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "public",
+      "type": "Boolean",
+      "value": "false"
+     }
+    ],
+    "rowName": "Custom Parameter",
+    "type": "ComponentsJavascriptParameter",
+    "typeDesc": "Custom parameter"
+   },
+   {
+    "id": "IVYISBOOTSTRAP",
+    "name": "Ivy IS Bootstrap",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "Group",
+      "type": "Label",
+      "value": "Ivy IS Bootstrap"
+     }
+    ],
+    "type": "Label",
+    "typeDesc": "<i>Group</i>"
+   },
+   {
+    "id": "7c14c474-106f-1378-a564-89dab44c1b37",
+    "parent": "IVYISBOOTSTRAP",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "statusSelector"
+     },
+     {
+      "name": "parameter",
+      "type": "Parameter",
+      "value": "${p:progressStatusParam}"
+     },
+     {
+      "name": "listeners",
+      "type": "Listeners",
+      "value": "[]"
+     },
+     {
+      "name": "parameters",
+      "type": "ValuesArray",
+      "value": "[]"
+     },
+     {
+      "name": "valueAsId",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "dataSource",
+      "type": "Datasource",
+      "value": "dataProgressStatus"
+     },
+     {
+      "name": "valuesArray",
+      "type": "ValuesArray",
+      "value": "[]"
+     },
+     {
+      "name": "priority",
+      "type": "Integer",
+      "value": "2"
+     },
+     {
+      "name": "refreshPeriod",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "buttonBlock",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "buttonType",
+      "type": "buttonTypeCustom",
+      "value": "btn-default"
+     },
+     {
+      "name": "buttonSize",
+      "type": "buttonSizeCustom",
+      "value": ""
+     },
+     {
+      "name": "prependIcon",
+      "type": "Boolean",
+      "value": "False"
+     },
+     {
+      "name": "buttonIcon",
+      "type": "buttonIconCustom",
+      "value": "none"
+     },
+     {
+      "name": "htmlObject",
+      "type": "HtmlObject",
+      "value": "htmlProjectStatus"
+     },
+     {
+      "name": "executeAtStart",
+      "type": "Boolean",
+      "value": "true"
+     },
+     {
+      "name": "preExecution",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "postExecution",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "postFetch",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "preChange",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "postChange",
+      "type": "JavaScript",
+      "value": ""
+     }
+    ],
+    "type": "ComponentsBSSelectBaseComponent",
+    "typeDesc": "Bootstrap Select"
+   }
+  ]
+ },
+ "datasources": {
+  "rows": [
+   {
+    "id": "SQL",
+    "name": "SQL Queries",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "Group",
+      "type": "Label",
+      "value": "SQL Queries"
+     }
+    ],
+    "type": "Label",
+    "typeDesc": "<i>Group</i>"
+   },
+   {
+    "id": "26d542c0-dc66-3895-aaa8-ae2ab8311af8",
+    "meta": "CDA",
+    "meta_conntype": "sql.jndi",
+    "meta_datype": "sql",
+    "parent": "SQL",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "dataProject"
+     },
+     {
+      "name": "access",
+      "type": "Access",
+      "value": "public"
+     },
+     {
+      "name": "jndi",
+      "type": "Jndi",
+      "value": "PTAR"
+     },
+     {
+      "name": "query",
+      "type": "SqlQuery",
+      "value": "select A.project_id,row_num() as seq,\n    \n    A.project_name AS Projek,\n    DATE_FORMAT(start_date,'%d/%m/%Y') AS Mula,\n    DATE_FORMAT(end_date,'%d/%m/%Y') AS Tamat,\n    A.project_status,\n    completion_percentage,\n    IF(ISNULL(A.actual_completion_date),\n        '',\n        IF(YEAR(A.actual_completion_date) < 10,\n            '',\n            DATE_FORMAT(A.actual_completion_date, '%d/%m/%Y'))) AS Siap,\n    IFNULL(resource_name, '') AS Sumber,\n    IFNULL(resource_type, '') AS 'Jenis Sumber'\nFROM\n    ptar_eis.mst_project A\nWHERE\n     A.project_status IN (${statusParam})\n     AND\n     (progress_status= ${progressStatusParam} OR 'Semua Status' = ${progressStatusParam})\nORDER BY completion_percentage DESC,start_date ASC"
+     },
+     {
+      "name": "parameters",
+      "type": "CdaParameters",
+      "value": "[[\"statusParam\",\"0\",\"String\",\"\",\"\"],[\"progressStatusParam\",\"0,1,2,3\",\"String\",\"\",\"\"]]"
+     },
+     {
+      "name": "cdacalculatedcolumns",
+      "type": "CdaCalculatedColumnsArray",
+      "value": "[]"
+     },
+     {
+      "name": "cdacolumns",
+      "type": "CdaColumnsArray",
+      "value": "[]"
+     },
+     {
+      "name": "output",
+      "type": "IndexArray",
+      "value": "[]"
+     },
+     {
+      "name": "outputMode",
+      "type": "OutputMode",
+      "value": "include"
+     },
+     {
+      "name": "cacheKeys",
+      "type": "CacheKeysValues",
+      "value": "[]"
+     },
+     {
+      "name": "cacheDuration",
+      "type": "Integer",
+      "value": 3600
+     },
+     {
+      "name": "cache",
+      "type": "Boolean",
+      "value": "true"
+     }
+    ],
+    "type": "Componentssql_sqlJndi",
+    "typeDesc": "sql over sqlJndi"
+   },
+   {
+    "id": "ad399ccc-c1b9-2ff1-c14d-2a5ab4dbe389",
+    "meta": "CDA",
+    "meta_conntype": "sql.jndi",
+    "meta_datype": "sql",
+    "parent": "SQL",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "dataActivity"
+     },
+     {
+      "name": "access",
+      "type": "Access",
+      "value": "public"
+     },
+     {
+      "name": "jndi",
+      "type": "Jndi",
+      "value": "PTAR"
+     },
+     {
+      "name": "query",
+      "type": "SqlQuery",
+      "value": "SELECT \n    activity_id,\n    strategy_id,\n    activity_name,\n   IF(ISNULL(A.start_date),\n        '',\n        DATE_FORMAT(A.start_date, '%d/%m/%Y')) AS Mula,\n    IF(ISNULL(A.end_date),\n        '',\n        DATE_FORMAT(A.end_date, '%d/%m/%Y')) AS Akhir,\n    status,\n    completion_percentage,\n    IF(ISNULL(A.actual_completion_date),\n        '',\n        IF(YEAR(A.actual_completion_date) < 10,\n            '',\n            DATE_FORMAT(A.actual_completion_date, '%d/%m/%Y'))) AS Siap,\n    IFNULL(A.resource_name, '') AS Sumber,\n    IFNULL(A.resource_type, '') AS 'Jenis Sumber',\n    remark\nFROM\n    ptar_eis.mst_project_activity A\n        \nWHERE\n    strategy_id = ${strategyIdParam}\nOrder BY start_date"
+     },
+     {
+      "name": "parameters",
+      "type": "CdaParameters",
+      "value": "[[\"strategyIdParam\",\"strategyIdParam\",\"String\",\"\"]]"
+     },
+     {
+      "name": "cdacalculatedcolumns",
+      "type": "CdaCalculatedColumnsArray",
+      "value": "[]"
+     },
+     {
+      "name": "cdacolumns",
+      "type": "CdaColumnsArray",
+      "value": "[]"
+     },
+     {
+      "name": "output",
+      "type": "IndexArray",
+      "value": "[]"
+     },
+     {
+      "name": "outputMode",
+      "type": "OutputMode",
+      "value": "include"
+     },
+     {
+      "name": "cacheKeys",
+      "type": "CacheKeysValues",
+      "value": "[]"
+     },
+     {
+      "name": "cacheDuration",
+      "type": "Integer",
+      "value": 3600
+     },
+     {
+      "name": "cache",
+      "type": "Boolean",
+      "value": "true"
+     }
+    ],
+    "type": "Componentssql_sqlJndi",
+    "typeDesc": "sql over sqlJndi"
+   },
+   {
+    "id": "796ab5ad-ff58-e1b5-756d-f09b8541982e",
+    "meta": "CDA",
+    "meta_conntype": "sql.jndi",
+    "meta_datype": "sql",
+    "parent": "SQL",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "dataActivityAll"
+     },
+     {
+      "name": "access",
+      "type": "Access",
+      "value": "public"
+     },
+     {
+      "name": "jndi",
+      "type": "Jndi",
+      "value": "PTAR"
+     },
+     {
+      "name": "query",
+      "type": "SqlQuery",
+      "value": "SELECT \n    IFNULL(project.project_name, '') AS Projek,\n    IFNULL(strategy.strategy_name, '') AS Strategi,\n    IFNULL(A.activity_name, '') AS Aktiviti,\n    IF(ISNULL(A.start_date),\n        '',\n        DATE_FORMAT(A.start_date, '%d/%m/%Y')) AS Mula,\n    IF(ISNULL(A.end_date),\n        '',\n        DATE_FORMAT(A.end_date, '%d/%m/%Y')) AS Akhir,\n    IFNULL(A.completion_percentage, '') AS 'Peratus Siap',\n    CASE A.status\n        WHEN 0 THEN 'Biru'\n        WHEN 1 THEN 'Merah'\n        WHEN 2 THEN 'Kuning'\n        WHEN 3 THEN 'Hijau'\n    END AS 'Status',\n    IF(ISNULL(A.actual_completion_date),\n        '',\n        IF(YEAR(A.actual_completion_date) < 10,\n            '',\n            DATE_FORMAT(A.actual_completion_date, '%d/%m/%Y'))) AS Siap,\n    IFNULL(project.resource_name, '') AS 'Pengurus Projek',\n    IFNULL(project.resource_type, '') AS 'Bahagian',\n    IFNULL(A.remark, '') AS 'Nota'\nFROM\n    mst_project_activity A\n        INNER JOIN\n    mst_project_strategy strategy ON A.strategy_id = strategy.strategy_id\n        INNER JOIN\n    mst_project project ON strategy.project_id = project.project_id\nORDER BY project.project_id , strategy.strategy_id\n\n\n"
+     },
+     {
+      "name": "parameters",
+      "type": "CdaParameters",
+      "value": "[]"
+     },
+     {
+      "name": "cdacalculatedcolumns",
+      "type": "CdaCalculatedColumnsArray",
+      "value": "[]"
+     },
+     {
+      "name": "cdacolumns",
+      "type": "CdaColumnsArray",
+      "value": "[]"
+     },
+     {
+      "name": "output",
+      "type": "IndexArray",
+      "value": "[]"
+     },
+     {
+      "name": "outputMode",
+      "type": "OutputMode",
+      "value": "include"
+     },
+     {
+      "name": "cacheKeys",
+      "type": "CacheKeysValues",
+      "value": "[]"
+     },
+     {
+      "name": "cacheDuration",
+      "type": "Integer",
+      "value": 3600
+     },
+     {
+      "name": "cache",
+      "type": "Boolean",
+      "value": "true"
+     }
+    ],
+    "type": "Componentssql_sqlJndi",
+    "typeDesc": "sql over sqlJndi"
+   },
+   {
+    "id": "491bd068-ee34-1765-2b8e-7765bb82ff5a",
+    "meta": "CDA",
+    "meta_conntype": "sql.jndi",
+    "meta_datype": "sql",
+    "parent": "SQL",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "dataStrategyAll"
+     },
+     {
+      "name": "access",
+      "type": "Access",
+      "value": "public"
+     },
+     {
+      "name": "jndi",
+      "type": "Jndi",
+      "value": "PTAR"
+     },
+     {
+      "name": "query",
+      "type": "SqlQuery",
+      "value": "SELECT \n    IFNULL(project.project_name, '') AS Projek,\n    IFNULL(A.strategy_name, '') AS Strategi,\n    IF(ISNULL(A.start_date),\n        '',\n        DATE_FORMAT(A.start_date, '%d/%m/%Y')) AS Mula,\n    IF(ISNULL(A.end_date),\n        '',\n        DATE_FORMAT(A.end_date, '%d/%m/%Y')) AS Akhir,\n    IFNULL(A.completion_percentange, '') AS 'Peratus Siap',\n    CASE A.strategy_status\n        WHEN 0 THEN 'Biru'\n        WHEN 1 THEN 'Merah'\n        WHEN 2 THEN 'Kuning'\n        WHEN 3 THEN 'Hijau'\n    END AS 'Status',\n    IF(ISNULL(A.actual_completion_date),\n        '',\n        IF(YEAR(A.actual_completion_date) < 10,\n            '',\n            DATE_FORMAT(A.actual_completion_date, '%d/%m/%Y'))) AS Siap,\n    IFNULL(project.resource_name, '') AS 'Pengurus Projek',\n    IFNULL(project.resource_type, '') AS 'Bahagian',\n    IFNULL(A.remark, '') AS 'Nota'\nFROM\n    mst_project_strategy A\n        INNER JOIN\n    mst_project project ON A.project_id = project.project_id\nORDER BY project.project_id"
+     },
+     {
+      "name": "parameters",
+      "type": "CdaParameters",
+      "value": "[]"
+     },
+     {
+      "name": "cdacalculatedcolumns",
+      "type": "CdaCalculatedColumnsArray",
+      "value": "[]"
+     },
+     {
+      "name": "cdacolumns",
+      "type": "CdaColumnsArray",
+      "value": "[]"
+     },
+     {
+      "name": "output",
+      "type": "IndexArray",
+      "value": "[]"
+     },
+     {
+      "name": "outputMode",
+      "type": "OutputMode",
+      "value": "include"
+     },
+     {
+      "name": "cacheKeys",
+      "type": "CacheKeysValues",
+      "value": "[]"
+     },
+     {
+      "name": "cacheDuration",
+      "type": "Integer",
+      "value": 3600
+     },
+     {
+      "name": "cache",
+      "type": "Boolean",
+      "value": "true"
+     }
+    ],
+    "type": "Componentssql_sqlJndi",
+    "typeDesc": "sql over sqlJndi"
+   },
+   {
+    "id": "b7b0380d-5838-e67d-3694-1033f80a22d9",
+    "meta": "CDA",
+    "meta_conntype": "sql.jndi",
+    "meta_datype": "sql",
+    "parent": "SQL",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "dataStrategy"
+     },
+     {
+      "name": "access",
+      "type": "Access",
+      "value": "public"
+     },
+     {
+      "name": "jndi",
+      "type": "Jndi",
+      "value": "PTAR"
+     },
+     {
+      "name": "query",
+      "type": "SqlQuery",
+      "value": "SELECT \n    A.project_id,\n    A.strategy_id,\n    A.strategy_name AS Strategi,\n    IF(ISNULL(A.start_date),\n        '',\n        DATE_FORMAT(A.start_date, '%d/%m/%Y')) AS Mula,\n    IF(ISNULL(A.end_date),\n        '',\n        DATE_FORMAT(A.end_date, '%d/%m/%Y')) AS Akhir,\n    A.completion_percentange,\n    A.strategy_status AS Status,\n    IF(ISNULL(A.actual_completion_date),\n        '',\n        IF(YEAR(A.actual_completion_date) < 10,\n            '',\n            DATE_FORMAT(A.actual_completion_date, '%d/%m/%Y'))) AS Siap,\n    IFNULL(A.resource_name, '') AS Sumber,\n    IFNULL(A.resource_name, '') AS 'Jenis Sumber',\n    A.remark,\n    A.start_month,\n    A.start_year,\n    A.start_month_name,\n    A.end_month,\n    A.end_year,\n    A.end_month_name\nFROM\n    mst_project_strategy A\n    \n   \nWHERE\n   A.project_id = ${projectIdParam}\nORDER BY start_date"
+     },
+     {
+      "name": "parameters",
+      "type": "CdaParameters",
+      "value": "[[\"projectIdParam\",\"projectIdParam\",\"String\",\"\"]]"
+     },
+     {
+      "name": "cdacalculatedcolumns",
+      "type": "CdaCalculatedColumnsArray",
+      "value": "[]"
+     },
+     {
+      "name": "cdacolumns",
+      "type": "CdaColumnsArray",
+      "value": "[]"
+     },
+     {
+      "name": "output",
+      "type": "IndexArray",
+      "value": "[]"
+     },
+     {
+      "name": "outputMode",
+      "type": "OutputMode",
+      "value": "include"
+     },
+     {
+      "name": "cacheKeys",
+      "type": "CacheKeysValues",
+      "value": "[]"
+     },
+     {
+      "name": "cacheDuration",
+      "type": "Integer",
+      "value": 3600
+     },
+     {
+      "name": "cache",
+      "type": "Boolean",
+      "value": "true"
+     }
+    ],
+    "type": "Componentssql_sqlJndi",
+    "typeDesc": "sql over sqlJndi"
+   },
+   {
+    "id": "b6644f23-096c-9d4c-47b8-93e51c6f21dd",
+    "meta": "CDA",
+    "meta_conntype": "sql.jndi",
+    "meta_datype": "sql",
+    "parent": "SQL",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "dataProgressStatus"
+     },
+     {
+      "name": "access",
+      "type": "Access",
+      "value": "public"
+     },
+     {
+      "name": "jndi",
+      "type": "Jndi",
+      "value": "PTAR"
+     },
+     {
+      "name": "query",
+      "type": "SqlQuery",
+      "value": "SELECT 'Semua Status', 'Semua Status' \nUNION SELECT 1, 'Belum Bermula' \nUNION SELECT 2, 'Bermula' \nUNION SELECT 3, 'Tamat'"
+     },
+     {
+      "name": "parameters",
+      "type": "CdaParameters",
+      "value": "[]"
+     },
+     {
+      "name": "cdacalculatedcolumns",
+      "type": "CdaCalculatedColumnsArray",
+      "value": "[]"
+     },
+     {
+      "name": "cdacolumns",
+      "type": "CdaColumnsArray",
+      "value": "[]"
+     },
+     {
+      "name": "output",
+      "type": "IndexArray",
+      "value": "[]"
+     },
+     {
+      "name": "outputMode",
+      "type": "OutputMode",
+      "value": "include"
+     },
+     {
+      "name": "cacheKeys",
+      "type": "CacheKeysValues",
+      "value": "[]"
+     },
+     {
+      "name": "cacheDuration",
+      "type": "Integer",
+      "value": 3600
+     },
+     {
+      "name": "cache",
+      "type": "Boolean",
+      "value": "true"
+     }
+    ],
+    "type": "Componentssql_sqlJndi",
+    "typeDesc": "sql over sqlJndi"
+   }
+  ]
+ },
+ "filename": "/public/ptar/dashboard/project/project.cdfde",
+ "layout": {
+  "rows": [
+   {
+    "id": "9d3f914a-3fcc-43dd-2372-3b1e05bc055c",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "toolTip"
+     },
+     {
+      "name": "resourceCode",
+      "type": "Resource",
+      "value": ""
+     },
+     {
+      "name": "resourceType",
+      "type": "Label",
+      "value": "Css"
+     }
+    ],
+    "type": "LayoutResourceCode",
+    "typeDesc": "Resource"
+   },
+   {
+    "id": "d8b60651-6107-c4e6-9cca-1cc8ed52e451",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "resourceCode",
+      "type": "Resource",
+      "value": "/*Change the size here*/\n.tooltip-inner {\n    max-width: 350px !important;\n} \n\n#htmlStatus .dropdown-menu > li:not(:first-child) > a {\n    color: #fff;\n} \n#tableStatus\n{\n    margin-right:5px;\n} \n\ntable.dataTable tr td {\n    border-bottom: 1px solid #e0e0e0;\n    border-right: 1px solid #e0e0e0;\n    border-top: 1px solid #ffffff;\n    padding: 18px;\n} \n\n        \n\ntable.dataTable td.details-control\n{\n    border-right:none;\n}\ntd.expandCol {\n    background-color: #e0e0e0;\n    border-right: 1px solid #fff !important;\n    width: 20px;\n}\ntd.childTbCont\n{\n\tpadding: 0px !important;\n} \n\n.divStrategy {\n    border: 1px solid #888888;\n    box-shadow: 10px 10px 10px #888888;\n    margin-bottom:10px;\n    padding: 5px;\n}\n.divActivity {\n    border: 1px solid #888888;\n    \n    -webkit-box-shadow:  10px 10px 10px #888888;\n    -moz-box-shadow:  10px 10px 10px #888888;\n    box-shadow: 10px 10px 10px #888888;\n    margin-bottom:10px;\n    padding: 5px;\n} "
+     },
+     {
+      "name": "resourceType",
+      "type": "Label",
+      "value": "Css"
+     }
+    ],
+    "type": "LayoutResourceCode",
+    "typeDesc": "Resource"
+   },
+   {
+    "id": "bb4a24bd-d053-fa2e-2d14-2f67ef1272c6",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "resourceCode",
+      "type": "Resource",
+      "value": "Dashboards.addParameter(\"reportTitleParam\", \"'PROJECT'\"); \nDashboards.setParameterViewMode(\"reportTitleParam\", \"unused\"); \n\n\nvar render_qryReportTitle = {\n  type: \"Query\",\n  name: \"render_qryReportTitle\",\n  priority: 5,\n  parameters: [[\"reportTitleParam\",\"PROJECT\"]],\n  resultvar: \"varReportTitle\",\n  executeAtStart: true,\n  listeners: [],\n  asynchronousMode: true,\n  postExecution: function f()\n\n{\n    \n    \n    $('.pageTitle').html(varReportTitle);\n    \n   \n   \n} ,\n  queryDefinition:  {\n    dataAccessId: \"dataReportTitle\",\n    path: \"/public/ptar/dashboard/home.cda\"\n  }\n};\nDashboards.addComponents([render_qryReportTitle]); \n\n\nfunction buildProgressBar(status,percentage)\n{\n    \n    var statusDefault = 0;\n    var statusRed = 1;\n    var statusYellow = 2;\n    var statusGreen = 3;\n    \n    var badgeColor;\n    \n    switch (status)\n    {\n        \n        case statusDefault:\n            badgeColor = \"blue\";\n            break;\n        case statusRed:\n            badgeColor = \"red\";\n            break;\n        case statusYellow:\n            badgeColor = \"yellow\";\n            break;\n        case statusGreen:\n             badgeColor = \"green\";\n            break;\n    }\n    \n    if (isNaN(percentage) || isNaN(status) || percentage === null || status === null || percentage === 0)\n    {\n        //return \"\";   \n        return \"<span class='badge \"+ badgeColor + \"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>\";\n    }else\n    {\n        return \"<span class='badge \"+ badgeColor + \"'>\"+ percentage + \"%</span>\";\n    } \n    \n   \n} "
+     },
+     {
+      "name": "resourceType",
+      "type": "Label",
+      "value": "Javascript"
+     }
+    ],
+    "type": "LayoutResourceCode",
+    "typeDesc": "Resource"
+   },
+   {
+    "id": "b4a39d88-17b8-e6d0-dcb4-d26e5bfc1c27",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "resourceCode",
+      "type": "Resource",
+      "value": "$( document ).ready(function() {\n    \n  \n    \n    \n    function renderStatusSelector()\n    {\n        var elem = $( \"#htmlSel\" );\n        var tb = [];\n        \n        tb.push (\n        '<table id=\"tableStatus\"><tbody><tr>',\n        '<td>Indikator Kemajuan</td>',\n        '<td statusId=\"0\" class=\"status\" style=\"background-color:#498EE0;width:30px;height:30px;\"></td>',\n        '<td statusId=\"1\" class=\"status\" style=\"background-color:#b90504;width:30px;height:30px;\"></td>',\n        '<td statusId=\"2\" class=\"status\" style=\"background-color:#ffc300;width:30px;height:30px;\"></td>',\n        '<td statusId=\"3\" class=\"status\" style=\"background-color:#387a36;width:30px;height:30px;\"></td>',\n        '</tr>',\n        '</tbody></table>'\n        );\n        \n        elem.append(tb.join(''));\n    }\n    \n    renderStatusSelector();\n     var param = [0,1,2,3];\n    //  Dashboards.fireChange('statusParam',param);\n    \n});\n\n$(document).on(\"click\",\"#tableStatus td.status\", function(e){\n    \n    console.log(e);\n    $(this).toggleClass('disabled');\n     var param = [];\n     \n    var $selected = $(this).parent('tr').find('td:not(.disabled)');\n     _.each($selected, function(elem, idx){\n            selectedOption = $(elem).attr(\"statusid\");\n            if (selectedOption)\n            {\n                param.push(  selectedOption) ;\n            }\n        });\n    \n    \n    Dashboards.fireChange('statusParam',param);\n    \n    //e.target.closest('td').toggleClass('disabled');\n    \n});\n\n$(document).on(\"click\",\".tableStrategy tr td.details-control.activity\", function(e){\n    e.preventDefault();\n    e.stopImmediatePropagation();    \n\n    var tr = $(this).closest('tr');\n    var strategyId =$(this).attr('strategyId');\n    var rowindex = $(this).closest('tr').index();\n    \n    if (tr.hasClass(\"shown\"))\n    {\n       tr.removeClass(\"shown\");\n       var next = tr.next();\n       next.remove();\n   }else\n   {\n       tr.addClass(\"shown\");\n        //$('#htmlStrategyTable > tbody > tr').eq(rowindex+1).before(detailRow);\n        \n        toggleActivity(strategyId,tr);\n        //tr.after(detailRow);\n   }\n   \n    \n    \n});\n\n\n$(document).on(\"click\",\"#htmlProjectTable tr td.details-control\", function(e){\n    \n    e.stopPropagation();\n\n\n   var tr = $(this).closest('tr');\n   \n   var project = $(this).closest('tr').find(\"td:first\").html();\n   var projectId =$(project).attr('id');\n  // console.log(\"strategy=\"+strategyId);\n   \n   var rowindex = $(this).closest('tr').index();\n   //console.log(\"idx=\"+rowindex);\n   \n   \n    \n  \n   \n   if (tr.hasClass(\"shown\"))\n   {\n       tr.removeClass(\"shown\");\n       var next = tr.next();\n       next.remove();\n   }else\n   {\n       tr.addClass(\"shown\");\n        //$('#htmlStrategyTable > tbody > tr').eq(rowindex+1).before(detailRow);\n        \n        toggleStrategy(projectId,tr);\n        //tr.after(detailRow);\n   }\n   \n   \n   \n  \n   \n   //toggleActivity(rowIndex,strategyId);\n  \n  \n \n});\n\n\nfunction toggleActivity(strategyId,tr)\n{\n    var qd={path:'/public/ptar/dashboard/project/project.cda', dataAccessId:\"dataActivity\"};\n    var params = {strategyIdParam: strategyId};\n    var queryObj = Query(qd);\n    var result;\n    var rowData = \"\";\n    queryObj.fetchData(params, function(data){\n    \n        \n        var result = data.resultset;\n        \n        var rowHeader;\n        var tbHeader = [];\n        \n        \n       \n        if (result.length <=0)\n        {\n            rowHeader =  '<tr><td colspan=\"9\" class=\"dataTables_empty\">'\n        }\n        else\n        {\n            rowHeader =  '<tr><td class=\"expandCol\"></td><td colspan=\"8\" class=\"childTbCont\">';\n        }\n        rowHeader = rowHeader + \"<div class='divActivity'>\";\n        tbHeader.push (\n            \"<table class='tableActivity dataTable childTable' style='width:100%;'>\",\n            \"<thead>\",\n            \"<tr>\",\n            \"<th>Bil</th>\",\n            \"<th>Aktiviti</th>\",\n            \"<th>Mula</th>\",\n            \"<th>Akhir</th>\",\n            \"<th>Status</th>\",\n            \"<th>Siap</th>\",\n            \"<th>Nota</th>\",\n            \"</thead>\",\n            \"</tr><tbody>\"\n        );\n        \n        var tb = '<tr><td colspan=\"8\"><table style=\"padding-left:80px;\">';\n        \n        var row = [];\n        for (i = 0; i < result.length; i++)\n        {\n            var status = result[i][5];\n            var percentage = result[i][6];\n            var noteData = result[i][10];\n            var statusProgress = '';\n            \n            statusProgress = buildProgressBar(status,percentage);\n            \n            var tdNote;\n            \n            if (noteData === null)\n            {\n                tdNote= '<td></td>';\n            }else\n            {\n                if (noteData.length >29)\n                {\n                    \n                    var remark = noteData.substring(0,29) + '...';\n                    tdNote = '<td data-toggle=\"tooltip\" title=\"'+ noteData + '\">'+ remark + '</td>';\n                    \n                }else\n                {\n                    tdNote= '<td>' + noteData + '</td>';\n                }\n            }\n            var seq = i+1;\n            row.push(\n                \"<tr>\",\n                \"<td>\" + seq + \"</td>\",\n                \"<td>\" + result[i][2] + \"</td>\",\n                \"<td>\" + result[i][3] +\"</td>\",\n                \"<td>\" + result[i][4] +\"</td>\",\n                \"<td>\" + statusProgress +\"</td>\",\n                \"<td>\" + result[i][7] +\"</td>\",\n                tdNote,\n                \"</tr>\"\n                \n                );\n        }\n        \n        row.push(\"</tbody></table>\");\n        row.push(\"</div>\");\n        if (result.length > 0)\n        {\n            rowData = rowHeader+ tbHeader.join(\"\")+ row.join(\"</td>\");\n        }else\n        {\n            \n            rowData =  rowHeader +'<span class=\"badge\">Tiada Aktiviti</span></td></tr>';\n        }\n        tr.after(rowData);\n        \n        return tr;\n        \n    \n    \n    });\n    \n    return tr;\n   \n\n} \n\nfunction toggleStrategy(projectId,tr)\n{\n    var qd={path:'/public/ptar/dashboard/project/project.cda', dataAccessId:\"dataStrategy\"};\n    var params = {projectIdParam: projectId};\n    var queryObj = Dashboards.getQuery(qd);\n    var result;\n    var rowData = \"\";\n    \n    \n    \n    queryObj.fetchData(params, function(data){\n    \n        //console.log(data);\n        var result = data.resultset;\n        //iphone getting blank result ??\n        var rowHeader;\n        var tbHeader = [];\n        \n        \n       \n        if (result.length <=0)\n        {\n            rowHeader =  '<tr><td colspan=\"9\" class=\"dataTables_empty\">'\n        }\n        else\n        {\n            rowHeader =  '<tr><td class=\"expandCol\"></td><td colspan=\"8\" style=\"padding:0px\" class=\"childTbCont\">';\n        }\n        rowHeader = rowHeader + \"<div class='divStrategy'>\";\n        tbHeader.push (\n            \"<table class='tableStrategy dataTable childTable' style='width:100%;'>\",\n            \"<thead>\",\n            \"<tr>\",\n            \"<th class='details-control'></th>\",\n            \"<th>Bil</th>\",\n            \"<th>Strategi</th>\",\n            \"<th>Mula</th>\",\n            \"<th>Akhir</th>\",\n            \"<th>Status</th>\",\n            \"<th>Siap</th>\",\n            \"<th>Nota</th>\",\n            \"</thead>\",\n            \"</tr><tbody>\"\n        );\n        \n  \n        var row = [];\n        for (i = 0; i < result.length; i++)\n        {\n            var status = result[i][6];\n            var percentage = result[i][5];\n            var noteData = result[i][10];\n            var nota = '';\n            var tdNote = '';\n            \n            if (noteData == null)\n            {\n                tdNote= '<td></td>';\n            }else\n            {\n                if (noteData.length >29)\n                {\n                    \n                    var remark = noteData.substring(0,29) + '...';\n                    tdNote = '<td data-toggle=\"tooltip\" title=\"'+ noteData + '\">'+ remark + '</td>';\n                    \n                }else\n                {\n                    tdNote= '<td>' + noteData + '</td>';\n                }\n            }\n            \n            \n            var statusProgress = buildProgressBar(status,percentage);\n            \n            var seq = i+1;\n            row.push(\n                \"<tr>\",\n                \"<td strategyId='\" +result[i][1] + \"' class='details-control activity'></td>\",\n                \"<td>\" + seq + \"</td>\",\n                \"<td>\" + result[i][2] + \"</td>\",\n                \"<td>\" + result[i][3] +\"</td>\",\n                \"<td>\" + result[i][4] +\"</td>\",\n                \"<td>\" + statusProgress +\"</td>\",\n                \"<td>\" + result[i][7] +\"</td>\",\n               tdNote,\n                \n                \"</tr>\"\n                \n                );\n        }\n        \n        row.push(\"</tbody></table>\");\n        row.push(\"</div>\");\n        if (result.length > 0)\n        {\n            rowData = rowHeader+ tbHeader.join(\"\")+ row.join(\"</td>\");\n        }else\n        {\n            \n            rowData =  rowHeader +'<span class=\"badge\">Tiada Strategi</span></td></tr>';\n        }\n        \n        //rowData = \"<div class='divStrategy'>\" + rowData + \">/div>\";\n        tr.after(rowData);\n        \n        return tr;\n        \n    \n    \n    });\n    \n    return tr;\n   \n \n} "
+     },
+     {
+      "name": "resourceType",
+      "type": "Label",
+      "value": "Javascript"
+     }
+    ],
+    "type": "LayoutResourceCode",
+    "typeDesc": "Resource"
+   },
+   {
+    "id": "89583e2a-af07-81b7-ff97-fd5a9efda6c9",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "hx"
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": "headerRow"
+     }
+    ],
+    "type": "LayoutRow",
+    "typeDesc": "Row"
+   },
+   {
+    "id": "ec89e78e-39ad-b60a-75c5-9388ef3f0a12",
+    "parent": "89583e2a-af07-81b7-ff97-fd5a9efda6c9",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "bootstrapExtraSmall",
+      "type": "String",
+      "value": "12"
+     },
+     {
+      "name": "bootstrapSmall",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapMedium",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapLarge",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapCssClass",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutBootstrapColumn",
+    "typeDesc": "Column"
+   },
+   {
+    "id": "2fb74cc9-41b7-4a1c-a38a-06331e340f7f",
+    "parent": "ec89e78e-39ad-b60a-75c5-9388ef3f0a12",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutRow",
+    "typeDesc": "Row"
+   },
+   {
+    "id": "9fe14584-cd30-2ed2-a4e4-496808bd366b",
+    "parent": "2fb74cc9-41b7-4a1c-a38a-06331e340f7f",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "bootstrapExtraSmall",
+      "type": "String",
+      "value": "12"
+     },
+     {
+      "name": "bootstrapSmall",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapMedium",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapLarge",
+      "type": "String",
+      "value": "12"
+     },
+     {
+      "name": "bootstrapCssClass",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutBootstrapColumn",
+    "typeDesc": "Column"
+   },
+   {
+    "id": "3d0130d1-ebf1-14d9-3193-db95a6972942",
+    "parent": "9fe14584-cd30-2ed2-a4e4-496808bd366b",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "html",
+      "type": "Html",
+      "value": "<span class=\"pageTitle\">Projek Inisiatif</span> "
+     },
+     {
+      "name": "fontSize",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "color",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutHtml",
+    "typeDesc": "Html"
+   },
+   {
+    "id": "279d4d7f-fe1b-8df6-bffa-a8815d63daa8",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutRow",
+    "typeDesc": "Row"
+   },
+   {
+    "id": "96c07134-108d-38de-226b-5f0b28b6e5fb",
+    "parent": "279d4d7f-fe1b-8df6-bffa-a8815d63daa8",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "bootstrapExtraSmall",
+      "type": "String",
+      "value": "12"
+     },
+     {
+      "name": "bootstrapSmall",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapMedium",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapLarge",
+      "type": "String",
+      "value": "12"
+     },
+     {
+      "name": "bootstrapCssClass",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": "filterRow"
+     }
+    ],
+    "type": "LayoutBootstrapColumn",
+    "typeDesc": "Column"
+   },
+   {
+    "id": "20aeaa91-49a8-14e0-5e89-6cb1f2743356",
+    "parent": "96c07134-108d-38de-226b-5f0b28b6e5fb",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutRow",
+    "typeDesc": "Row"
+   },
+   {
+    "id": "4cea9928-b9a4-a1bf-335c-2368247def04",
+    "parent": "20aeaa91-49a8-14e0-5e89-6cb1f2743356",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "bootstrapExtraSmall",
+      "type": "String",
+      "value": "6"
+     },
+     {
+      "name": "bootstrapSmall",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapMedium",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapLarge",
+      "type": "String",
+      "value": "6"
+     },
+     {
+      "name": "bootstrapCssClass",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutBootstrapColumn",
+    "typeDesc": "Column"
+   },
+   {
+    "id": "3a2b037d-dbb2-7b82-fbbe-c32920cb3cf4",
+    "parent": "4cea9928-b9a4-a1bf-335c-2368247def04",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "html",
+      "type": "Html",
+      "value": "<table>\n    <tr>\n        <td>Status Projek</td><td><div id=\"htmlProjectStatus\"></div></td>\n    </tr>\n</table> "
+     },
+     {
+      "name": "fontSize",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "color",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutHtml",
+    "typeDesc": "Html"
+   },
+   {
+    "id": "c60e6508-dba9-0928-559b-f9db128e0687",
+    "parent": "20aeaa91-49a8-14e0-5e89-6cb1f2743356",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "htmlSel"
+     },
+     {
+      "name": "bootstrapExtraSmall",
+      "type": "String",
+      "value": "6"
+     },
+     {
+      "name": "bootstrapSmall",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapMedium",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapLarge",
+      "type": "String",
+      "value": "6"
+     },
+     {
+      "name": "bootstrapCssClass",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": "pull-right"
+     }
+    ],
+    "type": "LayoutBootstrapColumn",
+    "typeDesc": "Column"
+   },
+   {
+    "id": "75026d95-c5ce-dd79-b972-da9a67aa5bf9",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutRow",
+    "typeDesc": "Row"
+   },
+   {
+    "id": "e158a804-c7b6-5409-33fd-fbd435ce0efe",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutRow",
+    "typeDesc": "Row"
+   },
+   {
+    "id": "92b33813-e421-f604-e3ad-02ce898702c7",
+    "parent": "e158a804-c7b6-5409-33fd-fbd435ce0efe",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "bootstrapExtraSmall",
+      "type": "String",
+      "value": "12"
+     },
+     {
+      "name": "bootstrapSmall",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapMedium",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapLarge",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapCssClass",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutBootstrapColumn",
+    "typeDesc": "Column"
+   },
+   {
+    "id": "3535f969-e15d-0af3-5b9c-cb42fb9063c6",
+    "parent": "92b33813-e421-f604-e3ad-02ce898702c7",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "html",
+      "type": "Html",
+      "value": "\n        <div id=\"htmlProject\"></div>\n "
+     },
+     {
+      "name": "fontSize",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "color",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutHtml",
+    "typeDesc": "Html"
+   },
+   {
+    "id": "1d2aa2f1-5c0f-c0ee-6331-9764a5fe233b",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutRow",
+    "typeDesc": "Row"
+   },
+   {
+    "id": "65af4607-2db8-798c-9bb3-938bf701bf1f",
+    "parent": "1d2aa2f1-5c0f-c0ee-6331-9764a5fe233b",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "bootstrapExtraSmall",
+      "type": "String",
+      "value": "12"
+     },
+     {
+      "name": "bootstrapSmall",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapMedium",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapLarge",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapCssClass",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutBootstrapColumn",
+    "typeDesc": "Column"
+   },
+   {
+    "id": "1e034c19-ba3b-f4a3-a6b0-b4c6828bc641",
+    "parent": "65af4607-2db8-798c-9bb3-938bf701bf1f",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "html",
+      "type": "Html",
+      "value": "<hr/>\n<div class=\"bottomExport\" style=\"float:right;\">\n    <span id=\"exportProject\"></span>&nbsp;\n    <span id=\"exportStrategy\"></span>&nbsp;\n    <span id=\"exportAktivity\"></span> \n    <div id=\"htmlTableStrategy\" style=\"display:none;\"></div> \n    <div id=\"htmlTableActivity\" style=\"display:none;\"></div> \n</div> "
+     },
+     {
+      "name": "fontSize",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "color",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutHtml",
+    "typeDesc": "Html"
+   }
+  ],
+  "title": "CDF - Sample structure"
+ }
+}

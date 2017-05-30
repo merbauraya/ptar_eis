@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CDADescriptor>
+   <DataSources>
+      <Connection id="query1_TableComponent" type="sql.jdbc">
+         <Driver>org.postgresql.Driver</Driver>
+         <Pass>postgres</Pass>
+         <Url>jdbc:postgresql://localhost:5432/foodmart</Url>
+         <User>postgres</User>
+      </Connection>
+   </DataSources>
+   <DataAccess access="public" cache="true" cacheDuration="3600"
+               connection="query1_TableComponent"
+               id="query1_TableComponent"
+               type="sql">
+      <Columns/>
+      <Output indexes="0,1,2,3,4,5,6,7" mode="include"/>
+      <Parameters/>
+      <Query>select distinct state_province AS state,
+city,
+CASE WHEN sum(unit_sales)&lt;=5000 THEN sum(unit_sales) ELSE 9000 END   UnitSales,
+CASE when sum(store_sales)&gt;=3000 then sum(store_sales) ELSE -sum(store_sales) END StoreSales,
+sum(unit_sales) UnitSales2,
+sum(store_sales) StoreSales2,
+sum(unit_sales) UnitSales3,
+sum(store_sales) StoreSales3
+from sales_fact_1997 sf7 
+INNER JOIN customer c ON sf7.customer_id=c.customer_id where country like 'USA' 
+group by state_province ,city
+ORDER BY state_province ,city</Query>
+   </DataAccess>
+</CDADescriptor>

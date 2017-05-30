@@ -1,0 +1,399 @@
+{
+ "components": {
+  "rows": [
+   {
+    "id": "COMMUNITYCOMPONENTS",
+    "name": "Community Contributions",
+    "type": "Label",
+    "typeDesc": "<i>Group</i>",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "Group",
+      "value": "Community Contributions",
+      "type": "Label"
+     }
+    ]
+   },
+   {
+    "id": "7afd1ceb-1407-b5c4-43bf-edaa88183a17",
+    "type": "ComponentsBTableComponent",
+    "typeDesc": "BTable (by Biz Tech)",
+    "parent": "COMMUNITYCOMPONENTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "bTablePost",
+      "type": "Id"
+     },
+     {
+      "name": "expandContainerObject",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "catalog",
+      "value": "",
+      "type": "MondrianCatalog"
+     },
+     {
+      "name": "cube",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "dimensions",
+      "value": "[]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "file",
+      "value": "/public/ptar/analyzer/perjawatanSummary.btable",
+      "type": "String"
+     },
+     {
+      "name": "filters",
+      "value": "[]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "fixedHeader",
+      "value": "true",
+      "type": "Boolean"
+     },
+     {
+      "name": "grandTotal",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "hideSpans",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "jndi",
+      "value": "",
+      "type": "Jndi"
+     },
+     {
+      "name": "measures",
+      "value": "[]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "measuresOnColumns",
+      "value": "true",
+      "type": "Boolean"
+     },
+     {
+      "name": "nonEmptyColumns",
+      "value": "true",
+      "type": "Boolean"
+     },
+     {
+      "name": "nonEmptyRows",
+      "value": "true",
+      "type": "Boolean"
+     },
+     {
+      "name": "orderBy",
+      "value": "[]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "pivotDimensions",
+      "value": "[]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "pivotGrandTotal",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "pivotSubTotals",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "showFilters",
+      "value": "true",
+      "type": "Boolean"
+     },
+     {
+      "name": "subTotals",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "tableSettingsFromFile",
+      "value": "true",
+      "type": "Boolean"
+     },
+     {
+      "name": "listeners",
+      "value": "[]",
+      "type": "Listeners"
+     },
+     {
+      "name": "expandParameters",
+      "value": "[]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "expandOnClick",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "drawCallback",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "priority",
+      "value": 5,
+      "type": "Integer"
+     },
+     {
+      "name": "refreshPeriod",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "htmlObject",
+      "value": "htmlPostData",
+      "type": "HtmlObject"
+     },
+     {
+      "name": "executeAtStart",
+      "value": "true",
+      "type": "Boolean"
+     },
+     {
+      "name": "preExecution",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postExecution",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postFetch",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "preChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "extraOptions",
+      "value": "[]",
+      "type": "OptionArray"
+     },
+     {
+      "name": "tooltip",
+      "value": "",
+      "type": "Html"
+     },
+     {
+      "name": "clickAction",
+      "value": "",
+      "type": "JavaScript"
+     }
+    ]
+   }
+  ]
+ },
+ "datasources": {
+  "rows": []
+ },
+ "filename": "/public/ptar/dashboard/perjawatan/data_perjawatan.cdfde",
+ "layout": {
+  "rows": [
+   {
+    "id": "1cf9ef03-5610-2238-5bbd-dd09291b5c64",
+    "type": "LayoutRow",
+    "typeDesc": "Row",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "filterRow",
+      "type": "Id"
+     },
+     {
+      "name": "height",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "backgroundColor",
+      "value": "",
+      "type": "Color"
+     },
+     {
+      "name": "roundCorners",
+      "value": "",
+      "type": "RoundCorners"
+     },
+     {
+      "name": "textAlign",
+      "value": "",
+      "type": "TextAlign"
+     },
+     {
+      "name": "cssClass",
+      "value": "filterRow",
+      "type": "String"
+     }
+    ]
+   },
+   {
+    "id": "da1112f2-7ff5-0a81-d238-8494749b7845",
+    "type": "LayoutRow",
+    "typeDesc": "Row",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "",
+      "type": "Id"
+     },
+     {
+      "name": "height",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "backgroundColor",
+      "value": "",
+      "type": "Color"
+     },
+     {
+      "name": "roundCorners",
+      "value": "",
+      "type": "RoundCorners"
+     },
+     {
+      "name": "textAlign",
+      "value": "",
+      "type": "TextAlign"
+     },
+     {
+      "name": "cssClass",
+      "value": "",
+      "type": "String"
+     }
+    ]
+   },
+   {
+    "id": "50254787-5677-90d4-7c7d-aac0498dcec2",
+    "type": "LayoutBootstrapColumn",
+    "typeDesc": "Column",
+    "parent": "da1112f2-7ff5-0a81-d238-8494749b7845",
+    "properties": [
+     {
+      "name": "name",
+      "value": "",
+      "type": "Id"
+     },
+     {
+      "name": "bootstrapExtraSmall",
+      "value": "12",
+      "type": "String"
+     },
+     {
+      "name": "bootstrapSmall",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "bootstrapMedium",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "bootstrapLarge",
+      "value": "12",
+      "type": "String"
+     },
+     {
+      "name": "bootstrapCssClass",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "height",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "backgroundColor",
+      "value": "",
+      "type": "Color"
+     },
+     {
+      "name": "roundCorners",
+      "value": "",
+      "type": "RoundCorners"
+     },
+     {
+      "name": "textAlign",
+      "value": "",
+      "type": "TextAlign"
+     },
+     {
+      "name": "cssClass",
+      "value": "",
+      "type": "String"
+     }
+    ]
+   },
+   {
+    "id": "f2d305ab-3f75-cfd9-6b85-9322d3cc8087",
+    "type": "LayoutHtml",
+    "typeDesc": "Html",
+    "parent": "50254787-5677-90d4-7c7d-aac0498dcec2",
+    "properties": [
+     {
+      "name": "name",
+      "value": "",
+      "type": "Id"
+     },
+     {
+      "name": "html",
+      "value": "<div class=\"panel panel-default\">\n        <div class=\"panel-heading\">\n            <span class=\"topPanelSubtitle\">Data Perjawatan</span>\n        </div>\n        <div class=\"panel-body \">\n            <div id=\"htmlPostData\"></div>\n        </div>\n    </div> ",
+      "type": "Html"
+     },
+     {
+      "name": "fontSize",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "color",
+      "value": "",
+      "type": "Color"
+     },
+     {
+      "name": "cssClass",
+      "value": "",
+      "type": "String"
+     }
+    ]
+   }
+  ],
+  "title": "CDF - Sample structure"
+ }
+}

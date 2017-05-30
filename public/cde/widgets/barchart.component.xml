@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DesignerComponent><Header><Name>barchart</Name><IName>widgetbarchart</IName><Description>barchart Widget</Description><Category>WIDGETS</Category><CatDescription>Widgets</CatDescription><Type>PalleteEntry</Type><Version>1.0</Version><Visible>true</Visible></Header><Metadata><meta name="widget">true</meta><meta name="wcdf">/public/cde/widgets/barchart.wcdf</meta></Metadata><Contents><Model><Property>htmlObject</Property></Model></Contents></DesignerComponent>

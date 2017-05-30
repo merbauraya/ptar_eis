@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?><CDADescriptor>
+  <DataSources>
+    <Connection id="dataProject" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataActivity" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataActivityAll" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataStrategyAll" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataStrategy" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataProgressStatus" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+  </DataSources>
+  <DataAccess access="public" connection="dataProject" id="dataProject" type="sql">
+    <Name>dataProject</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="0" name="statusParam" type="String"/>
+      <Parameter default="0,1,2,3" name="progressStatusParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[select A.project_id,row_num() as seq,
+    
+    A.project_name AS Projek,
+    DATE_FORMAT(start_date,'%d/%m/%Y') AS Mula,
+    DATE_FORMAT(end_date,'%d/%m/%Y') AS Tamat,
+    A.project_status,
+    completion_percentage,
+    IF(ISNULL(A.actual_completion_date),
+        '',
+        IF(YEAR(A.actual_completion_date) < 10,
+            '',
+            DATE_FORMAT(A.actual_completion_date, '%d/%m/%Y'))) AS Siap,
+    IFNULL(resource_name, '') AS Sumber,
+    IFNULL(resource_type, '') AS 'Jenis Sumber'
+FROM
+    ptar_eis.mst_project A
+WHERE
+     A.project_status IN (${statusParam})
+     AND
+     (progress_status= ${progressStatusParam} OR 'Semua Status' = ${progressStatusParam})
+ORDER BY completion_percentage DESC,start_date ASC]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataActivity" id="dataActivity" type="sql">
+    <Name>dataActivity</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="strategyIdParam" name="strategyIdParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    activity_id,
+    strategy_id,
+    activity_name,
+   IF(ISNULL(A.start_date),
+        '',
+        DATE_FORMAT(A.start_date, '%d/%m/%Y')) AS Mula,
+    IF(ISNULL(A.end_date),
+        '',
+        DATE_FORMAT(A.end_date, '%d/%m/%Y')) AS Akhir,
+    status,
+    completion_percentage,
+    IF(ISNULL(A.actual_completion_date),
+        '',
+        IF(YEAR(A.actual_completion_date) < 10,
+            '',
+            DATE_FORMAT(A.actual_completion_date, '%d/%m/%Y'))) AS Siap,
+    IFNULL(A.resource_name, '') AS Sumber,
+    IFNULL(A.resource_type, '') AS 'Jenis Sumber',
+    remark
+FROM
+    ptar_eis.mst_project_activity A
+        
+WHERE
+    strategy_id = ${strategyIdParam}
+Order BY start_date]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataActivityAll" id="dataActivityAll" type="sql">
+    <Name>dataActivityAll</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT 
+    IFNULL(project.project_name, '') AS Projek,
+    IFNULL(strategy.strategy_name, '') AS Strategi,
+    IFNULL(A.activity_name, '') AS Aktiviti,
+    IF(ISNULL(A.start_date),
+        '',
+        DATE_FORMAT(A.start_date, '%d/%m/%Y')) AS Mula,
+    IF(ISNULL(A.end_date),
+        '',
+        DATE_FORMAT(A.end_date, '%d/%m/%Y')) AS Akhir,
+    IFNULL(A.completion_percentage, '') AS 'Peratus Siap',
+    CASE A.status
+        WHEN 0 THEN 'Biru'
+        WHEN 1 THEN 'Merah'
+        WHEN 2 THEN 'Kuning'
+        WHEN 3 THEN 'Hijau'
+    END AS 'Status',
+    IF(ISNULL(A.actual_completion_date),
+        '',
+        IF(YEAR(A.actual_completion_date) < 10,
+            '',
+            DATE_FORMAT(A.actual_completion_date, '%d/%m/%Y'))) AS Siap,
+    IFNULL(project.resource_name, '') AS 'Pengurus Projek',
+    IFNULL(project.resource_type, '') AS 'Bahagian',
+    IFNULL(A.remark, '') AS 'Nota'
+FROM
+    mst_project_activity A
+        INNER JOIN
+    mst_project_strategy strategy ON A.strategy_id = strategy.strategy_id
+        INNER JOIN
+    mst_project project ON strategy.project_id = project.project_id
+ORDER BY project.project_id , strategy.strategy_id]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataStrategyAll" id="dataStrategyAll" type="sql">
+    <Name>dataStrategyAll</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT 
+    IFNULL(project.project_name, '') AS Projek,
+    IFNULL(A.strategy_name, '') AS Strategi,
+    IF(ISNULL(A.start_date),
+        '',
+        DATE_FORMAT(A.start_date, '%d/%m/%Y')) AS Mula,
+    IF(ISNULL(A.end_date),
+        '',
+        DATE_FORMAT(A.end_date, '%d/%m/%Y')) AS Akhir,
+    IFNULL(A.completion_percentange, '') AS 'Peratus Siap',
+    CASE A.strategy_status
+        WHEN 0 THEN 'Biru'
+        WHEN 1 THEN 'Merah'
+        WHEN 2 THEN 'Kuning'
+        WHEN 3 THEN 'Hijau'
+    END AS 'Status',
+    IF(ISNULL(A.actual_completion_date),
+        '',
+        IF(YEAR(A.actual_completion_date) < 10,
+            '',
+            DATE_FORMAT(A.actual_completion_date, '%d/%m/%Y'))) AS Siap,
+    IFNULL(project.resource_name, '') AS 'Pengurus Projek',
+    IFNULL(project.resource_type, '') AS 'Bahagian',
+    IFNULL(A.remark, '') AS 'Nota'
+FROM
+    mst_project_strategy A
+        INNER JOIN
+    mst_project project ON A.project_id = project.project_id
+ORDER BY project.project_id]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataStrategy" id="dataStrategy" type="sql">
+    <Name>dataStrategy</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="projectIdParam" name="projectIdParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    A.project_id,
+    A.strategy_id,
+    A.strategy_name AS Strategi,
+    IF(ISNULL(A.start_date),
+        '',
+        DATE_FORMAT(A.start_date, '%d/%m/%Y')) AS Mula,
+    IF(ISNULL(A.end_date),
+        '',
+        DATE_FORMAT(A.end_date, '%d/%m/%Y')) AS Akhir,
+    A.completion_percentange,
+    A.strategy_status AS Status,
+    IF(ISNULL(A.actual_completion_date),
+        '',
+        IF(YEAR(A.actual_completion_date) < 10,
+            '',
+            DATE_FORMAT(A.actual_completion_date, '%d/%m/%Y'))) AS Siap,
+    IFNULL(A.resource_name, '') AS Sumber,
+    IFNULL(A.resource_name, '') AS 'Jenis Sumber',
+    A.remark,
+    A.start_month,
+    A.start_year,
+    A.start_month_name,
+    A.end_month,
+    A.end_year,
+    A.end_month_name
+FROM
+    mst_project_strategy A
+    
+   
+WHERE
+   A.project_id = ${projectIdParam}
+ORDER BY start_date]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataProgressStatus" id="dataProgressStatus" type="sql">
+    <Name>dataProgressStatus</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT 'Semua Status', 'Semua Status' 
+UNION SELECT 1, 'Belum Bermula' 
+UNION SELECT 2, 'Bermula' 
+UNION SELECT 3, 'Tamat']]></Query>
+  </DataAccess>
+</CDADescriptor>

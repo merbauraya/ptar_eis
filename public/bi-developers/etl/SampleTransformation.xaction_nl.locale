@@ -1,0 +1,4 @@
+#Locale = nl
+#Wed May 31 05:29:42 MYT 2017
+file.title=Hallo ETL
+file.description=Dit voert een eenvoudige Kettle transformatie uit, waarbij records uit de Quandrant_Actuals voorbeeldtabel gefilterd worden. Een 'Hallo' bericht wordt naar elke positie verstuurd.  

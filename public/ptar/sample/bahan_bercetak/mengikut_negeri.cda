@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><CDADescriptor>
+  <DataSources>
+    <Connection id="dataAllCategory" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataStateList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataYearList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataLatestPeriod" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+  </DataSources>
+  <DataAccess access="public" connection="dataAllCategory" id="dataAllCategory" type="mdx">
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="stateParam" name="stateParam" type="String"/>
+      <Parameter default="ytdPeriodParam" name="ytdPeriodParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[with set [~FILTER] as '{${ytdPeriodParam}}'
+
+  set [~ROWS] as Descendants([Lokasi].[${stateParam}],[Lokasi].[Perpustakaan])
+select NON EMPTY {[Measures].[Judul], [Measures].[Naskah]} ON COLUMNS,
+  NON EMPTY [~ROWS] ON ROWS
+from [Bahan Bercetak]
+where [~FILTER]]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataStateList" id="dataStateList" type="sql">
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT DISTINCT
+    state_name
+FROM
+    ptar_eis.mst_state]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataYearList" id="dataYearList" type="sql">
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT DISTINCT
+    year_id
+FROM
+    dim_time
+ORDER BY 1 DESC]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataLatestPeriod" id="dataLatestPeriod" type="sql">
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    B.time_id, B.month_name, B.qtr_name, B.year_id,B.month_id
+FROM
+    ptar_eis.data_load_status A,
+    dim_time B
+WHERE
+    A.latest_period = B.time_id
+        AND A.data_name = 'bahan_bercetak'
+        AND A.period_year = ${yearParam}]]></Query>
+  </DataAccess>
+</CDADescriptor>

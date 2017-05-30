@@ -1,0 +1,677 @@
+{
+ "layout": {
+  "title": "CDF - Sample structure",
+  "rows": [
+   {
+    "id": "bc34a71d-2621-b47b-e8ba-230995c22598",
+    "type": "LayoutResourceCode",
+    "typeDesc": "Resource",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "Styles",
+      "type": "Id"
+     },
+     {
+      "name": "resourceType",
+      "value": "Css",
+      "type": "Label"
+     },
+     {
+      "name": "resourceCode",
+      "value": "body{\n    margin-top: 0.5cm;\n}\n.overflow {\noverflow: auto;\n}\n\ntable .even, table .odd{ background-color: white; } \ntable\n{\n    align-left:200px;\n}\n\ntable th {\n    background: black;\n    border: 1px none #B3B3B3;\n    color: #FFFFFF;\n    font-family: Century Gothic;\n    font-size: 14px;\n    font-weight: bold;\n    text-align: center;\n} \n/*\nth, td, caption {\n    padding: 4px 10px 4px 5px;\n}*/ \ntable td {\n    border-left: 1px solid #A9A7A1;\n    border-right: 1px solid #A9A7A1;\n    border-top:1px solid #A9A7A1;\n    border-bottom:1px solid #A9A7A1;\n    height: 20px;\n    font-size:14px;\n    /*padding-left: 10px;*/\n    vertical-align: middle; \n} \n.paging_full_numbers span.paginate_active {\n    background-color: #FF0000;\n}\n.paging_full_numbers span.paginate_button, .paging_full_numbers span.paginate_active {\n    border: 1px solid #008000;\n    cursor: pointer;\n    margin: 0 3px;\n    padding: 2px 5px;\n}\n\n.paging_full_numbers {\n    line-height: 18px;\n}\n.dataTables_paginate {\n    text-align: center;\n}\n\n \n \n ",
+      "type": "Resource"
+     }
+    ]
+   },
+   {
+    "id": "59ffe681-36f8-dc3d-6d70-c4d89c5bb25d",
+    "type": "LayoutRow",
+    "typeDesc": "Row",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "Title",
+      "type": "Id"
+     },
+     {
+      "name": "height",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "backgroundColor",
+      "value": "",
+      "type": "Color"
+     },
+     {
+      "name": "roundCorners",
+      "value": "",
+      "type": "RoundCorners"
+     },
+     {
+      "name": "textAlign",
+      "value": "",
+      "type": "TextAlign"
+     },
+     {
+      "name": "cssClass",
+      "value": "",
+      "type": "String"
+     }
+    ]
+   },
+   {
+    "id": "cac5aacf-59f8-0e98-c8ae-4fff40935301",
+    "type": "LayoutColumn",
+    "typeDesc": "Column",
+    "parent": "59ffe681-36f8-dc3d-6d70-c4d89c5bb25d",
+    "properties": [
+     {
+      "name": "name",
+      "value": "Title",
+      "type": "Id"
+     },
+     {
+      "name": "columnSpan",
+      "value": "24",
+      "type": "Integer"
+     },
+     {
+      "name": "columnPrepend",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "columnAppend",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "columnPrependTop",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "columnAppendBottom",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "columnBorder",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "columnBigBorder",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "height",
+      "value": "50",
+      "type": "Integer"
+     },
+     {
+      "name": "backgroundColor",
+      "value": "#f5ebf5",
+      "type": "Color"
+     },
+     {
+      "name": "roundCorners",
+      "value": "",
+      "type": "RoundCorners"
+     },
+     {
+      "name": "textAlign",
+      "value": "",
+      "type": "TextAlign"
+     },
+     {
+      "name": "cssClass",
+      "value": "",
+      "type": "String"
+     }
+    ]
+   },
+   {
+    "id": "9ddd5530-c334-7a74-c861-f5e5e6a3dd52",
+    "type": "LayoutHtml",
+    "typeDesc": "Html",
+    "parent": "cac5aacf-59f8-0e98-c8ae-4fff40935301",
+    "properties": [
+     {
+      "name": "name",
+      "value": "Title",
+      "type": "Id"
+     },
+     {
+      "name": "html",
+      "value": "Table Component Demonstration ",
+      "type": "Html"
+     },
+     {
+      "name": "fontSize",
+      "value": "25",
+      "type": "Integer"
+     },
+     {
+      "name": "color",
+      "value": "#080708",
+      "type": "Color"
+     },
+     {
+      "name": "cssClass",
+      "value": "",
+      "type": "String"
+     }
+    ]
+   },
+   {
+    "id": "f1b785cd-d112-5b20-a16b-eff37d14337b",
+    "type": "LayoutRow",
+    "typeDesc": "Row",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "SmallSpacer",
+      "type": "Id"
+     },
+     {
+      "name": "height",
+      "value": "10",
+      "type": "Integer"
+     },
+     {
+      "name": "backgroundColor",
+      "value": "",
+      "type": "Color"
+     },
+     {
+      "name": "roundCorners",
+      "value": "",
+      "type": "RoundCorners"
+     },
+     {
+      "name": "textAlign",
+      "value": "",
+      "type": "TextAlign"
+     },
+     {
+      "name": "cssClass",
+      "value": "",
+      "type": "String"
+     }
+    ]
+   },
+   {
+    "id": "3d8f15dd-a4e7-929f-d539-c27ac1ad93c6",
+    "type": "LayoutRow",
+    "typeDesc": "Row",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "",
+      "type": "Id"
+     },
+     {
+      "name": "height",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "backgroundColor",
+      "value": "",
+      "type": "Color"
+     },
+     {
+      "name": "roundCorners",
+      "value": "",
+      "type": "RoundCorners"
+     },
+     {
+      "name": "textAlign",
+      "value": "",
+      "type": "TextAlign"
+     },
+     {
+      "name": "cssClass",
+      "value": "",
+      "type": "String"
+     }
+    ]
+   },
+   {
+    "id": "bb611479-2dac-a505-3e21-fdbc94be3aeb",
+    "type": "LayoutColumn",
+    "typeDesc": "Column",
+    "parent": "3d8f15dd-a4e7-929f-d539-c27ac1ad93c6",
+    "properties": [
+     {
+      "name": "name",
+      "value": "TableComponent2",
+      "type": "Id"
+     },
+     {
+      "name": "columnSpan",
+      "value": "24",
+      "type": "Integer"
+     },
+     {
+      "name": "columnPrepend",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "columnAppend",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "columnPrependTop",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "columnAppendBottom",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "columnBorder",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "columnBigBorder",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "height",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "backgroundColor",
+      "value": "",
+      "type": "Color"
+     },
+     {
+      "name": "roundCorners",
+      "value": "",
+      "type": "RoundCorners"
+     },
+     {
+      "name": "textAlign",
+      "value": "",
+      "type": "TextAlign"
+     },
+     {
+      "name": "cssClass",
+      "value": "",
+      "type": "String"
+     }
+    ]
+   },
+   {
+    "id": "c943c152-a4c8-9ef9-b769-0a159b04e3ed",
+    "type": "LayoutRow",
+    "typeDesc": "Row",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "value": "",
+      "type": "Id"
+     },
+     {
+      "name": "height",
+      "value": "30",
+      "type": "Integer"
+     },
+     {
+      "name": "backgroundColor",
+      "value": "",
+      "type": "Color"
+     },
+     {
+      "name": "roundCorners",
+      "value": "",
+      "type": "RoundCorners"
+     },
+     {
+      "name": "textAlign",
+      "value": "",
+      "type": "TextAlign"
+     },
+     {
+      "name": "cssClass",
+      "value": "",
+      "type": "String"
+     }
+    ]
+   }
+  ]
+ },
+ "components": {
+  "rows": [
+   {
+    "id": "OTHERCOMPONENTS",
+    "name": "Others",
+    "type": "Label",
+    "typeDesc": "<i>Group</i>",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "Group",
+      "value": "Others",
+      "type": "Label"
+     }
+    ]
+   },
+   {
+    "id": "f6700b8e-552d-fcd5-0511-f96680ad014d",
+    "type": "ComponentsTable",
+    "typeDesc": "table Component",
+    "parent": "OTHERCOMPONENTS",
+    "properties": [
+     {
+      "name": "name",
+      "value": "Table2",
+      "type": "Id"
+     },
+     {
+      "name": "expandContainerObject",
+      "value": "",
+      "type": "String"
+     },
+     {
+      "name": "listeners",
+      "value": "[]",
+      "type": "Listeners"
+     },
+     {
+      "name": "oLanguage",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "parameters",
+      "value": "[]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "colHeaders",
+      "value": "[\"STATE\",\"CITY\",\"UNIT SALES\",\"STORE SALES\",\"UNIT SALES2\",\"STORE SALES2\",\"UNIT SALES3\",\"STORE SALES3\"]",
+      "type": "Array"
+     },
+     {
+      "name": "colTypes",
+      "value": "[\"groupHeaders\",\"string\",\"dataBar\",\"trendArrow\",\"circle\",\"numeric\",\"numeric\",\"formattedText\"]",
+      "type": "colTypesCustom"
+     },
+     {
+      "name": "colFormats",
+      "value": "[]",
+      "type": "Array"
+     },
+     {
+      "name": "colWidths",
+      "value": "[\"10%\",\"20%\",\"30%\"]",
+      "type": "Array"
+     },
+     {
+      "name": "colSortable",
+      "value": "[]",
+      "type": "Array"
+     },
+     {
+      "name": "expandParameters",
+      "value": "[]",
+      "type": "ValuesArray"
+     },
+     {
+      "name": "paginate",
+      "value": "true",
+      "type": "Boolean"
+     },
+     {
+      "name": "filter",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "info",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "sort",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "displayLength",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "lengthChange",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "expandOnClick",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "colSearchable",
+      "value": "[]",
+      "type": "Array"
+     },
+     {
+      "name": "drawCallback",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "dataSource",
+      "value": "query1_TableComponent",
+      "type": "Datasource"
+     },
+     {
+      "name": "sortBy",
+      "value": "[]",
+      "type": "SortByArray"
+     },
+     {
+      "name": "sDom",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "priority",
+      "value": 5,
+      "type": "Integer"
+     },
+     {
+      "name": "refreshPeriod",
+      "value": "",
+      "type": "Integer"
+     },
+     {
+      "name": "paginationType",
+      "value": "full_numbers",
+      "type": "PaginationType"
+     },
+     {
+      "name": "tableStyle",
+      "value": "classic",
+      "type": "TableStyle"
+     },
+     {
+      "name": "htmlObject",
+      "value": "${p:TableComponent2}",
+      "type": "HtmlObject"
+     },
+     {
+      "name": "paginateServerside",
+      "value": "false",
+      "type": "Boolean"
+     },
+     {
+      "name": "executeAtStart",
+      "value": "true",
+      "type": "Boolean"
+     },
+     {
+      "name": "preExecution",
+      "value": " function f(){  \n    this.setAddInOptions(\"colType\",\"formattedText\",function(cell_data){\n        \n        var percentage = cell_data.value;\n        \n        if(cell_data.colIdx == 7)\n        {\n            if(cell_data.value === '' || cell_data.value === null)\n            {\n                this.value = '00000';\n            }\n        }\n        \n        if(percentage <=8000){\n            return {  textFormat: function(v, st) { return \"<span style='color:red'>\"+v+\"</span>\"; } };\n        }\n         else {\n            return { textFormat: function(v, st) { return \"<span style='color:green'>\"+v+\"</span>\"; }  };\n            }\n      });\n      \n      \n    //bars  \n    this.setAddInOptions(\"colType\",\"dataBar\",function(column4){\n       return {\n                includeValue:true,\n                widthRatio: 0.8,\n                startColor: \"red\",\n                endColor: \"green\"\n              };\n    });\n\n\n    //trendArrow\n    this.setAddInOptions(\"colType\",\"trendArrow\",function(column5){\n       return {\n            includeValue: true,\n            good: false,\n            valueFormat: function f(v) { return \"$\" + sprintf('%d', v/1000) + 'k'; }\n\n\n       };\n    });\n    \n      \n }//main function ending\n\n  \n  \n",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postFetch",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postExecution",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "preChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "postChange",
+      "value": "",
+      "type": "JavaScript"
+     },
+     {
+      "name": "tooltip",
+      "value": "",
+      "type": "Html"
+     },
+     {
+      "name": "extraOptions",
+      "value": "[]",
+      "type": "OptionArray"
+     },
+     {
+      "name": "clickAction",
+      "value": "",
+      "type": "JavaScript"
+     }
+    ]
+   }
+  ]
+ },
+ "datasources": {
+  "rows": [
+   {
+    "id": "SQL",
+    "name": "SQL Queries",
+    "type": "Label",
+    "typeDesc": "<i>Group</i>",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "Group",
+      "value": "SQL Queries",
+      "type": "Label"
+     }
+    ]
+   },
+   {
+    "id": "f4d2f0ec-e529-a083-ed5f-285bcc305722",
+    "type": "Componentssql_sqlJdbc",
+    "typeDesc": "sql over sqlJdbc",
+    "parent": "SQL",
+    "properties": [
+     {
+      "name": "name",
+      "value": "query1_TableComponent",
+      "type": "Id"
+     },
+     {
+      "name": "user",
+      "value": "postgres",
+      "type": "String"
+     },
+     {
+      "name": "pass",
+      "value": "postgres",
+      "type": "String"
+     },
+     {
+      "name": "driver",
+      "value": "org.postgresql.Driver",
+      "type": "String"
+     },
+     {
+      "name": "url",
+      "value": "jdbc:postgresql://localhost:5432/foodmart",
+      "type": "String"
+     },
+     {
+      "name": "access",
+      "value": "public",
+      "type": "Access"
+     },
+     {
+      "name": "query",
+      "value": "select distinct state_province AS state,\ncity,\nCASE WHEN sum(unit_sales)<=5000 THEN sum(unit_sales) ELSE 9000 END   UnitSales,\nCASE when sum(store_sales)>=3000 then sum(store_sales) ELSE -sum(store_sales) END StoreSales,\nsum(unit_sales) UnitSales2,\nsum(store_sales) StoreSales2,\nsum(unit_sales) UnitSales3,\nsum(store_sales) StoreSales3\nfrom sales_fact_1997 sf7 \nINNER JOIN customer c ON sf7.customer_id=c.customer_id where country like 'USA' \ngroup by state_province ,city\nORDER BY state_province ,city",
+      "type": "SqlQuery"
+     },
+     {
+      "name": "parameters",
+      "value": "[]",
+      "type": "CdaParameters"
+     },
+     {
+      "name": "outputMode",
+      "value": "include",
+      "type": "OutputMode"
+     },
+     {
+      "name": "cdacolumns",
+      "value": "[]",
+      "type": "CdaColumnsArray"
+     },
+     {
+      "name": "cdacalculatedcolumns",
+      "value": "[]",
+      "type": "CdaCalculatedColumnsArray"
+     },
+     {
+      "name": "output",
+      "value": "[\"0\",\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\"]",
+      "type": "IndexArray"
+     },
+     {
+      "name": "cacheDuration",
+      "value": 3600,
+      "type": "Integer"
+     },
+     {
+      "name": "cache",
+      "value": "true",
+      "type": "Boolean"
+     }
+    ],
+    "meta": "CDA",
+    "meta_conntype": "sql.jdbc",
+    "meta_datype": "sql"
+   }
+  ]
+ },
+ "filename": "public/Explore/CDEExploring/Developement/TableComponentAddIns_ConditionalColoringOfCells/TableCustomizationConditionalColring.wcdf"
+}

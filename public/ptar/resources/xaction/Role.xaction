@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-sequence> 
+  <title>Who Am I?</title>
+  <version>1</version>
+  <logging-level>ERROR</logging-level>
+  <documentation> 
+    <author>Carlos Lopez</author>  
+    <description>Empty blank action sequence document</description>  
+    <help/>  
+    <result-type/>  
+    <icon/> 
+  </documentation>
+
+  <inputs> 
+    <principalRoles type="string"> 
+      <sources> 
+        <security>principalRoles</security> 
+      </sources> 
+    </principalRoles>  
+    <principalName type="string"> 
+      <sources> 
+        <security>principalName</security> 
+      </sources> 
+    </principalName> 
+  </inputs>
+
+  <outputs> 
+    <MessageOut type="string"/> 
+  </outputs>
+
+  <resources/>
+  
+  <actions> 
+    <action-definition> 
+      <component-name>TemplateComponent</component-name>
+      <action-type>Message Template</action-type>
+      <action-inputs> 
+        <principalName type="string"/>  
+        <principalRoles type="string"/> 
+      </action-inputs>
+      <action-outputs> 
+        <output-message type="string" mapping="MessageOut"/> 
+      </action-outputs>
+      <component-definition> 
+        <template><![CDATA[<html>
+<head>
+<br><br>
+I am currently logged as: {principalName}<br>
+I belong to the following roles: {principalRoles}<br>
+</head>
+</html>]]></template> 
+      </component-definition> 
+    </action-definition>
+ 
+  </actions> 
+</action-sequence>

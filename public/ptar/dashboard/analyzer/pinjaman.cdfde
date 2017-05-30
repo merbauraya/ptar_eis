@@ -1,0 +1,328 @@
+{
+ "components": {
+  "rows": [
+   {
+    "id": "COMMUNITYCOMPONENTS",
+    "name": "Community Contributions",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "Group",
+      "type": "Label",
+      "value": "Community Contributions"
+     }
+    ],
+    "type": "Label",
+    "typeDesc": "<i>Group</i>"
+   },
+   {
+    "id": "ac4ff460-363e-c2a8-2bea-2414797fea1a",
+    "parent": "COMMUNITYCOMPONENTS",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "btablePinjaman"
+     },
+     {
+      "name": "expandContainerObject",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "catalog",
+      "type": "MondrianCatalog",
+      "value": ""
+     },
+     {
+      "name": "cube",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "dimensions",
+      "type": "ValuesArray",
+      "value": "[]"
+     },
+     {
+      "name": "file",
+      "type": "String",
+      "value": "/public/ptar/analyzer/pinjaman/detail.btable"
+     },
+     {
+      "name": "filters",
+      "type": "ValuesArray",
+      "value": "[]"
+     },
+     {
+      "name": "fixedHeader",
+      "type": "Boolean",
+      "value": "true"
+     },
+     {
+      "name": "grandTotal",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "hideSpans",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "jndi",
+      "type": "Jndi",
+      "value": ""
+     },
+     {
+      "name": "measures",
+      "type": "ValuesArray",
+      "value": "[]"
+     },
+     {
+      "name": "measuresOnColumns",
+      "type": "Boolean",
+      "value": "true"
+     },
+     {
+      "name": "nonEmptyColumns",
+      "type": "Boolean",
+      "value": "true"
+     },
+     {
+      "name": "nonEmptyRows",
+      "type": "Boolean",
+      "value": "true"
+     },
+     {
+      "name": "orderBy",
+      "type": "ValuesArray",
+      "value": "[]"
+     },
+     {
+      "name": "pivotDimensions",
+      "type": "ValuesArray",
+      "value": "[]"
+     },
+     {
+      "name": "pivotGrandTotal",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "pivotSubTotals",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "showFilters",
+      "type": "Boolean",
+      "value": "true"
+     },
+     {
+      "name": "subTotals",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "tableSettingsFromFile",
+      "type": "Boolean",
+      "value": "true"
+     },
+     {
+      "name": "listeners",
+      "type": "Listeners",
+      "value": "[]"
+     },
+     {
+      "name": "expandParameters",
+      "type": "ValuesArray",
+      "value": "[]"
+     },
+     {
+      "name": "expandOnClick",
+      "type": "Boolean",
+      "value": "false"
+     },
+     {
+      "name": "drawCallback",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "priority",
+      "type": "Integer",
+      "value": 5
+     },
+     {
+      "name": "refreshPeriod",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "htmlObject",
+      "type": "HtmlObject",
+      "value": "${h:htmlTable}"
+     },
+     {
+      "name": "executeAtStart",
+      "type": "Boolean",
+      "value": "true"
+     },
+     {
+      "name": "preExecution",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "postExecution",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "postFetch",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "preChange",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "postChange",
+      "type": "JavaScript",
+      "value": ""
+     },
+     {
+      "name": "extraOptions",
+      "type": "OptionArray",
+      "value": "[]"
+     },
+     {
+      "name": "tooltip",
+      "type": "Html",
+      "value": ""
+     },
+     {
+      "name": "clickAction",
+      "type": "JavaScript",
+      "value": ""
+     }
+    ],
+    "type": "ComponentsBTableComponent",
+    "typeDesc": "BTable (by Biz Tech)"
+   }
+  ]
+ },
+ "datasources": {
+  "rows": []
+ },
+ "filename": "/public/ptar/dashboard/analyzer/pinjaman.cdfde",
+ "layout": {
+  "rows": [
+   {
+    "id": "21b68aa0-8ed8-a88f-cb87-0c61fe11b4b5",
+    "parent": "UnIqEiD",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutRow",
+    "typeDesc": "Row"
+   },
+   {
+    "id": "3ddd7426-695d-ae53-1110-e19e1f6820bd",
+    "parent": "21b68aa0-8ed8-a88f-cb87-0c61fe11b4b5",
+    "properties": [
+     {
+      "name": "name",
+      "type": "Id",
+      "value": "htmlTable"
+     },
+     {
+      "name": "bootstrapExtraSmall",
+      "type": "String",
+      "value": "12"
+     },
+     {
+      "name": "bootstrapSmall",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapMedium",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "bootstrapLarge",
+      "type": "String",
+      "value": "12"
+     },
+     {
+      "name": "bootstrapCssClass",
+      "type": "String",
+      "value": ""
+     },
+     {
+      "name": "height",
+      "type": "Integer",
+      "value": ""
+     },
+     {
+      "name": "backgroundColor",
+      "type": "Color",
+      "value": ""
+     },
+     {
+      "name": "roundCorners",
+      "type": "RoundCorners",
+      "value": ""
+     },
+     {
+      "name": "textAlign",
+      "type": "TextAlign",
+      "value": ""
+     },
+     {
+      "name": "cssClass",
+      "type": "String",
+      "value": ""
+     }
+    ],
+    "type": "LayoutBootstrapColumn",
+    "typeDesc": "Column"
+   }
+  ],
+  "title": "CDF - Sample structure"
+ }
+}

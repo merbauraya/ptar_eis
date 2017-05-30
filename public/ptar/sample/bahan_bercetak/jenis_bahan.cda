@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><CDADescriptor>
+  <DataSources>
+    <Connection id="dataItemTypeMonthly" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataItemTypeByState" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataItemCategoryList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataYearList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataLatestPeriod" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+  </DataSources>
+  <DataAccess access="public" connection="dataItemTypeMonthly" id="dataItemTypeMonthly" type="mdx">
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="itemCategoryParam" name="itemCategoryParam" type="String"/>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[with set [~ROWS] as 'Descendants([Time].[${yearParam}], [Time].[Month])'
+select NON EMPTY {[Measures].[Judul], [Measures].[Naskah]} ON COLUMNS,
+  NON EMPTY [~ROWS] ON ROWS
+from [Bahan Bercetak]
+WHERE [Kategori].[${itemCategoryParam}]]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataItemTypeByState" id="dataItemTypeByState" type="mdx">
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="ytdPeriodParam" name="ytdPeriodParam" type="String"/>
+      <Parameter default="itemCategoryParam" name="itemCategoryParam" type="String"/>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+SET [~ROWS] AS
+    {[Lokasi].[Negeri].Members}
+SELECT
+NON EMPTY {[Measures].[Judul], [Measures].[Naskah]} ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Bahan Bercetak]
+WHERE CrossJoin({${ytdPeriodParam}}, {[Kategori].[${itemCategoryParam}]})]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataItemCategoryList" id="dataItemCategoryList" type="sql">
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT 
+    item_type_name
+FROM
+    mst_item_type
+WHERE
+    printed_type=1
+ORDER BY 1]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataYearList" id="dataYearList" type="sql">
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT DISTINCT
+    year_id
+FROM
+    dim_time
+ORDER BY 1 DESC]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataLatestPeriod" id="dataLatestPeriod" type="sql">
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    B.time_id, B.month_name, B.qtr_name, B.year_id,B.month_id
+FROM
+    ptar_eis.data_load_status A,
+    dim_time B
+WHERE
+    A.latest_period = B.time_id
+        AND A.data_name = 'bahan_bercetak'
+        AND A.period_year = ${yearParam}]]></Query>
+  </DataAccess>
+</CDADescriptor>

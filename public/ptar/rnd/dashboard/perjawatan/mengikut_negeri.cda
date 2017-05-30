@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><CDADescriptor>
+  <DataSources>
+    <Connection id="dataMonthly" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataLibraryYTD" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataCategoryByLibrary" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataPostCategory" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataMaxPeriod" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataStateList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataYearList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+  </DataSources>
+  <DataAccess access="public" connection="dataMonthly" id="dataMonthly" type="mdx">
+    <Name>dataMonthly</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+      <Parameter default="stateParam" name="stateParam" type="String"/>
+      <Parameter default="categoryParam" name="categoryParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+
+SET [~ROWS] AS
+    
+   Descendants([Time].[${yearParam}],[Time].[Month])
+
+SELECT
+NON EMPTY {[Measures].[Jumlah]} ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Perjawatan]
+WHERE crossjoin ({${categoryParam}},{[Lokasi].[${stateParam}]})]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataLibraryYTD" id="dataLibraryYTD" type="mdx">
+    <Name>dataLibraryYTD</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="ytdPeriodParam" name="ytdPeriodParam" type="String"/>
+      <Parameter default="stateParam" name="stateParam" type="String"/>
+      <Parameter default="categoryParam" name="categoryParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+SET [~FILTER] AS
+    crossjoin({${ytdPeriodParam}} ,{${categoryParam}})
+SET [~ROWS] AS
+    
+    Descendants([Lokasi].[Negeri].[${stateParam}],[Lokasi].[Perpustakaan])
+
+SELECT
+NON EMPTY {[Measures].[Jumlah]} ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Perjawatan]
+WHERE [~FILTER]]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataCategoryByLibrary" id="dataCategoryByLibrary" type="mdx">
+    <Name>dataCategoryByLibrary</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="stateParam" name="stateParam" type="String"/>
+      <Parameter default="ytdPeriodParam" name="ytdPeriodParam" type="String"/>
+      <Parameter default="categoryParam" name="categoryParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+SET [~FILTER] AS
+    {${ytdPeriodParam}}
+
+SET [~ROWS] AS
+    Descendants([Lokasi].[Negeri].[${stateParam}],[Lokasi].[Perpustakaan])
+SET [~COLUMNS] AS
+    {${categoryParam}}
+SELECT
+NON EMPTY CrossJoin([~COLUMNS], {[Measures].[Jumlah]}) ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Perjawatan]
+WHERE [~FILTER]]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataPostCategory" id="dataPostCategory" type="sql">
+    <Name>dataPostCategory</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    post_category_name
+FROM
+    mst_post_category]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataMaxPeriod" id="dataMaxPeriod" type="sql">
+    <Name>dataMaxPeriod</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    B.time_id, B.month_name, B.qtr_name, B.year_id,B.month_id
+FROM
+    dim_time B
+WHERE
+    B.time_id = getLatestPeriod('perjawatan',${yearParam})]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataStateList" id="dataStateList" type="sql">
+    <Name>dataStateList</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT DISTINCT
+    state_name
+FROM
+    mst_state
+order by 1]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataYearList" id="dataYearList" type="sql">
+    <Name>dataYearList</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT DISTINCT
+    year_id
+FROM
+    dim_time
+ORDER BY 1 DESC]]></Query>
+  </DataAccess>
+</CDADescriptor>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><CDADescriptor>
+  <DataSources>
+    <Connection id="dataYearList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataStateList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataCategoryList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataSummary" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+  </DataSources>
+  <DataAccess access="public" connection="dataYearList" id="dataYearList" type="sql">
+    <Name>dataYearList</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT DISTINCT
+    year_id
+FROM
+    dim_time
+ORDER BY 1 DESC]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataStateList" id="dataStateList" type="sql">
+    <Name>dataStateList</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT 'All' 
+UNION SELECT DISTINCT
+    state_name
+FROM
+    mst_state]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataCategoryList" id="dataCategoryList" type="sql">
+    <Name>dataCategoryList</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT 'All' 
+UNION SELECT DISTINCT
+    borrower_category_name
+FROM
+    ptar_eis.mst_borrower_category]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataSummary" id="dataSummary" type="mdx">
+    <Name>dataSummary</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+      <Parameter default="stateParam" name="stateParam" type="String"/>
+      <Parameter default="categoryParam" name="categoryParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+SET [~FILTER] AS
+    {[Time].[${yearParam}]}
+SET [~COLUMNS] AS
+    {[Kategori].[${categoryParam}]}
+SET [~ROWS] AS
+    {[Lokasi].[${stateParam}]}
+SELECT
+NON EMPTY CrossJoin([~COLUMNS], {[Measures].[Jumlah]}) ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Pinjaman Bahan]
+WHERE [~FILTER]]]></Query>
+  </DataAccess>
+</CDADescriptor>

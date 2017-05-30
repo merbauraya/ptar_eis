@@ -1,0 +1,4 @@
+#Locale = de
+#Wed May 31 05:29:43 MYT 2017
+file.title=SQL Abfrage Abteilungsleiter
+file.description=Diese Regel verwendet eine SQL Datenbankabfrage, um die Abteilungsleiter jeder Region zur\u00FCck zu liefern.

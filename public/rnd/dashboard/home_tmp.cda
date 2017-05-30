@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?><CDADescriptor>
+  <DataSources>
+    <Connection id="dataYearList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataSumLoanByYear" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataVisitorYTD" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataSumNonPrintedMaterial" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataSumPrintedMaterial" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataPrintedMaterial" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataLatestSeting" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataLatestIR" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataLatestPosition" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataLatestMembership" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataSumLoan" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataBlendedLearning" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+  </DataSources>
+  <DataAccess access="public" connection="dataYearList" id="dataYearList" type="sql">
+    <Name>dataYearList</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[select distinct year_id
+from dim_time
+order by 1 desc]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataSumLoanByYear" id="dataSumLoanByYear" type="sql">
+    <Name>dataSumLoanByYear</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[select sum(total) as total from fact_loan a,dim_time b
+where a.time_id = b.time_id
+and b.year_id=${yearParam}]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataVisitorYTD" id="dataVisitorYTD" type="sql">
+    <Name>dataVisitorYTD</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    visitor_category_name, SUM(total) AS total
+FROM
+    ptar_eis.fact_visitor A,
+    mst_visitor_category B
+WHERE
+    A.visitor_category_id = B.visitor_category_id
+        AND A.time_id = getLatestPeriod('pengunjung','2016')
+           
+GROUP BY visitor_category_name]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataSumNonPrintedMaterial" id="dataSumNonPrintedMaterial" type="sql">
+    <Name>dataSumNonPrintedMaterial</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    SUM(A.title) AS title, SUM(A.volume) AS volume
+FROM
+    fact_non_printed_material A
+WHERE
+    A.time_id = getLatestPeriod('bahan_bukan_bercetak',${yearParam})]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataSumPrintedMaterial" id="dataSumPrintedMaterial" type="sql">
+    <Name>dataSumPrintedMaterial</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    SUM(A.title) AS title, SUM(A.volume) AS volume
+FROM
+    fact_printed_material A
+WHERE
+    A.time_id = getLatestPeriod('bahan_bercetak',${yearParam})]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataPrintedMaterial" id="dataPrintedMaterial" type="sql">
+    <Name>dataPrintedMaterial</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    SUM(A.title)  AS title,
+    SUM(A.volume)  AS volume
+FROM
+    fact_printed_material A
+    
+WHERE
+    A.time_id = getLatestPeriod('bahan_bercetak',${yearParam})]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataLatestSeting" id="dataLatestSeting" type="sql">
+    <Name>dataLatestSeting</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    SUM(A.capacity) AS capacity
+FROM
+    fact_seating A
+WHERE
+    A.time_id = getLatestPeriod('tempat_duduk',${yearParam})]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataLatestIR" id="dataLatestIR" type="sql">
+    <Name>dataLatestIR</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    SUM(A.title) as title, SUM(A.volume) as volume
+FROM
+    fact_ir_item A
+WHERE
+    A.time_id = getLatestPeriod('bahan_ir',${yearParam})]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataLatestPosition" id="dataLatestPosition" type="sql">
+    <Name>dataLatestPosition</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    post_category_code, SUM(total) AS total
+FROM
+    fact_post A
+WHERE
+    A.time_id = getLatestPeriod('perjawatan',${yearParam})
+          
+GROUP BY post_category_code]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataLatestMembership" id="dataLatestMembership" type="sql">
+    <Name>dataLatestMembership</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    category_group, SUM(total) AS total
+FROM
+    ptar_eis.fact_membership A,
+    mst_member_category B
+WHERE
+    A.member_category_id = B.category_id
+        AND A.time_id = getLatestPeriod('ahli_perpustakaan',${yearParam}) 
+GROUP BY category_group
+ORDER BY B.category_id]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataSumLoan" id="dataSumLoan" type="mdx">
+    <Name>dataSumLoan</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+SET [~FILTER] AS
+    {[Time].[${yearParam}]}
+SET [~ROWS] AS
+    {[Kategori].[Jenis Kategori].Members}
+SELECT
+NON EMPTY {[Measures].[Jumlah]} ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Pinjaman Bahan]
+WHERE [~FILTER]]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataBlendedLearning" id="dataBlendedLearning" type="mdx">
+    <Name>dataBlendedLearning</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[WITH
+SET [~ROWS] AS
+   Tail([Time].[Month].Members)
+SELECT
+NON EMPTY {[Measures].[Judul], [Measures].[Naskah]} ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Bahan Bukan Bercetak]]]></Query>
+  </DataAccess>
+</CDADescriptor>

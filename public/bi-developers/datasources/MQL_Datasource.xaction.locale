@@ -1,0 +1,5 @@
+#Locale = default
+#Wed May 31 05:29:43 MYT 2017
+file.title=MQL Query of Order Totals
+title=MQL_Datasource
+file.description=This rule uses an MQL query to determine which orders are larger than a certain amount.<p>See the Quick Start Guide for how to customize this data.

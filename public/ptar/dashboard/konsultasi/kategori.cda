@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?><CDADescriptor>
+  <DataSources>
+    <Connection id="dataLatestPeriod" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataMeasureList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataCategoryList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataYearList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataGroupType" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataDefaultGroup" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataTop10Library" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataByState" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataBottom10" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataMonthly" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+  </DataSources>
+  <DataAccess access="public" connection="dataLatestPeriod" id="dataLatestPeriod" type="sql">
+    <Name>dataLatestPeriod</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    time_id, month_name, qtr_name, year_id, month_id
+FROM
+    dim_time
+WHERE
+    time_id = GETLATESTPERIOD('konsultasi', ${yearParam})]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataMeasureList" id="dataMeasureList" type="sql">
+    <Name>dataMeasureList</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="groupParam" name="groupParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 'Pengguna' 
+UNION SELECT 'Sessi']]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataCategoryList" id="dataCategoryList" type="sql">
+    <Name>dataCategoryList</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="groupParam" name="groupParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT category_name,category_name FROM dim_consultation
+where group_id = ${groupParam}]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataYearList" id="dataYearList" type="sql">
+    <Name>dataYearList</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT DISTINCT
+    year_id
+FROM
+    dim_time
+ORDER BY 1 DESC]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataGroupType" id="dataGroupType" type="sql">
+    <Name>dataGroupType</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT distinct group_id,group_name FROM dim_consultation]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataDefaultGroup" id="dataDefaultGroup" type="sql">
+    <Name>dataDefaultGroup</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="categoryParam" name="categoryParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT group_id FROM dim_consultation A
+where A.category_name = ${categoryParam}]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataTop10Library" id="dataTop10Library" type="mdx">
+    <Name>dataTop10Library</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+      <Parameter default="categoryParam" name="categoryParam" type="String"/>
+      <Parameter default="measureParam" name="measureParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+SET [~FILTER] AS
+CrossJoin (
+    {[Kategori].[Kategori].[${categoryParam}]},
+    [Time].[${yearParam}]
+)
+    
+SET [~ROWS] AS
+ {TOPCOUNT([Lokasi].[Perpustakaan].Members, 10, 
+       [Measures].[Pengguna])}
+       
+SELECT
+NON EMPTY {${measureParam}} ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Konsultasi Perkhidmatan Akademik]
+WHERE [~FILTER]]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataByState" id="dataByState" type="mdx">
+    <Name>dataByState</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+      <Parameter default="categoryParam" name="categoryParam" type="String"/>
+      <Parameter default="measureParam" name="measureParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+SET [~FILTER] AS
+CrossJoin (
+    {[Kategori].[Kategori].[${categoryParam}]},
+    [Time].[${yearParam}]
+)
+    
+SET [~ROWS] AS
+ORDER(
+        {[Lokasi].[Negeri].Members},
+            [Measures].[Pengguna],
+            BDESC
+    
+    )
+SELECT
+NON EMPTY {${measureParam}} ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Konsultasi Perkhidmatan Akademik]
+WHERE [~FILTER]]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataBottom10" id="dataBottom10" type="mdx">
+    <Name>dataBottom10</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+      <Parameter default="categoryParam" name="categoryParam" type="String"/>
+      <Parameter default="measureParam" name="measureParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+SET [~FILTER] AS
+CrossJoin (
+    {[Kategori].[Kategori].[${categoryParam}]},
+    [Time].[${yearParam}]
+)
+    
+SET [~ROWS] AS
+BOTTOMCOUNT(FILTER([Lokasi].[Perpustakaan].Members, 
+    NOT ISEMPTY([Measures].[Pengguna])) , 
+        10 , [Measures].[Pengguna])
+       
+SELECT
+NON EMPTY {${measureParam}} ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Konsultasi Perkhidmatan Akademik]
+WHERE [~FILTER]]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataMonthly" id="dataMonthly" type="mdx">
+    <Name>dataMonthly</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+      <Parameter default="categoryParam" name="categoryParam" type="String"/>
+      <Parameter default="measureParam" name="measureParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+SET [~FILTER] AS
+    {[Kategori].[Kategori].[${categoryParam}]}
+    SET [~ROWS] AS
+  'Descendants([Time].[${yearParam}], [Time].[Month])'
+SELECT
+NON EMPTY {${measureParam}} ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Konsultasi Perkhidmatan Akademik]
+WHERE [~FILTER]]]></Query>
+  </DataAccess>
+</CDADescriptor>

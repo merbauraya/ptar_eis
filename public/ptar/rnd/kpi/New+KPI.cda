@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><CDADescriptor>
+  <DataSources>
+    <Connection id="d3" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="d2" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataDummy" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+  </DataSources>
+  <DataAccess access="public" connection="d3" id="d3" type="sql">
+    <Name>d3</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[select 'KPI','Target',2000000
+union ALL
+select
+'KPI','Actual',1000000]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="d2" id="d2" type="sql">
+    <Name>d2</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[select 2000000, 8000000]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataDummy" id="dataDummy" type="sql">
+    <Name>dataDummy</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[select 2000000, 800000,40]]></Query>
+  </DataAccess>
+</CDADescriptor>

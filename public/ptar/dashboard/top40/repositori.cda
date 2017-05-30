@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><CDADescriptor>
+  <DataSources>
+    <Connection id="dataLatestPeriod" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataCategoryList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataMeasure" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataMedium" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataYearList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataBottom40" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataTop40" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+  </DataSources>
+  <DataAccess access="public" connection="dataLatestPeriod" id="dataLatestPeriod" type="sql">
+    <Name>dataLatestPeriod</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    time_id, month_name, qtr_name, year_id, month_id
+FROM
+    dim_time
+WHERE
+    time_id = GETLATESTPERIOD('bahan_ir', ${yearParam})]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataCategoryList" id="dataCategoryList" type="sql">
+    <Name>dataCategoryList</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT '[All Kategoris]', 'Semua Kategori' 
+UNION SELECT 
+    CONCAT(CONCAT('[Kategori].[', category_name),
+            ']'),
+    category_name
+FROM
+    mst_member_category]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataMeasure" id="dataMeasure" type="sql">
+    <Name>dataMeasure</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT 'Judul' 
+UNION SELECT 'Naskah']]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataMedium" id="dataMedium" type="sql">
+    <Name>dataMedium</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT item_medium_name
+from mst_item_medium]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataYearList" id="dataYearList" type="sql">
+    <Name>dataYearList</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT DISTINCT
+    year_id
+FROM
+    dim_time
+ORDER BY 1 DESC]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataBottom40" id="dataBottom40" type="mdx">
+    <Name>dataBottom40</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+      <Parameter default="ytdPeriodParam" name="ytdPeriodParam" type="String"/>
+      <Parameter default="topBottom10Measure" name="topBottom10Measure" type="String"/>
+      <Parameter default="measureParam" name="measureParam" type="String"/>
+      <Parameter default="mediumParam" name="mediumParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+SET [~FILTER] AS
+   {${ytdPeriodParam}}
+SET [~ROWS] AS
+    
+     
+     BOTTOMCOUNT(FILTER([PTJ].[PTJ].Members, NOT ISEMPTY(${topBottom10Measure})) , 40 ,${topBottom10Measure})
+     
+SELECT
+NON EMPTY {${measureParam}} ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Jenis Bahan IR]
+WHERE 
+CROSSJOIN (
+    [~FILTER],
+     {${mediumParam}}
+     )]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataTop40" id="dataTop40" type="mdx">
+    <Name>dataTop40</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+      <Parameter default="ytdPeriodParam" name="ytdPeriodParam" type="String"/>
+      <Parameter default="topBottom10Measure" name="topBottom10Measure" type="String"/>
+      <Parameter default="measureParam" name="measureParam" type="String"/>
+      <Parameter default="mediumParam" name="mediumParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+
+SET [~ROWS] AS
+    
+     {TopCount([PTJ].[PTJ].Members, 40, ${topBottom10Measure})} 
+SELECT
+NON EMPTY {${measureParam}} ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Jenis Bahan IR]
+WHERE
+ crossjoin (
+ ${ytdPeriodParam},
+ {${mediumParam}}
+)]]></Query>
+  </DataAccess>
+</CDADescriptor>

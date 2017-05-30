@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><CDADescriptor>
+  <DataSources>
+    <Connection id="dataYearList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataLibraryList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataState" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataDefaultState" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataLatestPeriod" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataCategory" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataLibrary" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+  </DataSources>
+  <DataAccess access="public" connection="dataYearList" id="dataYearList" type="sql">
+    <Name>dataYearList</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT DISTINCT
+    year_id
+FROM
+    dim_time
+ORDER BY 1 DESC]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataLibraryList" id="dataLibraryList" type="sql">
+    <Name>dataLibraryList</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="stateParam" name="stateParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    library_name,library_name
+FROM
+    mst_library
+    where state_id =${stateParam}]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataState" id="dataState" type="sql">
+    <Name>dataState</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[select state_id,state_name from mst_state]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataDefaultState" id="dataDefaultState" type="sql">
+    <Name>dataDefaultState</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="libraryParam" name="libraryParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT state_id FROM mst_library A
+where library_name = ${libraryParam}]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataLatestPeriod" id="dataLatestPeriod" type="sql">
+    <Name>dataLatestPeriod</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    B.time_id, B.month_name, B.qtr_name, B.year_id,B.month_id
+FROM
+    ptar_eis.data_load_status A,
+    dim_time B
+WHERE
+    A.latest_period = B.time_id
+        AND A.data_name = 'bahan_bukan_bercetak'
+        AND A.period_year = ${yearParam}]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataCategory" id="dataCategory" type="mdx">
+    <Name>dataCategory</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+      <Parameter default="libraryParam" name="libraryParam" type="String"/>
+      <Parameter default="ytdPeriodParam" name="ytdPeriodParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+    
+SET [~ROWS] AS
+   ORDER (
+    {[Kategori].[Kategori].Members},[Measures].[Judul],ASC
+    
+)    
+    
+SELECT
+NON EMPTY {[Measures].[Judul], [Measures].[Naskah]} ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Bahan Bukan Bercetak]
+
+WHERE CrossJoin({[Lokasi].[Perpustakaan].[${libraryParam}]}, { ${ytdPeriodParam}})]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataLibrary" id="dataLibrary" type="mdx">
+    <Name>dataLibrary</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+      <Parameter default="libraryParam" name="libraryParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+SET [~FILTER] AS
+     {[Lokasi].[Perpustakaan].[${libraryParam}]}
+
+SET [~ROWS] AS
+    'Descendants([Time].[${yearParam}], [Time].[Month])'
+SELECT
+NON EMPTY {[Measures].[Judul], [Measures].[Naskah]} ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Bahan Bukan Bercetak]
+WHERE [~FILTER]]]></Query>
+  </DataAccess>
+</CDADescriptor>

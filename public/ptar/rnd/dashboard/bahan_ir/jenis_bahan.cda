@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?><CDADescriptor>
+  <DataSources>
+    <Connection id="dataItemTypeMonthly" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataTop10" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataByPtjType" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataMedium" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataMeasure" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataItemCategoryList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataYearList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataLatestPeriod" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+  </DataSources>
+  <DataAccess access="public" connection="dataItemTypeMonthly" id="dataItemTypeMonthly" type="mdx">
+    <Name>dataItemTypeMonthly</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="itemCategoryParam" name="itemCategoryParam" type="String"/>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+      <Parameter default="measureParam" name="measureParam" type="String"/>
+      <Parameter default="mediumParam" name="mediumParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[with set [~ROWS] as 'Descendants([Time].[${yearParam}], [Time].[Month])'
+select NON EMPTY {${measureParam}} ON COLUMNS,
+  NON EMPTY [~ROWS] ON ROWS
+from [Jenis Bahan IR]
+WHERE 
+CrossJoin 
+    (
+        [Bahan].[${itemCategoryParam}] ,
+        {${mediumParam}}
+    )]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataTop10" id="dataTop10" type="mdx">
+    <Name>dataTop10</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="ytdPeriodParam" name="ytdPeriodParam" type="String"/>
+      <Parameter default="itemCategoryParam" name="itemCategoryParam" type="String"/>
+      <Parameter default="measureParam" name="measureParam" type="String"/>
+      <Parameter default="mediumParam" name="mediumParam" type="String"/>
+      <Parameter default="topBottom10Measure" name="topBottom10Measure" type="String"/>
+    </Parameters>
+    <Query><![CDATA[select {${measureParam}} ON COLUMNS,
+  {TopCount([PTJ].[PTJ].Members, 10, ${topBottom10Measure})} ON ROWS
+FROM [Jenis Bahan IR]
+WHERE  
+crossjoin (
+    
+    CrossJoin (
+    {${ytdPeriodParam}},
+    [Bahan].[${itemCategoryParam}]
+    ),
+    {${mediumParam}}
+)]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataByPtjType" id="dataByPtjType" type="mdx">
+    <Name>dataByPtjType</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="ytdPeriodParam" name="ytdPeriodParam" type="String"/>
+      <Parameter default="itemCategoryParam" name="itemCategoryParam" type="String"/>
+      <Parameter default="measureParam" name="measureParam" type="String"/>
+      <Parameter default="mediumParam" name="mediumParam" type="String"/>
+      <Parameter default="topBottom10Measure" name="topBottom10Measure" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH
+
+SET [~ROWS] AS
+   ORDER (
+    {[PTJ].[Kategori PTJ].Members},${topBottom10Measure},BDESC
+    
+)
+
+
+SELECT
+NON EMPTY {${measureParam}} ON COLUMNS,
+
+NON EMPTY [~ROWS] ON ROWS
+FROM [Jenis Bahan IR]
+WHERE 
+CrossJoin
+    (
+        CrossJoin (
+            {${ytdPeriodParam}}, 
+            {[Bahan].[${itemCategoryParam}]}
+        ),
+            {${mediumParam}}
+    )]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataMedium" id="dataMedium" type="sql">
+    <Name>dataMedium</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT item_medium_name
+from mst_item_medium]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataMeasure" id="dataMeasure" type="sql">
+    <Name>dataMeasure</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT 'Judul' 
+UNION SELECT 'Naskah']]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataItemCategoryList" id="dataItemCategoryList" type="sql">
+    <Name>dataItemCategoryList</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT 
+    item_type_name
+FROM
+    mst_item_type
+WHERE
+    ir_type=1
+ORDER BY 1]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataYearList" id="dataYearList" type="sql">
+    <Name>dataYearList</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT DISTINCT
+    year_id
+FROM
+    dim_time
+ORDER BY 1 DESC]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataLatestPeriod" id="dataLatestPeriod" type="sql">
+    <Name>dataLatestPeriod</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    B.time_id, B.month_name, B.qtr_name, B.year_id,B.month_id
+FROM
+    ptar_eis.data_load_status A,
+    dim_time B
+WHERE
+    A.latest_period = B.time_id
+        AND A.data_name = 'bahan_ir'
+        AND A.period_year = ${yearParam}]]></Query>
+  </DataAccess>
+</CDADescriptor>

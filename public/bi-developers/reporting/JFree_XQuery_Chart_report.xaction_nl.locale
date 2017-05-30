@@ -1,0 +1,4 @@
+#Locale = nl
+#Wed May 31 05:29:43 MYT 2017
+file.title=JFreeReport met Staafgrafiek
+file.description=Voert een JFreeReport uit tegen data in een XML document en genereert een staafgrafiek met behulp van JFreeChart.

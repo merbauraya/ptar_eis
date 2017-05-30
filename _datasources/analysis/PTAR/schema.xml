@@ -1,0 +1,482 @@
+<Schema name="PTAR">
+  <Dimension type="TimeDimension" visible="true" highCardinality="false" name="Time">
+    <Hierarchy visible="true" hasAll="false" primaryKey="time_id" caption="Masa">
+      <Table name="dim_time">
+      </Table>
+      <Level name="Year" visible="true" table="dim_time" column="year_id" type="String" uniqueMembers="true" levelType="TimeYears" hideMemberIf="Never" caption="Tahun">
+      </Level>
+      <Level name="Quarter" visible="true" table="dim_time" column="qtr_name" nameColumn="qtr_name" ordinalColumn="qtr_id" type="String" uniqueMembers="false" levelType="TimeQuarters" hideMemberIf="Never" caption="Sukuan">
+      </Level>
+      <Level name="Month" visible="true" table="dim_time" column="month_name" ordinalColumn="month_id" type="String" uniqueMembers="false" levelType="TimeMonths" hideMemberIf="Never" caption="Bulan">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="TimeFullName">
+    <Hierarchy visible="true" hasAll="true">
+      <Table name="dim_time">
+      </Table>
+      <Level name="Year" visible="true" column="year_id" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Quarter" visible="true" column="qtr_id" nameColumn="qtr_desc" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Month" visible="true" column="month_id" nameColumn="month_desc" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Cube name="Perjawatan" visible="true" description="Perjawatan" cache="true" enabled="true">
+    <Table name="fact_post">
+    </Table>
+    <DimensionUsage source="Time" name="Time" caption="Masa" visible="true" foreignKey="time_id" highCardinality="false">
+    </DimensionUsage>
+    <Dimension type="StandardDimension" visible="true" foreignKey="post_grade_id" highCardinality="false" name="Grade">
+      <Hierarchy visible="true" hasAll="true" primaryKey="post_grade_id">
+        <Table name="mst_post_grade">
+        </Table>
+        <Level name="Grade" visible="true" column="post_grade_id" nameColumn="post_grade_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="post_category_id" highCardinality="false" name="Kategori Perjawatan">
+      <Hierarchy visible="true" hasAll="true" primaryKey="post_category_id">
+        <Table name="mst_post_category">
+        </Table>
+        <Level name="Kategori" visible="true" table="mst_post_category" column="post_category_id" nameColumn="post_category_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="library_id" highCardinality="false" name="Lokasi">
+      <Hierarchy visible="true" hasAll="true" primaryKey="library_id">
+        <Table name="dim_location">
+        </Table>
+        <Level name="Negeri" visible="true" column="state_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Jenis Perpustakaan" visible="true" column="library_type_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Perpustakaan" visible="true" column="library_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="Jumlah" column="total" datatype="Numeric" aggregator="sum" visible="true">
+    </Measure>
+  </Cube>
+  <Cube name="Pengunjung" visible="true" cache="true" enabled="true">
+    <Table name="fact_visitor">
+    </Table>
+    <Dimension type="StandardDimension" visible="true" foreignKey="visitor_category_id" highCardinality="false" name="Category">
+      <Hierarchy visible="true" hasAll="true" primaryKey="visitor_category_id">
+        <Table name="mst_visitor_category">
+        </Table>
+        <Level name="Kategori" visible="true" column="visitor_category_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <DimensionUsage source="Time" name="Time" caption="Masa" visible="true" foreignKey="time_id" highCardinality="false">
+    </DimensionUsage>
+    <Dimension type="StandardDimension" visible="true" foreignKey="library_id" highCardinality="false" name="Lokasi">
+      <Hierarchy visible="true" hasAll="true" primaryKey="library_id">
+        <Table name="dim_location">
+        </Table>
+        <Level name="Negeri" visible="true" column="state_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Jenis Perpustakaan" visible="true" column="library_type_name" ordinalColumn="library_type_code" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Perpustakaan" visible="true" column="library_name" ordinalColumn="library_code" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="Jumlah" column="total" aggregator="sum" visible="true">
+    </Measure>
+  </Cube>
+  <Cube name="Pinjaman Bahan" visible="true" cache="true" enabled="true">
+    <Table name="fact_loan">
+    </Table>
+    <DimensionUsage source="Time" name="Time" caption="Masa" visible="true" foreignKey="time_id" highCardinality="false">
+    </DimensionUsage>
+    <Dimension type="StandardDimension" visible="true" foreignKey="member_category_id" highCardinality="false" name="Kategori" caption="Kategori Peminjan">
+      <Hierarchy visible="true" hasAll="true" primaryKey="category_id">
+        <Table name="mst_member_category">
+        </Table>
+        <Level name="Jenis Kategori" visible="true" column="category_group" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Kategori" visible="true" column="category_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="library_id" highCardinality="false" name="Lokasi">
+      <Hierarchy visible="true" hasAll="true" primaryKey="library_id">
+        <Table name="dim_location">
+        </Table>
+        <Level name="Negeri" visible="true" column="state_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Jenis Perpustakaan" visible="true" column="library_type_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Perpustakaan" visible="true" column="library_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="Jumlah" column="total" datatype="Integer" aggregator="sum" visible="true">
+    </Measure>
+  </Cube>
+  <Cube name="Bahan Bercetak" visible="true" cache="true" enabled="true">
+    <Table name="fact_printed_material">
+    </Table>
+    <DimensionUsage source="Time" name="Time" caption="Masa" visible="true" foreignKey="time_id" highCardinality="false">
+    </DimensionUsage>
+    <Dimension type="StandardDimension" visible="true" foreignKey="item_type_id" highCardinality="false" name="Kategori">
+      <Hierarchy visible="true" hasAll="true" primaryKey="item_type_id">
+        <Table name="mst_item_type">
+        </Table>
+        <Level name="Kategori" visible="true" column="item_type_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="library_id" highCardinality="false" name="Lokasi">
+      <Hierarchy visible="true" hasAll="true" primaryKey="library_id">
+        <Table name="dim_location">
+        </Table>
+        <Level name="Negeri" visible="true" column="state_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Jenis Perpustakaan" visible="true" column="library_type_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Perpustakaan" visible="true" column="library_name" ordinalColumn="library_id" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="Judul" column="title" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Naskah" column="volume" aggregator="sum" visible="true">
+    </Measure>
+  </Cube>
+  <Cube name="Bahan Bukan Bercetak" visible="true" cache="true" enabled="true">
+    <Table name="fact_non_printed_material">
+    </Table>
+    <DimensionUsage source="Time" name="Time" caption="Masa" visible="true" foreignKey="time_id" highCardinality="false">
+    </DimensionUsage>
+    <Dimension type="StandardDimension" visible="true" foreignKey="item_type_id" highCardinality="false" name="Kategori">
+      <Hierarchy visible="true" hasAll="true">
+        <Table name="mst_item_type">
+        </Table>
+        <Level name="Kategori" visible="true" column="item_type_id" nameColumn="item_type_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="library_id" highCardinality="false" name="Lokasi">
+      <Hierarchy visible="true" hasAll="true" primaryKey="library_id">
+        <Table name="dim_location">
+        </Table>
+        <Level name="Negeri" visible="true" column="state_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Jenis Perpustakaan" visible="true" column="library_type_name" ordinalColumn="library_type_code" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Perpustakaan" visible="true" column="library_name" ordinalColumn="library_code" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="Judul" column="title" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Naskah" column="volume" aggregator="sum" visible="true">
+    </Measure>
+  </Cube>
+  <Cube name="Jenis Bahan IR" visible="true" cache="true" enabled="true">
+    <Table name="fact_ir_item">
+    </Table>
+    <DimensionUsage source="Time" name="Time" caption="Masa" visible="true" foreignKey="time_id" highCardinality="false">
+    </DimensionUsage>
+    <Dimension type="StandardDimension" visible="true" foreignKey="item_type_id" highCardinality="false" name="Bahan">
+      <Hierarchy visible="true" hasAll="true">
+        <Table name="mst_item_type">
+        </Table>
+        <Level name="Bahan" visible="true" column="item_type_id" nameColumn="item_type_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="item_medium_id" highCardinality="false" name="Medium">
+      <Hierarchy visible="true" hasAll="true">
+        <Table name="mst_item_medium">
+        </Table>
+        <Level name="Jenis Medium" visible="true" column="item_medium_id" nameColumn="item_medium_name" ordinalColumn="item_medium_id" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="faculty_id" highCardinality="false" name="PTJ">
+      <Hierarchy visible="true" hasAll="true">
+        <Table name="mst_faculty">
+        </Table>
+        <Level name="Kategori PTJ" visible="true" column="faculty_type_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="PTJ" visible="true" column="faculty_id" nameColumn="faculty_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="library_id" highCardinality="false" name="Lokasi">
+      <Hierarchy visible="true" hasAll="true" primaryKey="library_id">
+        <Table name="dim_location">
+        </Table>
+        <Level name="Negeri" visible="true" column="state_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Jenis Perpustakaan" visible="true" column="library_type_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Perpustakaan" visible="true" column="library_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="Judul" column="title" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Naskah" column="volume" aggregator="sum" visible="true">
+    </Measure>
+  </Cube>
+  <Cube name="Tempat Duduk" visible="true" cache="true" enabled="true">
+    <Table name="fact_seating">
+    </Table>
+    <DimensionUsage source="Time" name="Time" visible="true" foreignKey="time_id" highCardinality="false">
+    </DimensionUsage>
+    <Dimension type="StandardDimension" visible="true" foreignKey="seating_category_id" highCardinality="false" name="Category">
+      <Hierarchy name="Jabatan" visible="true" hasAll="true" primaryKey="seating_category_id">
+        <Table name="mst_seating_category">
+        </Table>
+        <Level name="Jabatan" visible="true" column="seating_department_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Kategori" visible="true" column="seating_category_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="library_id" highCardinality="false" name="Lokasi">
+      <Hierarchy visible="true" hasAll="true" primaryKey="library_id">
+        <Table name="dim_location">
+        </Table>
+        <Level name="Negeri" visible="true" column="state_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Jenis Perpustakaan" visible="true" column="library_type_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Perpustakaan" visible="true" column="library_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="Jumlah" column="capacity" aggregator="sum" visible="true">
+    </Measure>
+  </Cube>
+  <Cube name="Ahli Perpustakaan" visible="true" cache="true" enabled="true">
+    <Table name="fact_membership">
+    </Table>
+    <DimensionUsage source="Time" name="Time" visible="true" foreignKey="time_id" highCardinality="false">
+    </DimensionUsage>
+    <Dimension type="StandardDimension" visible="true" foreignKey="member_category_id" highCardinality="false" name="Kategori">
+      <Hierarchy visible="true" hasAll="true" primaryKey="category_id">
+        <Table name="mst_member_category">
+        </Table>
+        <Level name="Jenis Kategori" visible="true" column="category_group" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Kategori" visible="true" column="category_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="library_id" highCardinality="false" name="Lokasi">
+      <Hierarchy visible="true" hasAll="true" primaryKey="library_id">
+        <Table name="dim_location">
+        </Table>
+        <Level name="Negeri" visible="true" column="state_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Jenis Perpustakaan" visible="true" column="library_type_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Perpustakaan" visible="true" column="library_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="Jumlah" column="total" aggregator="sum" visible="true">
+    </Measure>
+  </Cube>
+  <Cube name="Bahan IR Suku" visible="true" cache="true" enabled="true">
+    <Table name="fact_ir_quarter">
+    </Table>
+    <DimensionUsage source="Time" name="Time" visible="true" foreignKey="time_id" highCardinality="false">
+    </DimensionUsage>
+    <Dimension type="StandardDimension" visible="true" foreignKey="item_type_id" highCardinality="false" name="Bahan">
+      <Hierarchy visible="true" hasAll="true">
+        <Table name="mst_item_type">
+        </Table>
+        <Level name="Bahan" visible="true" column="item_type_id" nameColumn="item_type_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="item_medium_id" highCardinality="false" name="Medium">
+      <Hierarchy visible="true" hasAll="true">
+        <Table name="mst_item_medium">
+        </Table>
+        <Level name="Jenis Medium" visible="true" column="item_medium_id" nameColumn="item_medium_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="faculty_id" highCardinality="false" name="PTJ">
+      <Hierarchy visible="true" hasAll="true">
+        <Table name="mst_faculty">
+        </Table>
+        <Level name="Kategori PTJ" visible="true" column="faculty_type_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="PTJ" visible="true" column="faculty_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="Judul" column="title" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Naskah" column="volume" aggregator="sum" visible="true">
+    </Measure>
+  </Cube>
+  <Cube name="KPI" visible="true" cache="true" enabled="true">
+    <Table name="fact_kpi">
+    </Table>
+    <Dimension type="StandardDimension" visible="true" foreignKey="kpi_id" highCardinality="false" name="Jenis KPI">
+      <Hierarchy visible="true" hasAll="true" primaryKey="kpi_id">
+        <Table name="mst_kpi">
+        </Table>
+        <Level name="Jenis Kpi" visible="true" column="kpi_name" nameColumn="kpi_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="time_id" highCardinality="false" name="Sukuan">
+      <Hierarchy visible="true" hasAll="true" primaryKey="time_id">
+        <Table name="dim_kpi_time_quarter">
+        </Table>
+        <Level name="Tahun" visible="true" column="year_id" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Separuh Tahun" visible="true" column="semi_annual_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Suku" visible="true" column="time_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="time_id" highCardinality="false" name="Setengah Tahun">
+      <Hierarchy visible="true" hasAll="true" primaryKey="time_id">
+        <Table name="dim_kpi_time_halfyear">
+        </Table>
+        <Level name="Tahun" visible="true" column="year_id" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Setengah Tahun" visible="true" column="time_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="time_id" highCardinality="false" name="Tahunan">
+      <Hierarchy visible="true" hasAll="true" primaryKey="time_id">
+        <Table name="dim_kpi_time_year">
+        </Table>
+        <Level name="Tahun" visible="true" column="time_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="time_id" highCardinality="false" name="Bulanan">
+      <Hierarchy visible="true" hasAll="true" primaryKey="time_id">
+        <Table name="dim_time">
+        </Table>
+        <Level name="Tahun" visible="true" column="year_id" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Setengah Tahun" visible="true" column="half_year_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Suku" visible="true" column="qtr_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Bulan" visible="true" column="month_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="KPI" column="target" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Nilai Sebenar" column="actual" aggregator="sum" visible="true">
+    </Measure>
+  </Cube>
+  <Cube name="Perbelanjaan" visible="true" cache="true" enabled="true">
+    <Table name="fact_expense">
+    </Table>
+    <DimensionUsage source="Time" name="Time" visible="true" foreignKey="time_id" highCardinality="false">
+    </DimensionUsage>
+    <Dimension type="StandardDimension" visible="true" foreignKey="library_id" highCardinality="false" name="Lokasi">
+      <Hierarchy visible="true" hasAll="true" primaryKey="library_id">
+        <Table name="dim_location">
+        </Table>
+        <Level name="Negeri" visible="true" column="state_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Jenis Perpustakaan" visible="true" column="library_type_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Perpustakaan" visible="true" column="library_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="masterfile_id" highCardinality="false" name="Sumber">
+      <Hierarchy visible="true" hasAll="true" primaryKey="masterFileId">
+        <Table name="masterfile">
+        </Table>
+        <Level name="Sumber" visible="true" column="masterFileName" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="masterfile_id" highCardinality="false" name="Kategori">
+      <Hierarchy visible="true" hasAll="true" primaryKey="item_id">
+        <Table name="mst_expense_item">
+        </Table>
+        <Level name="Kategori" visible="true" column="expense_type" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Jenis" visible="true" column="item_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="Jumlah" column="amount" aggregator="sum" visible="true">
+    </Measure>
+  </Cube>
+  <Cube name="Konsultasi Perkhidmatan Akademik" visible="true" cache="true" enabled="true">
+    <Table name="fact_consultation">
+    </Table>
+    <DimensionUsage source="Time" name="Time" visible="true" foreignKey="time_id" highCardinality="false">
+    </DimensionUsage>
+    <Dimension type="StandardDimension" visible="true" foreignKey="category_id" highCardinality="false" name="Kategori">
+      <Hierarchy visible="true" hasAll="true" primaryKey="category_id">
+        <Table name="dim_consultation">
+        </Table>
+        <Level name="Kumpulan" visible="true" column="group_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Kategori" visible="true" column="category_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="library_id" highCardinality="false" name="Lokasi">
+      <Hierarchy visible="true" hasAll="true" primaryKey="library_id">
+        <Table name="dim_location">
+        </Table>
+        <Level name="Negeri" visible="true" column="state_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Jenis Perpustakaan" visible="true" column="library_type_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Perpustakaan" visible="true" column="library_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="Sessi" column="session_total" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Pengguna" column="user_total" aggregator="sum" visible="true">
+    </Measure>
+  </Cube>
+  <Cube name="Perolehan" visible="true" cache="true" enabled="true">
+    <Table name="fact_acquisition" alias="">
+    </Table>
+    <DimensionUsage source="Time" name="Time" visible="true" foreignKey="time_id">
+    </DimensionUsage>
+    <Dimension type="StandardDimension" visible="true" foreignKey="faculty_id" name="PTJ">
+      <Hierarchy visible="true" hasAll="true">
+        <Table name="mst_faculty" alias="">
+        </Table>
+        <Level name="Kategori PTJ" visible="true" column="faculty_type_name" uniqueMembers="false">
+        </Level>
+        <Level name="PTJ" visible="true" column="faculty_name" uniqueMembers="false">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="item_id" name="Bahan">
+      <Hierarchy visible="true" hasAll="true">
+        <Table name="mst_item_type" alias="">
+        </Table>
+        <Level name="Bahan" visible="true" column="item_type_name" uniqueMembers="false">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="Naskah" column="volume" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Judul" column="title" aggregator="sum" visible="true">
+    </Measure>
+  </Cube>
+</Schema>

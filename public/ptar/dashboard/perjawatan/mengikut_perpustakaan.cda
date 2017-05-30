@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><CDADescriptor>
+  <DataSources>
+    <Connection id="dataLatestPeriod" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataPostCategory" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataLibraryList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataYearList" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataState" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataPositionDetail" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataDefaultState" type="sql.jndi">
+      <Jndi>PTAR</Jndi>
+    </Connection>
+    <Connection id="dataMonthly" type="mondrian.jndi">
+      <Catalog>mondrian:/PTAR</Catalog>
+      <Jndi>PTAR</Jndi>
+    </Connection>
+  </DataSources>
+  <DataAccess access="public" connection="dataLatestPeriod" id="dataLatestPeriod" type="sql">
+    <Name>dataLatestPeriod</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    B.time_id, B.month_name, B.qtr_name, B.year_id,B.month_id
+FROM
+    dim_time B
+WHERE
+    B.time_id = getLatestPeriod('perjawatan',${yearParam})]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataPostCategory" id="dataPostCategory" type="sql">
+    <Name>dataPostCategory</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT 
+    post_category_name
+FROM
+    mst_post_category]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataLibraryList" id="dataLibraryList" type="sql">
+    <Name>dataLibraryList</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="stateParam" name="stateParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    library_name,library_name
+FROM
+    mst_library
+    where state_id =${stateParam}]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataYearList" id="dataYearList" type="sql">
+    <Name>dataYearList</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[SELECT DISTINCT
+    year_id
+FROM
+    dim_time
+ORDER BY 1 DESC]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataState" id="dataState" type="sql">
+    <Name>dataState</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters/>
+    <Query><![CDATA[select state_id,state_name from mst_state
+order by state_name]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataPositionDetail" id="dataPositionDetail" type="sql">
+    <Name>dataPositionDetail</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="libraryParam" name="libraryParam" type="String"/>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT 
+    B.post_grade_name, D.post_category_name,B.post_grade_code, total AS Jumlah
+FROM
+    ptar_eis.fact_post A,
+    mst_post_grade B,
+    dim_location C,
+    mst_post_category D
+WHERE
+    A.time_id = GETLATESTPERIOD('perjawatan', ${yearParam})
+        AND A.post_grade_id = B.post_grade_id
+        AND A.library_id = C.library_id
+        AND C.library_name = ${libraryParam}
+        AND D.post_category_id = B.post_category_id
+GROUP BY B.post_grade_name , D.post_category_name,B.post_grade_code
+ORDER BY Jumlah ASC]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataDefaultState" id="dataDefaultState" type="sql">
+    <Name>dataDefaultState</Name>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="libraryParam" name="libraryParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[SELECT state_id FROM mst_library A
+where library_name = ${libraryParam}]]></Query>
+  </DataAccess>
+  <DataAccess access="public" connection="dataMonthly" id="dataMonthly" type="mdx">
+    <Name>dataMonthly</Name>
+    <BandedMode>compact</BandedMode>
+    <Cache duration="3600" enabled="true"/>
+    <Columns/>
+    <Parameters>
+      <Parameter default="yearParam" name="yearParam" type="String"/>
+      <Parameter default="libraryParam" name="libraryParam" type="String"/>
+      <Parameter default="categoryParam" name="categoryParam" type="String"/>
+    </Parameters>
+    <Query><![CDATA[WITH SET [~COLUMNS] AS
+  { [Lokasi].[Perpustakaan].[${libraryParam}] }
+SET [~ROWS] AS
+  'Descendants([Time].[${yearParam}], [Time].[Month])'
+SELECT NON EMPTY Crossjoin ( [~COLUMNS], { [Measures].[Jumlah] } ) ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Perjawatan]
+WHERE { ${categoryParam} }]]></Query>
+  </DataAccess>
+</CDADescriptor>
